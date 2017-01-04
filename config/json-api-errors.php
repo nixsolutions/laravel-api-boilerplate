@@ -2,6 +2,7 @@
 
 use CloudCreativity\JsonApi\Document\Error;
 use CloudCreativity\LaravelJsonApi\Validators\ValidatorErrorFactory as V;
+use \Illuminate\Auth\AuthenticationException;
 
 return [
 
@@ -150,5 +151,10 @@ return [
     Exception::class => [
         Error::TITLE => 'Internal Server Error',
         Error::STATUS => 500,
+    ],
+
+    AuthenticationException::class => [
+        Error::TITLE => 'Unauthenticated',
+        Error::STATUS => 401,
     ],
 ];

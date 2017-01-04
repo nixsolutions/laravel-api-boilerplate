@@ -10,7 +10,7 @@ return [
         |--------------------------------------------------------------------------
         */
 
-        'title' => 'Swagger UI',
+        'title' => 'LevelUP Swagget UI',
 
         /*
         |--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ return [
         |--------------------------------------------------------------------------
         */
 
-        'key_var' => env('L5_SWAGGER_API_KEY_VAR', 'api_key'),
+        'key_var' => env('L5_SWAGGER_API_KEY_VAR', 'Authorization'),
 
         /*
         |--------------------------------------------------------------------------
@@ -34,7 +34,7 @@ return [
         |--------------------------------------------------------------------------
         */
 
-        'security_definition' => env('L5_SWAGGER_API_SECURITY_DEFINITION', 'api_key'),
+        'security_definition' => env('L5_SWAGGER_API_SECURITY_DEFINITION', 'Authorization'),
 
         /*
         |--------------------------------------------------------------------------
@@ -42,7 +42,7 @@ return [
         |--------------------------------------------------------------------------
         */
 
-        'key_inject' => env('L5_SWAGGER_API_KEY_INJECT', 'query'),
+        'key_inject' => env('L5_SWAGGER_API_KEY_INJECT', 'header'),
 
         /*
         |--------------------------------------------------------------------------
@@ -228,9 +228,10 @@ return [
         |--------------------------------------------------------------------------
         */
 
-        //'request' => [
-        //  'TestMe' => 'testValue',
-        //],
+        'request' => [
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json'
+        ],
 
     ],
 
@@ -240,7 +241,8 @@ return [
     |--------------------------------------------------------------------------
      */
     'constants' => [
-        //'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', 'http://my-default-host.com'),
+        'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', 'http://homestead.app'),
+        'L5_SWAGGER_CONST_BASE_PATH' => env('L5_SWAGGER_BASE_PATH', '/api/v1')
     ],
 
 ];

@@ -95,7 +95,7 @@ if (app()->environment() != 'testing') {
                 jsonEditor: false,
                 apisSorter: "alpha",
                 defaultModelRendering: 'schema',
-                showRequestHeaders: false
+                showRequestHeaders: true
             });
 
             function addApiKeyAuthorization(){

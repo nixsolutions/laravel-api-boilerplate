@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use CloudCreativity\LaravelJsonApi\Http\Middleware\HandleRequest;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -36,6 +37,7 @@ class Kernel extends HttpKernel
             'throttle:60,1',
             'bindings',
         ],
+        'json-api' => []
     ];
 
     /**

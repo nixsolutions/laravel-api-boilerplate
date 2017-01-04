@@ -39,7 +39,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        //
+        $this->mapJsonApiV1Routes();
     }
 
     /**
@@ -74,6 +74,24 @@ class RouteServiceProvider extends ServiceProvider
             'prefix' => 'api',
         ], function ($router) {
             require base_path('routes/api.php');
+        });
+    }
+
+    /**
+     * Define the "api" routes for the application.
+     *
+     * These routes are typically stateless.
+     *
+     * @return void
+     */
+    protected function mapJsonApiV1Routes()
+    {
+        Route::group([
+            'middleware' => 'json-api:v1',
+            'namespace' => $this->namespace,
+            'prefix' => 'api/v1'
+        ], function ($router) {
+            require base_path('routes/json-api-v1.php');
         });
     }
 }

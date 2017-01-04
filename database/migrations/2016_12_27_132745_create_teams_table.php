@@ -17,8 +17,7 @@ class CreateTeamsTable extends Migration {
 			$table->increments('id');
 			$table->string('name');
 			$table->timestamps();
-			$table->integer('parent_id')->unsigned()->index('fk_teams_teams_idx');
-			$table->primary(['id','parent_id']);
+			$table->integer('parent_id')->unsigned()->nullable()->index('fk_teams_teams1_idx');
 		});
 	}
 
