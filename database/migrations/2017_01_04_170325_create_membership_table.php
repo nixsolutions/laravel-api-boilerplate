@@ -18,7 +18,7 @@ class CreateMembershipTable extends Migration {
 			$table->integer('team_id')->unsigned()->index('fk_membership_teams1_idx');
 			$table->integer('user_id')->unsigned()->index('fk_membership_users1_idx');
 			$table->string('role');
-			$table->primary(['id','team_id','user_id']);
+			$table->unique(['id','team_id','user_id'], 'unique_team_id_user_id');
 		});
 	}
 

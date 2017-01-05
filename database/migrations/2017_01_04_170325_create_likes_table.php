@@ -19,7 +19,7 @@ class CreateLikesTable extends Migration {
 			$table->integer('liked_id')->unsigned()->index('fk_likes_users2_idx');
 			$table->integer('skill_id')->unsigned()->index('fk_likes_skills1_idx');
 			$table->text('comment', 65535)->nullable();
-			$table->primary(['id','liker_id','liked_id','skill_id']);
+			$table->unique(['liker_id','liked_id','skill_id','id'], 'unique_id_liker_id_liked_id_skill_id');
 		});
 	}
 

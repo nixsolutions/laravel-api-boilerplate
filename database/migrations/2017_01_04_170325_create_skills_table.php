@@ -18,7 +18,7 @@ class CreateSkillsTable extends Migration {
 			$table->string('name');
 			$table->integer('author_id')->unsigned()->index('fk_skills_users1_idx');
 			$table->timestamps();
-			$table->primary(['id','author_id']);
+			$table->unique(['id','author_id'], 'unique_id_author_id');
 		});
 	}
 
