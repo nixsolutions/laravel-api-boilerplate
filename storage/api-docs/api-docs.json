@@ -1,0 +1,147 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "L5 Swagger API",
+        "contact": {
+            "email": "darius@matulionis.lt"
+        },
+        "version": "1.0.0"
+    },
+    "host": "192.168.10.10",
+    "basePath": "/api/v1",
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "paths": {
+        "/login": {
+            "post": {
+                "tags": [
+                    "User actions"
+                ],
+                "summary": "Perform user sign in",
+                "description": "login user using request data",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "login user",
+                        "in": "body",
+                        "description": "JSON Object which login user",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "email": {
+                                    "description": "Handle a login request to the application.",
+                                    "type": "string",
+                                    "example": "user@user.com"
+                                },
+                                "password": {
+                                    "description": "Handle a login request to the application.",
+                                    "type": "string",
+                                    "example": "12345678"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return token or error message"
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "get": {
+                "tags": [
+                    "User actions"
+                ],
+                "summary": "Perform user logout",
+                "description": "logout user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return token or error message"
+                    }
+                }
+            }
+        },
+        "/register": {
+            "post": {
+                "tags": [
+                    "User actions"
+                ],
+                "summary": "Perform user registration",
+                "description": "register form data validate and save",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "register object",
+                        "in": "body",
+                        "description": "JSON Object which register user",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "email": {
+                                    "description": "Handle a registration request for the application.",
+                                    "type": "string",
+                                    "example": "user@user.com"
+                                },
+                                "password": {
+                                    "description": "Handle a registration request for the application.",
+                                    "type": "string",
+                                    "example": "12345678"
+                                },
+                                "password_confirmation": {
+                                    "description": "Handle a registration request for the application.",
+                                    "type": "string",
+                                    "example": "12345678"
+                                },
+                                "name": {
+                                    "description": "Handle a registration request for the application.",
+                                    "type": "string",
+                                    "example": "Steven"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return message"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {},
+    "securityDefinitions": {
+        "api_key": {
+            "type": "apiKey",
+            "name": "api_key",
+            "in": "query"
+        },
+        "X-Api-Token": {
+            "type": "apiKey",
+            "name": "X-Api-Token",
+            "in": "header"
+        }
+    }
+}

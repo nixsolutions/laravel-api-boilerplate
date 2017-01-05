@@ -13,6 +13,7 @@
 
 Route::group(['prefix' => 'v1'], function () {
     Route::post('login', 'Auth\LoginController@login');
+    Route::post('register', 'Auth\RegisterController@register');
 
     Route::group([
         'middleware' => 'auth:api',
@@ -20,6 +21,9 @@ Route::group(['prefix' => 'v1'], function () {
 
         // Authentication Routes...
         Route::get('logout', 'Auth\LoginController@logout');
+
+        Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+        Route::post('password/forgot', 'Auth\ForgotPasswordController@sendResetLinkEmail');
 
         Route::get('/test', function () {
             return response()->json(['message' => 'authenticated']);

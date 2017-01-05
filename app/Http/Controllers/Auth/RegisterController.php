@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Validator;
@@ -53,6 +53,7 @@ class RegisterController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
+            'role' => 'sometimes|required|string'
         ]);
     }
 
@@ -68,11 +69,34 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'role' => array_get($data, 'role', 'user')
         ]);
     }
 
     /**
      * Handle a registration request for the application.
+     *
+     * @SWG\Post(path="/register",
+     *   tags={"User actions"},
+     *   summary="Perform user registration",
+     *   description="register form data validate and save",
+     *   produces={"application/json"},
+     *   consumes={"application/json"},
+     *     @SWG\Parameter(
+     *     in="body",
+     *     name="register object",
+     *     description="JSON Object which register user",
+     *     required=true,
+     *     @SWG\Schema(
+     *         type="object",
+     *         @SWG\Property(property="email", type="string", example="user@user.com"),
+     *         @SWG\Property(property="password", type="string", example="12345678"),
+     *         @SWG\Property(property="password_confirmation", type="string", example="12345678"),
+     *         @SWG\Property(property="name", type="string", example="Steven")
+     *     )
+     *   ),
+     *   @SWG\Response(response="200", description="Return message")
+     * )
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response

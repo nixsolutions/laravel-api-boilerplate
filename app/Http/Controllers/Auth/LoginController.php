@@ -38,8 +38,30 @@ class LoginController extends Controller
     {
         $this->middleware('guest', ['except' => 'logout']);
     }
+
     /**
      * Handle a login request to the application.
+     *
+     * @SWG\Post(path="/login",
+     *   tags={"User actions"},
+     *   summary="Perform user sign in",
+     *   description="login user using request data",
+     *   produces={"application/json"},
+     *   consumes={"application/json"},
+     *     @SWG\Parameter(
+     *     in="body",
+     *     name="login user",
+     *     description="JSON Object which login user",
+     *     required=true,
+     *     @SWG\Schema(
+     *         type="object",
+     *         @SWG\Property(property="email", type="string", example="user@user.com"),
+     *         @SWG\Property(property="password", type="string", example="12345678"),
+     *     )
+     *   ),
+     *   @SWG\Response(response="200", description="Return token or error message")
+     * )
+     *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -103,10 +125,17 @@ class LoginController extends Controller
     /**
      * Log the user out of the application.
      *
-     * @param \Illuminate\Http\Request  $request
+     * @SWG\Get(path="/logout",
+     *   tags={"User actions"},
+     *   summary="Perform user logout",
+     *   description="logout user",
+     *   produces={"application/json"},
+     *   @SWG\Response(response="200", description="Return token or error message")
+     * )
+     *
      * @return \Illuminate\Http\Response
      */
-    public function logout(Request $request)
+    public function logout()
     {
         $this->guard()->logout();
 

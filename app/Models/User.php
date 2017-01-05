@@ -10,7 +10,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject as AuthenticatableUserContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Contracts\Auth\Authenticatable;
 
-class User extends Model implements AuthenticatableUserContract, Authenticatable
+class User extends Model implements AuthenticatableUserContract, Authenticatable, CanResetPasswordContract
 {
     use \Illuminate\Auth\Authenticatable, Authorizable, CanResetPassword, Notifiable;
 
@@ -20,7 +20,7 @@ class User extends Model implements AuthenticatableUserContract, Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'role'
     ];
 
     /**
