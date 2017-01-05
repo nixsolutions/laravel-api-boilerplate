@@ -13,7 +13,8 @@
         "barryvdh/laravel-ide-helper": "^2.2",
         "barryvdh/laravel-debugbar": "^2.3",
         "doctrine/dbal": "^2.5",
-        "laravel/homestead": "^4.0"
+        "laravel/homestead": "^4.0",
+        "zizaco/entrust": "5.2.x-dev"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
