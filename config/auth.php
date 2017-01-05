@@ -68,6 +68,7 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+            'table' => 'users'
         ],
 
         // 'users' => [
@@ -98,5 +99,4 @@ return [
             'expire' => 60,
         ],
     ],
-
 ];
