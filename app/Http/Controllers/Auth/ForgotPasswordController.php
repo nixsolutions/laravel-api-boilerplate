@@ -29,4 +29,25 @@ class ForgotPasswordController extends Controller
     {
         $this->middleware('guest');
     }
+
+    /**
+     * @SWG\Post(path="/password/forgot",
+     *   tags={"User actions"},
+     *   summary="Perform user password forgot",
+     *   description="forgot user password",
+     *   produces={"application/json"},
+     *   consumes={"application/json"},
+     *     @SWG\Parameter(
+     *     in="body",
+     *     name="forgot password object",
+     *     description="JSON Object which forgot user password",
+     *     required=true,
+     *     @SWG\Schema(
+     *         type="object",
+     *         @SWG\Property(property="email", type="string", example="user@user.com")
+     *     )
+     *   ),
+     *   @SWG\Response(response="200", description="Return message")
+     * )
+     */
 }

@@ -29,7 +29,4 @@ Route::group(['prefix' => 'v1'], function () {
             return response()->json(['message' => 'authenticated']);
         });
     });
-
-
-
 });
