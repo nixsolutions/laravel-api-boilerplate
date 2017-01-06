@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\JsonApi\Users\Hydrator;
+use App\JsonApi\Users\Search;
 use App\Models\User;
 use CloudCreativity\JsonApi\Contracts\Http\Requests\RequestInterface as JsonApiRequest;
 use CloudCreativity\LaravelJsonApi\Http\Controllers\EloquentController;
@@ -14,14 +15,15 @@ class UsersController extends EloquentController
 {
     /**
      * EloquentController constructor.
+     *
      * @param User $model
      * @param Hydrator|null $hydrator
-     * @param SearchAll|null $search
+     * @param Search|null $search
      */
     public function __construct(
         User $model,
         Hydrator $hydrator = null,
-        SearchAll $search = null
+        Search $search = null
     ) {
         parent::__construct($model, $hydrator, $search);
     }
