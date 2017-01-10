@@ -55,8 +55,8 @@ class LoginController extends Controller
      *     required=true,
      *     @SWG\Schema(
      *         type="object",
-     *         @SWG\Property(property="email", type="string", example="user@user.com"),
-     *         @SWG\Property(property="password", type="string", example="12345678"),
+     *         @SWG\Property(property="email", type="string", example="user@mail.com"),
+     *         @SWG\Property(property="password", type="string", example="password"),
      *     )
      *   ),
      *   @SWG\Response(response="200", description="Return token or error message")

@@ -57,17 +57,17 @@ class User extends Model implements AuthenticatableUserContract, Authenticatable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function teams()
     {
-        return $this->belongsToMany(Team::class);
+        return $this->belongsToMany(Team::class, 'membership', 'user_id', 'team_id');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function role()
+    public function roles()
     {
         return $this->belongsToMany(Role::class);
     }

@@ -2,14 +2,20 @@
 
 namespace App\JsonApi\Users;
 
-use App\Models\Team;
 use CloudCreativity\LaravelJsonApi\Search\AbstractSearch;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 
 class Search extends AbstractSearch
 {
+    /**
+     * @var int
+     */
+    protected $maxPerPage = 25;
+
     /**
      * @param Builder $builder
      * @param Collection $filters
@@ -18,18 +24,16 @@ class Search extends AbstractSearch
     {
         $user = Auth::user();
 
-        if ($user && !$user->hasRole('admin')) {
-            $memberships = Team::leftjoin('membership', 'teams.id', 'membership.team_id')
-                ->where('membership.user_id', $user->id)
-                ->get();
-
-            $teamsIds = $memberships->map(function ($membership) {
-                return $membership->team_id;
-            });
+        if (!$user->hasRole('admin')) {
+            $teamsIds = $user->teams->pluck('id')->toArray();
 
             $builder
                 ->leftJoin('membership', 'users.id', 'membership.user_id')
                 ->whereIn('team_id', $teamsIds);
+
+            if ($filters->has('name')) {
+                $builder->where('name', 'like', '%' . $filters->get('name') . '%');
+            }
         }
     }
 
