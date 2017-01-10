@@ -4,10 +4,8 @@ namespace App\JsonApi\Users;
 
 use CloudCreativity\LaravelJsonApi\Search\AbstractSearch;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
 
 class Search extends AbstractSearch
 {
