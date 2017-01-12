@@ -1,11 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\WebAuth;
 
 use App\Models\User;
-use Auth;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\Request;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -53,7 +50,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed'
+            'password' => 'required|min:6|confirmed',
         ]);
     }
 
@@ -68,48 +65,17 @@ class RegisterController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password'])
+            'password' => bcrypt($data['password']),
         ]);
     }
 
     /**
-     * Handle a registration request for the application.
+     * Render register form
      *
-     * @SWG\Post(path="/register",
-     *   tags={"User actions"},
-     *   summary="Perform user registration",
-     *   description="register form data validate and save",
-     *   produces={"application/json"},
-     *   consumes={"application/json"},
-     *     @SWG\Parameter(
-     *     in="body",
-     *     name="register object",
-     *     description="JSON Object which register user",
-     *     required=true,
-     *     @SWG\Schema(
-     *         type="object",
-     *         @SWG\Property(property="email", type="string", example="user@user.com"),
-     *         @SWG\Property(property="password", type="string", example="12345678"),
-     *         @SWG\Property(property="password_confirmation", type="string", example="12345678"),
-     *         @SWG\Property(property="name", type="string", example="Steven")
-     *     )
-     *   ),
-     *   @SWG\Response(response="200", description="Return message")
-     * )
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function register(Request $request)
+    public function index()
     {
-        $this->validator($request->all())->validate();
-
-        event(new Registered($user = $this->create($request->all())));
-
-        Auth::guard('api')->login($user);
-
-        return response()->json([
-            'message' => trans('Registered successfully. Please verify your email'),
-        ]);
+        return view('auth.register');
     }
 }

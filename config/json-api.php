@@ -45,7 +45,7 @@ return [
             'url-prefix' => '/api/v1',
             'supported-ext' => null,
             'paging' => [
-                'page' => null,
+                'page' => 'number',
                 'per-page' => null,
             ],
             'paging-meta' => [

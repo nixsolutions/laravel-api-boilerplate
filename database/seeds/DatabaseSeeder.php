@@ -1,6 +1,11 @@
 <?php
 
+use App\Seeds\TeamsTableSeeder;
+use App\Seeds\TeamUsersTableSeeder;
 use Illuminate\Database\Seeder;
+use App\Seeds\RolesTableSeeder;
+use App\Seeds\UsersTableSeeder;
+use App\Seeds\UsersRolesTableSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,6 +16,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+         $this->call(RolesTableSeeder::class);
+         $this->call(UsersTableSeeder::class);
+         $this->call(UsersRolesTableSeeder::class);
+         $this->call(TeamsTableSeeder::class);
+         $this->call(TeamUsersTableSeeder::class);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -55,8 +56,8 @@ class LoginController extends Controller
      *     required=true,
      *     @SWG\Schema(
      *         type="object",
-     *         @SWG\Property(property="email", type="string", example="user@user.com"),
-     *         @SWG\Property(property="password", type="string", example="12345678"),
+     *         @SWG\Property(property="email", type="string", example="user@mail.com"),
+     *         @SWG\Property(property="password", type="string", example="password"),
      *     )
      *   ),
      *   @SWG\Response(response="200", description="Return token or error message")
@@ -78,7 +79,7 @@ class LoginController extends Controller
             return $this->sendLockoutResponse($request);
         }
 
-        if ($token = $this->guard()->attempt($this->credentials($request))) {
+        if ($token = Auth::guard('api')->attempt($this->credentials($request))) {
             return $this->sendLoginResponse($request, $token);
         }
 

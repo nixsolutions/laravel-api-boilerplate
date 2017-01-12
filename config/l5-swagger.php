@@ -229,7 +229,7 @@ return [
         */
 
         'request' => [
-            'Content-Type' => 'application/json',
+            'Content-Type' => 'application/vnd.api+json',
             'Accept' => 'application/json'
         ],
 

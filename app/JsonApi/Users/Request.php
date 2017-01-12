@@ -26,6 +26,12 @@ class Request extends RequestHandler
      */
     protected $allowedFilteringParameters = [
         'id',
+        'name'
+    ];
+
+    protected $allowedSortParameters = [
+        'name',
+        'email'
     ];
 }
 
