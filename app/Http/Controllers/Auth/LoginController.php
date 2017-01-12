@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -78,7 +79,7 @@ class LoginController extends Controller
             return $this->sendLockoutResponse($request);
         }
 
-        if ($token = $this->guard()->attempt($this->credentials($request))) {
+        if ($token = Auth::guard('api')->attempt($this->credentials($request))) {
             return $this->sendLoginResponse($request, $token);
         }
 
