@@ -6,7 +6,6 @@ use CloudCreativity\JsonApi\Http\Requests\RequestHandler;
 
 class Request extends RequestHandler
 {
-
     /**
      * @var array
      */
@@ -26,12 +25,11 @@ class Request extends RequestHandler
      */
     protected $allowedFilteringParameters = [
         'id',
-        'name'
+        'name',
     ];
 
     protected $allowedSortParameters = [
         'name',
-        'email'
+        'email',
     ];
 }
-

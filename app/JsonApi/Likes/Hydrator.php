@@ -6,7 +6,6 @@ use CloudCreativity\LaravelJsonApi\Hydrator\EloquentHydrator;
 
 class Hydrator extends EloquentHydrator
 {
-
     /**
      * @var array
      */
@@ -20,6 +19,4 @@ class Hydrator extends EloquentHydrator
     protected $relationships = [
         //
     ];
-
 }
-
