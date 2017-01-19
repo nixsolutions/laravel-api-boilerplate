@@ -2,7 +2,7 @@
 
 use CloudCreativity\JsonApi\Document\Error;
 use CloudCreativity\LaravelJsonApi\Validators\ValidatorErrorFactory as V;
-use \Illuminate\Auth\AuthenticationException;
+use Illuminate\Auth\AuthenticationException;
 
 return [
 

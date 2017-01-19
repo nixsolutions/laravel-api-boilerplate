@@ -2,6 +2,7 @@
 
 namespace App\Seeds;
 
+use DB;
 use Illuminate\Database\Seeder;
 
 /**
@@ -18,7 +19,7 @@ class TeamsTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('teams')->insert([
+        DB::table('teams')->insert([
             [
                 'id' => 1,
                 'name' => 'Team1'

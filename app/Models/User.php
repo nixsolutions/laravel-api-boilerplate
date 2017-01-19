@@ -9,11 +9,14 @@ use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject as AuthenticatableUserContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Model implements AuthenticatableUserContract, Authenticatable, CanResetPasswordContract
 {
-    use \Illuminate\Auth\Authenticatable, Authorizable, CanResetPassword, Notifiable, EntrustUserTrait {
+    use AuthenticatableTrait, Authorizable, CanResetPassword, Notifiable, EntrustUserTrait {
         EntrustUserTrait::can insteadof Authorizable;
 
     }
@@ -24,7 +27,7 @@ class User extends Model implements AuthenticatableUserContract, Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password'
+        'name', 'email', 'password',
     ];
 
     /**
@@ -51,13 +54,13 @@ class User extends Model implements AuthenticatableUserContract, Authenticatable
     {
         return [
             'user' => [
-                'id' => $this->id
-             ]
+                'id' => $this->id,
+            ],
         ];
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function teams()
     {
@@ -65,7 +68,7 @@ class User extends Model implements AuthenticatableUserContract, Authenticatable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function roles()
     {
