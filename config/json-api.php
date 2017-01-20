@@ -40,21 +40,21 @@ return [
     | contracts. If any values are `null`, defaults will be used.
     |
     */
-    'namespaces' => [
+    'namespaces'       => [
         'v1' => [
-            'url-prefix' => '/api/v1',
+            'url-prefix'    => '/api/v1',
             'supported-ext' => null,
-            'paging' => [
-                'page' => 'number',
+            'paging'        => [
+                'page'     => 'number',
                 'per-page' => null,
             ],
-            'paging-meta' => [
+            'paging-meta'   => [
                 'current-page' => null,
-                'per-page' => null,
-                'first-item' => null,
-                'last-item' => null,
-                'total' => null,
-                'last-page' => null,
+                'per-page'     => null,
+                'first-item'   => null,
+                'last-item'    => null,
+                'total'        => null,
+                'last-page'    => null,
             ],
         ],
     ],
@@ -73,7 +73,7 @@ return [
     | then an error will be sent to the client as per the JSON-API spec.
     |
     */
-    'codec-matcher' => [
+    'codec-matcher'    => [
         'encoders' => [
             'application/vnd.api+json',
             'text/plain' => JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES,
@@ -97,14 +97,14 @@ return [
     | Schema sets are a mapping of the record object class to the schema class
     | that is responsible for encoding it.
     */
-    'schemas' => [
+    'schemas'          => [
         'defaults' => [
-            App\Models\Team::class => App\JsonApi\Teams\Schema::class,
+            App\Models\Team::class  => App\JsonApi\Teams\Schema::class,
             App\Models\Skill::class => App\JsonApi\Skills\Schema::class,
-            App\Models\Like::class => App\JsonApi\Likes\Schema::class,
-            App\Models\User::class => App\JsonApi\Users\Schema::class,
+            App\Models\Like::class  => App\JsonApi\Likes\Schema::class,
+            App\Models\User::class  => App\JsonApi\Users\Schema::class,
         ],
-        'v1' => [],
+        'v1'       => [],
     ],
 
     /*
@@ -124,11 +124,11 @@ return [
     | by default.
     */
     'eloquent-adapter' => [
-        'map' => [
-            'teams' => App\Models\Team::class,
+        'map'     => [
+            'teams'  => App\Models\Team::class,
             'skills' => App\Models\Skill::class,
-            'likes' => App\Models\Like::class,
-            'users' => App\Models\User::class,
+            'likes'  => App\Models\Like::class,
+            'users'  => App\Models\User::class,
         ],
         'columns' => [],
     ],
@@ -147,7 +147,7 @@ return [
     | your custom adapters here. These will be created via the service
     | container, so you can type-hint dependencies in an adapter's constructor.
     */
-    'adapters' => [],
+    'adapters'         => [],
 
     /*
     |--------------------------------------------------------------------------
@@ -183,9 +183,9 @@ return [
     | override it; if the setting is `false`, then `--eloquent` is the override.
     |
     */
-    'generator' => [
-        'namespace' => 'JsonApi',
-        'by-resource' => true,
+    'generator'        => [
+        'namespace'    => 'JsonApi',
+        'by-resource'  => true,
         'use-eloquent' => true,
     ],
 ];

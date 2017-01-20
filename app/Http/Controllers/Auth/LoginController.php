@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use Auth;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use phpDocumentor\Reflection\Types\String_;
 
 class LoginController extends Controller
 {
@@ -63,8 +64,9 @@ class LoginController extends Controller
      *   @SWG\Response(response="200", description="Return token or error message")
      * )
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     *
+     * @return Response
      */
     public function login(Request $request)
     {
@@ -94,7 +96,8 @@ class LoginController extends Controller
     /**
      * @param Request $request
      * @param string $token
-     * @return \Illuminate\Http\JsonResponse
+     *
+     * @return JsonResponse
      */
     protected function sendLoginResponse(Request $request, $token)
     {
@@ -107,7 +110,8 @@ class LoginController extends Controller
      * @param Request $request
      * @param $user
      * @param string $token
-     * @return \Illuminate\Http\JsonResponse
+     *
+     * @return JsonResponse
      */
     protected function authenticated(Request $request, $user, $token)
     {
@@ -134,7 +138,7 @@ class LoginController extends Controller
      *   @SWG\Response(response="200", description="Return token or error message")
      * )
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function logout()
     {

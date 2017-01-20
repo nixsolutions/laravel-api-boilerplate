@@ -6,6 +6,7 @@ use App\JsonApi\Users\Hydrator;
 use App\JsonApi\Users\Search;
 use App\Models\User;
 use CloudCreativity\LaravelJsonApi\Http\Controllers\EloquentController;
+use App\JsonApi\Users\Request as UsersRequest;
 
 class UsersController extends EloquentController
 {
@@ -26,7 +27,7 @@ class UsersController extends EloquentController
 
     protected function getRequestHandler()
     {
-        return \App\JsonApi\Users\Request::class;
+        return UsersRequest::class;
     }
 
     /**

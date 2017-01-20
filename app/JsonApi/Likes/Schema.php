@@ -8,7 +8,6 @@ use CloudCreativity\LaravelJsonApi\Schema\EloquentSchema;
 
 class Schema extends EloquentSchema
 {
-
     /**
      * @var string
      */
@@ -18,7 +17,7 @@ class Schema extends EloquentSchema
      * @var array
      */
     protected $attributes = [
-        'comment'
+        'comment',
     ];
 
     /**
@@ -33,30 +32,31 @@ class Schema extends EloquentSchema
      * @param object $resource
      * @param bool $isPrimary
      * @param array $includeRelationships
+     *
      * @return array
      */
-    public function getRelationships($resource, $isPrimary, array $includeRelationships)
+    public function getRelationships($resource, bool $isPrimary, array $includeRelationships)
     {
         if (!$resource instanceof Like) {
             throw new RuntimeException('Expecting a Like model.');
         }
+
         return [
             'liker' => [
-                self::SHOW_SELF => true,
+                self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::DATA => $resource->liker
+                self::DATA         => $resource->liker,
             ],
             'liked' => [
-                self::SHOW_SELF => true,
+                self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::DATA => $resource->liked
+                self::DATA         => $resource->liked,
             ],
             'skill' => [
-                self::SHOW_SELF => true,
+                self::SHOW_SELF    => true,
                 self::SHOW_RELATED => true,
-                self::DATA => $resource->skill
+                self::DATA         => $resource->skill,
             ],
         ];
     }
 }
-

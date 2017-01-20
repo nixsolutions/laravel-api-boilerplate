@@ -10,7 +10,7 @@ return [
         |--------------------------------------------------------------------------
         */
 
-        'title' => 'LevelUP Swagget UI',
+        'title' => 'Laravel API Boilerplate Swagger UI',
 
         /*
         |--------------------------------------------------------------------------
@@ -78,7 +78,7 @@ return [
         |--------------------------------------------------------------------------
         */
 
-        'docs' => 'docs',
+        'docs'       => 'docs',
 
         /*
         |--------------------------------------------------------------------------
@@ -86,7 +86,7 @@ return [
         |--------------------------------------------------------------------------
          */
         'middleware' => [
-            'api' => ['web'],
+            'api'  => ['web'],
             'docs' => [],
         ],
 
@@ -190,7 +190,7 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'docExpansion' => env('L5_SWAGGER_DOC_EXPANSION', 'none'),
+    'docExpansion'       => env('L5_SWAGGER_DOC_EXPANSION', 'none'),
 
     /*
     |--------------------------------------------------------------------------
@@ -210,7 +210,7 @@ return [
 
     //'validatorUrl' => null,
 
-    'headers' => [
+    'headers'   => [
 
         /*
         |--------------------------------------------------------------------------
@@ -230,7 +230,7 @@ return [
 
         'request' => [
             'Content-Type' => 'application/vnd.api+json',
-            'Accept' => 'application/json'
+            'Accept'       => 'application/json',
         ],
 
     ],
@@ -241,8 +241,8 @@ return [
     |--------------------------------------------------------------------------
      */
     'constants' => [
-        'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', 'http://homestead.app'),
-        'L5_SWAGGER_CONST_BASE_PATH' => env('L5_SWAGGER_BASE_PATH', '/api/v1')
+        'L5_SWAGGER_CONST_HOST'      => env('L5_SWAGGER_CONST_HOST', 'http://homestead.app'),
+        'L5_SWAGGER_CONST_BASE_PATH' => env('L5_SWAGGER_BASE_PATH', '/api/v1'),
     ],
 
 ];

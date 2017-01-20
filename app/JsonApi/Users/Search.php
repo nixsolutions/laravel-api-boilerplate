@@ -37,6 +37,7 @@ class Search extends AbstractSearch
 
     /**
      * @param Collection $filters
+     *
      * @return bool
      */
     protected function isSearchOne(Collection $filters)

@@ -6,11 +6,13 @@ use App\JsonApi\Skills\Hydrator;
 use App\Models\Skill;
 use CloudCreativity\LaravelJsonApi\Http\Controllers\EloquentController;
 use CloudCreativity\LaravelJsonApi\Search\SearchAll;
+use App\JsonApi\Skills\Request as SkillsRequest;
 
 class SkillsController extends EloquentController
 {
     /**
      * EloquentController constructor.
+     *
      * @param Skill $model
      * @param Hydrator|null $hydrator
      * @param SearchAll|null $search
@@ -25,6 +27,6 @@ class SkillsController extends EloquentController
 
     protected function getRequestHandler()
     {
-        return \App\JsonApi\Skills\Request::class;
+        return SkillsRequest::class;
     }
 }

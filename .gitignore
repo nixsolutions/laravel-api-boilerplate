@@ -7,3 +7,4 @@ Homestead.yaml
 .env
 .vagrant
 storage/api-docs/
+_ide_helper.php

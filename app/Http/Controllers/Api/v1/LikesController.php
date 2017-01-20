@@ -6,11 +6,13 @@ use App\JsonApi\Likes\Hydrator;
 use App\Models\Like;
 use CloudCreativity\LaravelJsonApi\Http\Controllers\EloquentController;
 use CloudCreativity\LaravelJsonApi\Search\SearchAll;
+use App\JsonApi\Likes\Request as LikesRequest;
 
 class LikesController extends EloquentController
 {
     /**
      * EloquentController constructor.
+     *
      * @param Like $model
      * @param Hydrator|null $hydrator
      * @param SearchAll|null $search
@@ -25,6 +27,6 @@ class LikesController extends EloquentController
 
     protected function getRequestHandler()
     {
-        return \App\JsonApi\Likes\Request::class;
+        return LikesRequest::class;
     }
 }

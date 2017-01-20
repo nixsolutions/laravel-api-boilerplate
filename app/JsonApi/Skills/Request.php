@@ -6,12 +6,11 @@ use CloudCreativity\JsonApi\Http\Requests\RequestHandler;
 
 class Request extends RequestHandler
 {
-
     /**
      * @var array
      */
     protected $hasOne = [
-        'author'
+        'author',
     ];
 
     /**
@@ -28,4 +27,3 @@ class Request extends RequestHandler
         'id',
     ];
 }
-

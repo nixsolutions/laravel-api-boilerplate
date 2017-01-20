@@ -6,7 +6,6 @@ use CloudCreativity\LaravelJsonApi\Schema\EloquentSchema;
 
 class Schema extends EloquentSchema
 {
-
     /**
      * @var string
      */
@@ -18,8 +17,7 @@ class Schema extends EloquentSchema
     protected $attributes = [
         'name',
         'email',
-        'role'
-
+        'role',
     ];
 
     /**
@@ -30,4 +28,3 @@ class Schema extends EloquentSchema
         return self::RESOURCE_TYPE;
     }
 }
-
