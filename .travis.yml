@@ -13,14 +13,12 @@ env:
     - DB_USERNAME=root
     - DB_PASSWORD=
 
-install:
-  - mysql -e 'create database homestead;'
+install:  
   - travis_retry composer install --no-interaction --prefer-source
 
 before_script:
-  - mkdir -p 775 /home/travis/build/laracmf/laracmf/build/logs  
-  - travis_retry php artisan vendor:publish  
-  - php artisan key:generate
+  - mkdir -p 775 /home/travis/build/laracmf/laracmf/build/logs
+  - php artisan jwt:secret
   - php artisan migrate
   - php artisan db:seed
 
