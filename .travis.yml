@@ -17,8 +17,7 @@ install:
   - travis_retry composer install --no-interaction --prefer-source
 
 before_script:
-  - mkdir -p 775 /home/travis/build/laracmf/laracmf/build/logs
-  - php artisan jwt:secret
+  - mkdir -p 775 /home/travis/build/laracmf/laracmf/build/logs  
   - php artisan migrate
   - php artisan db:seed
 
