@@ -13,8 +13,7 @@ env:
     - DB_USERNAME=root
     - DB_PASSWORD=
 
-install:
-  - mysql -e 'create database homestead;'
+install:  
   - travis_retry composer install --no-interaction --prefer-source
 
 before_script:
