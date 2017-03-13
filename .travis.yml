@@ -1,0 +1,39 @@
+language: php
+
+php:
+  - 7.0
+
+sudo: false
+
+env:
+  global:
+    - DB_HOST=localhost
+    - DB_CONNECTION=mysql
+    - DB_DATABASE=homestead
+    - DB_USERNAME=root
+    - DB_PASSWORD=
+
+install:
+  - mysql -e 'create database homestead;'
+  - travis_retry composer install --no-interaction --prefer-source
+
+before_script:
+  - mkdir -p 775 /home/travis/build/laracmf/laracmf/build/logs
+  - cp config/env/.env.travis .env
+  - travis_retry php artisan vendor:publish
+  - travis_retry gulp --production
+  - php artisan key:generate
+  - php artisan migrate
+  - php artisan db:seed
+
+script:  
+  - vendor/bin/phpunit --coverage-clover /home/travis/build/laracmf/laracmf/build/logs/clover.xml;    
+
+after_script:
+- php vendor/bin/coveralls -v
+- wget https://scrutinizer-ci.com/ocular.phar
+- php ocular.phar code-coverage:upload --format=php-clover /home/travis/build/laracmf/laracmf/build/logs/clover.xml;
+
+notifications:
+  email: false
+
