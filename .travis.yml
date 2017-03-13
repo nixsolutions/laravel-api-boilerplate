@@ -18,10 +18,8 @@ install:
   - travis_retry composer install --no-interaction --prefer-source
 
 before_script:
-  - mkdir -p 775 /home/travis/build/laracmf/laracmf/build/logs
-  - cp config/env/.env.travis .env
-  - travis_retry php artisan vendor:publish
-  - travis_retry gulp --production
+  - mkdir -p 775 /home/travis/build/laracmf/laracmf/build/logs  
+  - travis_retry php artisan vendor:publish  
   - php artisan key:generate
   - php artisan migrate
   - php artisan db:seed
