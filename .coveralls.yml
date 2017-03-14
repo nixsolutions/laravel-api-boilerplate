@@ -1,3 +1,3 @@
 service_name: travis-ci
-coverage_clover: /home/travis/build/laracmf/laracmf/build/logs/clover.xml
-json_path: /home/travis/build/laracmf/laracmf/build/logs/coveralls-upload.json
+coverage_clover: /home/travis/build/nixsolutions/laravel-api-boilerplate/build/logs/clover.xml
+json_path: /home/travis/build/nixsolutions/laravel-api-boilerplate/build/logs/coveralls-upload.json
