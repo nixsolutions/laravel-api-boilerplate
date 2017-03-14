@@ -25,14 +25,5 @@ before_script:
   - php artisan migrate
   - php artisan db:seed
 
-script:  
-  - vendor/bin/phpunit --coverage-clover /home/travis/build/nixsolutions/laravel-api-boilerplate/build/logs/clover.xml;
-
-after_script:
-- php vendor/bin/coveralls -v
-- wget https://scrutinizer-ci.com/ocular.phar
-- php ocular.phar code-coverage:upload --format=php-clover /home/travis/build/nixsolutions/laravel-api-boilerplate/build/logs/clover.xml;
-
 notifications:
   email: false
-
