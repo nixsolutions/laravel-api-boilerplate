@@ -115,8 +115,18 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user, $token)
     {
+        $user = Auth::guard('api')->user();
+
         return response()->json([
-            'token' => $token,
+            'data' => [
+                'type' => 'token',
+                'attributes' => [
+                    'access_token' => $token,
+                    'token_type' => 'Bearer',
+                    'email' => $user->email,
+                    'id' => $user->id
+                ]
+            ]
         ]);
     }
 
