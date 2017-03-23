@@ -155,7 +155,6 @@ class LoginController extends Controller
         $this->guard()->logout();
 
         return response()->json([
-            'message' => 'Good bye!'
-        ]);
+        ], 200);
     }
 }
