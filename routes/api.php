@@ -12,22 +12,24 @@
 */
 
 Route::group(['prefix' => 'v1'], function () {
-    Route::post('login', 'Auth\LoginController@login');
-    Route::post('register', 'Auth\RegisterController@register');
+    Route::group(['namespace' => 'Api\v1\Auth'], function () {
+        Route::post('login', 'LoginController@login');
+        Route::post('register', 'RegisterController@register');
 
-    Route::group([
-        'middleware' => 'auth:api',
-    ], function () {
+        Route::group([
+            'middleware' => 'auth:api',
+        ], function () {
 
-        // Authentication Routes...
-        Route::get('logout', 'Auth\LoginController@logout');
-        Route::group(['prefix' => 'password'], function () {
-            Route::post('reset', 'Auth\ResetPasswordController@reset');
-            Route::post('forgot', 'Auth\ForgotPasswordController@sendResetLinkEmail');
-        });
+            // Authentication Routes...
+            Route::get('logout', 'LoginController@logout');
+            Route::group(['prefix' => 'password'], function () {
+                Route::post('reset', 'ResetPasswordController@reset');
+                Route::post('forgot', 'ForgotPasswordController@sendResetLinkEmail');
+            });
 
-        Route::get('/test', function () {
-            return response()->json(['message' => 'authenticated']);
+            Route::get('/test', function () {
+                return response()->json(['message' => 'authenticated']);
+            });
         });
     });
 });
