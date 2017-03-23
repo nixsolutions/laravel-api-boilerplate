@@ -60,14 +60,6 @@ class User extends Model implements AuthenticatableUserContract, Authenticatable
     }
 
     /**
-     * @return HasMany
-     */
-    public function teams()
-    {
-        return $this->belongsToMany(Team::class, 'membership', 'user_id', 'team_id');
-    }
-
-    /**
      * @return BelongsToMany
      */
     public function roles()

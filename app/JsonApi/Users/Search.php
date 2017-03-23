@@ -20,19 +20,7 @@ class Search extends AbstractSearch
      */
     protected function filter(Builder $builder, Collection $filters)
     {
-        $user = Auth::user();
 
-        if (!$user->hasRole('admin')) {
-            $teamsIds = $user->teams->pluck('id')->toArray();
-
-            $builder
-                ->leftJoin('membership', 'users.id', 'membership.user_id')
-                ->whereIn('team_id', $teamsIds);
-
-            if ($filters->has('name')) {
-                $builder->where('name', 'like', '%' . $filters->get('name') . '%');
-            }
-        }
     }
 
     /**
