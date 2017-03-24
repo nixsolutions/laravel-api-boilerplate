@@ -13,23 +13,27 @@
 
 Route::group(['prefix' => 'v1'], function () {
     Route::group(['namespace' => 'Api\v1\Auth'], function () {
-        Route::post('login', 'LoginController@login');
-        Route::post('register', 'RegisterController@register');
+        Route::post('login', [
+            'as' => 'login', 'uses' => 'LoginController@login'
+        ]);
+        Route::post('login-via-facebook', 'LoginController@loginViaFacebook');
 
-        Route::group([
-            'middleware' => 'auth:api',
-        ], function () {
+        Route::group(['prefix' => 'register', 'as' => 'register.'], function () {
+            Route::post('', 'RegisterController@register')->name('index');
+            Route::post('verify', 'RegisterController@verify')->name('verify');
+            Route::post('resend-activation-email', 'RegisterController@resendActivationEmail');
+        });
 
-            // Authentication Routes...
+        Route::group(['middleware' => 'auth:api'], function () {
             Route::get('logout', 'LoginController@logout');
-            Route::group(['prefix' => 'password'], function () {
-                Route::post('reset', 'ResetPasswordController@reset');
-                Route::post('forgot', 'ForgotPasswordController@sendResetLinkEmail');
-            });
+            Route::post('password/change', [
+                'as' => 'change-password', 'uses' => 'ChangePasswordController@change'
+            ]);
+        });
 
-            Route::get('/test', function () {
-                return response()->json(['message' => 'authenticated']);
-            });
+        Route::group(['prefix' => 'password', 'as' => 'password.'], function () {
+            Route::post('forgot', 'ForgotPasswordController@sendResetLinkEmail')->name('forgot');
+            Route::post('reset', 'ResetPasswordController@reset')->name('reset');
         });
     });
 });
