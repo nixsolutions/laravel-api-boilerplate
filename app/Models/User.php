@@ -27,7 +27,7 @@ class User extends Model implements AuthenticatableUserContract, Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'activated'
     ];
 
     /**
@@ -65,5 +65,13 @@ class User extends Model implements AuthenticatableUserContract, Authenticatable
     public function roles()
     {
         return $this->belongsToMany(Role::class);
+    }
+
+    /**
+     * Get the activation record associated with the user.
+     */
+    public function activation()
+    {
+        return $this->hasOne(Activation::class);
     }
 }

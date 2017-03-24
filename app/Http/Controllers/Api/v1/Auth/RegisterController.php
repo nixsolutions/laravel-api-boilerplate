@@ -2,16 +2,21 @@
 
 namespace App\Http\Controllers\Api\v1\Auth;
 
+use App\Helpers\Interfaces\ResponseCodesInterface;
+use App\Helpers\JsonApiResponseHelper;
 use App\Models\User;
 use Auth;
+use App\Services\ActivationService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\JsonResponse;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
-class RegisterController extends Controller
+class RegisterController extends Controller implements ResponseCodesInterface
 {
     /*
     |--------------------------------------------------------------------------
@@ -24,7 +29,12 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
+    use RegistersUsers, JsonApiResponseHelper;
+
+    /**
+     * @var ActivationService
+     */
+    private $activationService;
 
     /**
      * Where to redirect users after login / registration.
@@ -34,13 +44,14 @@ class RegisterController extends Controller
     protected $redirectTo = '/home';
 
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * RegisterController constructor.
+     * @param ActivationService $activationService
      */
-    public function __construct()
+    public function __construct(ActivationService $activationService)
     {
         $this->middleware('guest');
+
+        $this->activationService = $activationService;
     }
 
     /**
@@ -68,11 +79,13 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password'])
         ]);
+
+        return $user;
     }
 
     /**
@@ -102,7 +115,7 @@ class RegisterController extends Controller
      *
      * @param Request $request
      *
-     * @return Response
+     * @return JsonResponse
      */
     public function register(Request $request)
     {
@@ -116,4 +129,66 @@ class RegisterController extends Controller
             'message' => trans('Registered successfully. Please verify your email'),
         ]);
     }
+
+    /**
+     * Verify user account.
+     *
+     * @SWG\Post(path="/register/verify",
+     *   tags={"User actions"},
+     *   summary="Verify user's email",
+     *   description="register form data validate and save",
+     *   produces={"application/json"},
+     *   consumes={"application/json"},
+     *     @SWG\Parameter(
+     *     in="body",
+     *     name="verify object",
+     *     description="JSON Object which verify email",
+     *     required=true,
+     *     @SWG\Schema(
+     *         type="object",
+     *         @SWG\Property(property="hash", type="string", example="12345678")
+     *     )
+     *   ),
+     *   @SWG\Response(response="200", description="Return message")
+     * )
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function verify(Request $request)
+    {
+        $user = $this->activationService->verifyEmail($request->get('hash'));
+
+        if ($user) {
+            $token = JWTAuth::fromUser($user);
+
+            return $this->sendLoginResponse($token, $user);
+        }
+
+        $error = ['email' => ['Wrong activation hash']];
+
+        return $this->sendFailedResponse($error, self::HTTP_CODE_BAD_REQUEST);
+    }
+
+    /**
+     * @param string $token
+     *
+     * @return JsonResponse
+     */
+    protected function sendLoginResponse($token, $user)
+    {
+        return response()->json([
+            'data' => [
+                'type' => 'token',
+                'attributes' => [
+                    'access_token' => $token,
+                    'token_type' => 'Bearer',
+                    'email' => $user->email,
+                    'id' => $user->id
+                ]
+            ]
+        ]);
+    }
+
 }
