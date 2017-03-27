@@ -52,7 +52,7 @@ class ForgotPasswordController extends Controller implements ResponseCodesInterf
      *     required=true,
      *     @SWG\Schema(
      *         type="object",
-     *         @SWG\Property(property="email", type="string", example="user@user.com")
+     *         @SWG\Property(property="email", type="string", example="user@mail.com")
      *     )
      *   ),
      *   @SWG\Response(response="200", description="Return message")

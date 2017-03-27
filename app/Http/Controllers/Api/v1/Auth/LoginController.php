@@ -133,7 +133,10 @@ class LoginController extends Controller
     protected function sendFailedLoginResponse(Request $request)
     {
         return response()->json([
-            'message' => 'Email or password are wrong',
+            'errors' => [
+                'status' => 401,
+                'detail' => 'Email or password are wrong',
+            ],
         ], 401);
     }
 
