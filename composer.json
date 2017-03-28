@@ -22,7 +22,6 @@
         "phpunit/phpunit": "~5.0",
         "symfony/css-selector": "3.1.*",
         "symfony/dom-crawler": "3.1.*",
-        "way/generators": "3.0.3",
         "xethron/migrations-generator": "^2.0",
         "satooshi/php-coveralls": "dev-master"
     },
