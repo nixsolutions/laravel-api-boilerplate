@@ -22,6 +22,7 @@
         "phpunit/phpunit": "~5.0",
         "symfony/css-selector": "3.1.*",
         "symfony/dom-crawler": "3.1.*",
+        "laracasts/generators": "^1.1",
         "xethron/migrations-generator": "^2.0",
         "satooshi/php-coveralls": "dev-master"
     },
