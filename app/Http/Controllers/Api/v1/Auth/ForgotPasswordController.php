@@ -78,9 +78,11 @@ class ForgotPasswordController extends Controller implements ResponseCodesInterf
         }
 
         $errors = [
-            'email' => [
-                'Entered email is not found. Please make sure you are using existing email address and try again.'
+            [
+                'type' => 'email',
+                'details' => 'Entered email is not found. Please make sure you are using existing email address and try again.'
             ]
+
         ];
 
         return $this->sendFailedResponse($errors, self::HTTP_CODE_NOT_FOUND);

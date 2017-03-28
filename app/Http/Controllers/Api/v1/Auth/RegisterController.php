@@ -119,15 +119,16 @@ class RegisterController extends Controller implements ResponseCodesInterface
      */
     public function register(Request $request)
     {
-        $this->validator($request->all())->validate();
+        $errors = $this->validator($request->all())->errors();
 
-        event(new Registered($user = $this->create($request->all())));
+        if (!empty($errors->all())) {
+            return $this->sendFailedResponse($errors->toArray(), self::HTTP_CODE_BAD_REQUEST);
+        } else {
+            event(new Registered($user = $this->create($request->all())));
 
-        Auth::guard('api')->login($user);
+            return $this->sendSuccessResponse();
+        }
 
-        return response()->json([
-            'message' => trans('Registered successfully. Please verify your email'),
-        ]);
     }
 
     /**
