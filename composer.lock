@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3f75db96996e9dde0eb8c206bacc828d",
-    "content-hash": "1c50dbd6c20439d905e8785dfad89807",
+    "hash": "52c812d3e913b20546aafb0601389fc6",
+    "content-hash": "5183d2a1d52c902c4790ff3f987fbee6",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -3368,16 +3368,16 @@
         },
         {
             "name": "laracasts/generators",
-            "version": "1.1.3",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laracasts/Laravel-5-Generators-Extended.git",
-                "reference": "d6afcc60dff846980393d59f6df2074b8a297b08"
+                "reference": "4e9ce5db9d93475ca27b993a92de3b15090aa139"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laracasts/Laravel-5-Generators-Extended/zipball/d6afcc60dff846980393d59f6df2074b8a297b08",
-                "reference": "d6afcc60dff846980393d59f6df2074b8a297b08",
+                "url": "https://api.github.com/repos/laracasts/Laravel-5-Generators-Extended/zipball/4e9ce5db9d93475ca27b993a92de3b15090aa139",
+                "reference": "4e9ce5db9d93475ca27b993a92de3b15090aa139",
                 "shasum": ""
             },
             "require": {
@@ -3408,7 +3408,7 @@
                 "generators",
                 "laravel"
             ],
-            "time": "2015-12-31 18:44:32"
+            "time": "2017-01-25 15:31:26"
         },
         {
             "name": "mockery/mockery",
@@ -5106,12 +5106,20 @@
             "time": "2017-02-15 21:39:05"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "alias": "1.1.4",
+            "alias_normalized": "1.1.4.0",
+            "version": "9999999-dev",
+            "package": "laracasts/generators"
+        }
+    ],
     "minimum-stability": "stable",
     "stability-flags": {
         "tymon/jwt-auth": 10,
         "zizaco/entrust": 20,
-        "satooshi/php-coveralls": 20
+        "satooshi/php-coveralls": 20,
+        "laracasts/generators": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
