@@ -79,8 +79,9 @@ class ForgotPasswordController extends Controller implements ResponseCodesInterf
 
         $errors = [
             [
-                'type' => 'email',
-                'details' => 'Entered email is not found. Please make sure you are using existing email address and try again.'
+                'status' => 404,
+                'title' => 'Email error',
+                'detail' => 'Entered email is not found. Please make sure you are using existing email address and try again.'
             ]
 
         ];

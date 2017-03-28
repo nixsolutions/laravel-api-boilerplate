@@ -167,7 +167,7 @@ class RegisterController extends Controller implements ResponseCodesInterface
             return $this->sendLoginResponse($token, $user);
         }
 
-        $error = ['email' => ['Wrong activation hash']];
+        $error = ['activation_hash' => ['Wrong activation hash']];
 
         return $this->sendFailedResponse($error, self::HTTP_CODE_BAD_REQUEST);
     }

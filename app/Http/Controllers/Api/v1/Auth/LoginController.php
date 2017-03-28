@@ -124,7 +124,8 @@ class LoginController extends Controller
                     'access_token' => $token,
                     'token_type' => 'Bearer',
                     'email' => $user->email,
-                    'id' => $user->id
+                    'id' => $user->id,
+                    'token' => 'Bearer ' . $token,
                 ]
             ]
         ]);
@@ -135,6 +136,7 @@ class LoginController extends Controller
         return response()->json([
             'errors' => [
                 'status' => 401,
+                'title'  => 'Email or password error',
                 'detail' => 'Email or password are wrong',
             ],
         ], 401);
