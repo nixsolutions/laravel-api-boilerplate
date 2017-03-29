@@ -35,7 +35,7 @@ class PasswordService
                 $this->remindPasswordEmailTemplate,
                 ['hash' => $token, 'email' => $email],
                 function ($message) use ($user) {
-                    $message->to($user->email, $user->usename)->subject('CarSoup');
+                    $message->to($user->email, $user->usename)->subject('Laravel api boilerplate');
                 }
             );
 
