@@ -12,6 +12,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Activation extends Model
 {
+    const EXPIRE_DAYS = 7;
+    const ACTIVATION_HASH_LENGTH = 50;
+
     public $table = 'user_activation';
 
     /**

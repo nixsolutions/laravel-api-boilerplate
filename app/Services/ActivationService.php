@@ -30,7 +30,7 @@ class ActivationService
     {
         $user->activation()->delete();
 
-        $hash = Hash::make(str_random(50));
+        $hash = Hash::make(str_random(Activation::ACTIVATION_HASH_LENGTH));
         $expired = Carbon::now()->addDay();
 
         Activation::insert([
@@ -88,7 +88,7 @@ class ActivationService
      */
     public function deleteOldActivations()
     {
-        $date = Carbon::now()->subDays(7);
+        $date = Carbon::now()->subDays(Activation::EXPIRE_DAYS);
         $activations = Activation::where('expired', '<', $date->toDateTimeString())->get();
 
         if (!$activations->isEmpty()) {
