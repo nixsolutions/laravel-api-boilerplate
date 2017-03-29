@@ -1,7 +1,7 @@
 {
-    "name": "dtroyan/levelup",
-    "description": "Skills metrics for teams and groups",
-    "keywords": ["skills"],
+    "name": "nixsolutions/laravel-api-boilerplate",
+    "description": "Laravel api skeleton",
+    "keywords": ["json-api"],
     "license": "",
     "type": "project",
     "require": {
