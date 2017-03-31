@@ -110,7 +110,7 @@ class MakeJsonApiDemo extends Command
      */
     public function fire()
     {
-        $this->createDirectories();
+//        $this->createDirectories();
 
         $this->copyJsonApiEntities();
     }
@@ -118,28 +118,28 @@ class MakeJsonApiDemo extends Command
     /**
      *
      */
-    protected function createDirectories()
-    {
-        if (!is_dir(app_path('JsonApi/Likes'))) {
-            mkdir(app_path('JsonApi/Likes'), 0755, true);
-        }
-        if (!is_dir(app_path('JsonApi/Skills'))) {
-            mkdir(app_path('JsonApi/Skills'), 0755, true);
-        }
-        if (!is_dir(app_path('JsonApi/Teams'))) {
-            mkdir(app_path('JsonApi/Teams'), 0755, true);
-        }
-        if (!is_dir(app_path('JsonApi/Users'))) {
-            mkdir(app_path('JsonApi/Users'), 0755, true);
-        }
-    }
+//    protected function createDirectories()
+//    {
+//        if (!is_dir(app_path('JsonApi/Likes'))) {
+//            mkdir(app_path('JsonApi/Likes'), 0755, true);
+//        }
+//        if (!is_dir(app_path('JsonApi/Skills'))) {
+//            mkdir(app_path('JsonApi/Skills'), 0755, true);
+//        }
+//        if (!is_dir(app_path('JsonApi/Teams'))) {
+//            mkdir(app_path('JsonApi/Teams'), 0755, true);
+//        }
+//        if (!is_dir(app_path('JsonApi/Users'))) {
+//            mkdir(app_path('JsonApi/Users'), 0755, true);
+//        }
+//    }
 
     /**
      *
      */
     protected function copyJsonApiEntities()
     {
-        $this->recurse_copy(('stubs/JsonApi'),app_path('JsonApi2'));
+        $this->recurse_copy(('stubs/JsonApi'),app_path('JsonApi'));
     }
 
     /**
