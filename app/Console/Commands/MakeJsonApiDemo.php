@@ -48,7 +48,6 @@ class MakeJsonApiDemo extends Command
 
     protected $models = [
         'Like.stub' => 'Like.php',
-        'Role.stub' => 'Role.php',
         'Skill.stub' => 'Skill.php',
         'Team.stub' => 'Team.php'
     ];
@@ -121,17 +120,17 @@ class MakeJsonApiDemo extends Command
      */
     protected function createDirectories()
     {
-        if (!is_dir(app_path('JsonApi2/Likes'))) {
-            mkdir(app_path('JsonApi2/Likes'), 0755, true);
+        if (!is_dir(app_path('JsonApi/Likes'))) {
+            mkdir(app_path('JsonApi/Likes'), 0755, true);
         }
-        if (!is_dir(app_path('JsonApi2/Skills'))) {
-            mkdir(app_path('JsonApi2/Skills'), 0755, true);
+        if (!is_dir(app_path('JsonApi/Skills'))) {
+            mkdir(app_path('JsonApi/Skills'), 0755, true);
         }
-        if (!is_dir(app_path('JsonApi2/Teams'))) {
-            mkdir(app_path('JsonApi2/Teams'), 0755, true);
+        if (!is_dir(app_path('JsonApi/Teams'))) {
+            mkdir(app_path('JsonApi/Teams'), 0755, true);
         }
-        if (!is_dir(app_path('JsonApi2/Users'))) {
-            mkdir(app_path('JsonApi2/Users'), 0755, true);
+        if (!is_dir(app_path('JsonApi/Users'))) {
+            mkdir(app_path('JsonApi/Users'), 0755, true);
         }
     }
 
