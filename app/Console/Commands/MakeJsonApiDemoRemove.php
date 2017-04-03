@@ -36,6 +36,23 @@ class MakeJsonApiDemoRemove extends Command
         'Team.stub' => 'Team.php'
     ];
 
+    protected $migrations = [
+        'create_likes_table.stub'                   => 'create_likes_table.php',
+        'create_membership_table.stub'              => 'create_membership_table.php',
+        'create_skills_table.stub'                  => 'create_skills_table.php',
+        'create_teams_table.stub'                   => 'create_teams_table.php',
+        'add_foreign_keys_to_likes_table.stub'      => 'add_foreign_keys_to_likes_table.php',
+        'add_foreign_keys_to_membership_table.stub' => 'add_foreign_keys_to_membership_table.php',
+        'add_foreign_keys_to_skills_table.stub'     => 'add_foreign_keys_to_skills_table.php',
+        'add_foreign_keys_to_teams_table.stub'      => 'add_foreign_keys_to_teams_table.php'
+    ];
+
+    protected $seeds = [
+        'TeamsTableSeeder.stub'     => 'TeamsTableSeeder.php',
+        'TeamUsersTableSeeder.stub' => 'TeamUsersTableSeeder.php',
+        'JsonApiSeeder.stub' => 'JsonApiSeeder.php'
+    ];
+
     protected $jsonapiEntities = [
         'JsonApi/Likes/Hydrator.stub' => 'JsonApi/Likes/Hydrator.php',
         'JsonApi/Likes/Request.stub' => 'JsonApi/Likes/Request.php',
@@ -81,6 +98,8 @@ class MakeJsonApiDemoRemove extends Command
     {
         $this->removeJsonApiEntities();
         $this->removeModels();
+        $this->removeMigrations();
+        $this->removeSeeds();
         $this->removeControllers();
         $this->info('JsonApi demo entities removed successfully.');
     }
@@ -96,6 +115,21 @@ class MakeJsonApiDemoRemove extends Command
     {
         foreach ($this->controllers as $key => $value) {
             unlink(app_path('Http/Controllers/Api/v1/' . $value));
+        }
+    }
+
+    protected function removeMigrations()
+    {
+        foreach ($this->migrations as $key => $value) {
+            $mask = database_path('migrations/*' . $value);
+            array_map( "unlink", glob( $mask ) );
+        }
+    }
+
+    protected function removeSeeds()
+    {
+        foreach ($this->seeds as $key => $value) {
+            unlink(database_path('seeds/' . $value));
         }
     }
 
