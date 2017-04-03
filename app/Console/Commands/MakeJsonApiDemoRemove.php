@@ -107,7 +107,7 @@ class MakeJsonApiDemoRemove extends Command
     protected function removeModels()
     {
         foreach ($this->models as $key => $value) {
-            if (file_exists('Models/' . $value)) {
+            if (file_exists(app_path('Models/' . $value))) {
                 unlink(app_path('Models/' . $value));
             }
         }
