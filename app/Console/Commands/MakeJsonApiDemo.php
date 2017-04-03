@@ -76,6 +76,8 @@ class MakeJsonApiDemo extends Command
         $this->exportMigrations();
         $this->exportSeeds();
 
+        $this::call('optimize');
+
         $this->info('JsonApi demo entities generated successfully.');
     }
 
@@ -84,29 +86,8 @@ class MakeJsonApiDemo extends Command
      */
     public function fire()
     {
-//        $this->createDirectories();
-
         $this->copyJsonApiEntities();
     }
-
-    /**
-     *
-     */
-//    protected function createDirectories()
-//    {
-//        if (!is_dir(app_path('JsonApi/Likes'))) {
-//            mkdir(app_path('JsonApi/Likes'), 0755, true);
-//        }
-//        if (!is_dir(app_path('JsonApi/Skills'))) {
-//            mkdir(app_path('JsonApi/Skills'), 0755, true);
-//        }
-//        if (!is_dir(app_path('JsonApi/Teams'))) {
-//            mkdir(app_path('JsonApi/Teams'), 0755, true);
-//        }
-//        if (!is_dir(app_path('JsonApi/Users'))) {
-//            mkdir(app_path('JsonApi/Users'), 0755, true);
-//        }
-//    }
 
     /**
      *
