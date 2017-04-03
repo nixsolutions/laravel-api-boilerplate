@@ -78,6 +78,9 @@ class MakeJsonApiDemo extends Command
 
         $this::call('optimize');
 
+        $this::call('migrate');
+        $this::call('db:seed --class=JsonApiSeeder');
+
         $this->info('JsonApi demo entities generated successfully.');
     }
 

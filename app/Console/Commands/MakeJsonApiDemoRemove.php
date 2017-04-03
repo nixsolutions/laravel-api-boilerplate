@@ -101,6 +101,11 @@ class MakeJsonApiDemoRemove extends Command
         $this->removeMigrations();
         $this->removeSeeds();
         $this->removeControllers();
+
+        $this::call('migrate:rollback --step=8');
+
+        $this::call('optimize');
+
         $this->info('JsonApi demo entities removed successfully.');
     }
 
