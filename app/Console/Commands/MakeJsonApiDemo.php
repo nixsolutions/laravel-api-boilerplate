@@ -52,33 +52,6 @@ class MakeJsonApiDemo extends Command
         'Team.stub' => 'Team.php'
     ];
 
-    protected $jsonapiEntities = [
-        'JsonApi/Likes/Hydrator.stub' => 'JsonApi/Likes/Hydrator.php',
-        'JsonApi/Likes/Request.stub' => 'JsonApi/Likes/Request.php',
-        'JsonApi/Likes/Schema.stub' => 'JsonApi/Likes/Schema.php',
-        'JsonApi/Likes/Search.stub' => 'JsonApi/Likes/Search.php',
-        'JsonApi/Likes/Validators.stub' => 'JsonApi/Likes/Validators.php',
-
-        'JsonApi/Skills/Hydrator.stub' => 'JsonApi/Skills/Hydrator.php',
-        'JsonApi/Skills/Request.stub' => 'JsonApi/Skills/Request.php',
-        'JsonApi/Skills/Schema.stub' => 'JsonApi/Skills/Schema.php',
-        'JsonApi/Skills/Search.stub' => 'JsonApi/Skills/Search.php',
-        'JsonApi/Skills/Validators.stub' => 'JsonApi/Skills/Validators.php',
-
-        'JsonApi/Teams/Hydrator.stub' => 'JsonApi/Teams/Hydrator.php',
-        'JsonApi/Teams/Request.stub' => 'JsonApi/Teams/Request.php',
-        'JsonApi/Teams/Schema.stub' => 'JsonApi/Teams/Schema.php',
-        'JsonApi/Teams/Search.stub' => 'JsonApi/Teams/Search.php',
-        'JsonApi/Teams/Validators.stub' => 'JsonApi/Teams/Validators.php',
-
-        'JsonApi/Users/Hydrator.stub' => 'JsonApi/Users/Hydrator.php',
-        'JsonApi/Users/Request.stub' => 'JsonApi/Users/Request.php',
-        'JsonApi/Users/Schema.stub' => 'JsonApi/Users/Schema.php',
-        'JsonApi/Users/Search.stub' => 'JsonApi/Users/Search.php',
-        'JsonApi/Users/Validators.stub' => 'JsonApi/Users/Validators.php',
-    ];
-
-
     /**
      * Create a new command instance.
      *
@@ -185,6 +158,7 @@ class MakeJsonApiDemo extends Command
      */
     protected function exportMigrations()
     {
+        $counter = 0;
         foreach ($this->migrations as $key => $value) {
             if (file_exists(database_path('migrations/'.$value)) && ! $this->option('force')) {
                 if (! $this->confirm("The [{$value}] migration already exists. Do you want to replace it?")) {
@@ -194,7 +168,7 @@ class MakeJsonApiDemo extends Command
 
             copy(
                 base_path('stubs/migrations/' . $key),
-                database_path('migrations/'. date('Y_m_d_His_')  . $value)
+                database_path('migrations/'. date('Y_m_d_Hi') . '0' . $counter++ . '_' . $value)
             );
         }
     }
