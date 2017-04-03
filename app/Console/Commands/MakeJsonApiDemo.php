@@ -36,7 +36,8 @@ class MakeJsonApiDemo extends Command
 
     protected $seeds = [
         'TeamsTableSeeder.stub'     => 'TeamsTableSeeder.php',
-        'TeamUsersTableSeeder.stub' => 'TeamUsersTableSeeder.php'
+        'TeamUsersTableSeeder.stub' => 'TeamUsersTableSeeder.php',
+        'JsonApiSeeder.stub' => 'JsonApiSeeder.php'
     ];
 
     protected $controllers = [
