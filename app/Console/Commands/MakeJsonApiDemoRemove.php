@@ -107,14 +107,18 @@ class MakeJsonApiDemoRemove extends Command
     protected function removeModels()
     {
         foreach ($this->models as $key => $value) {
-            unlink(app_path('Models/' . $value));
+            if (file_exists('Models/' . $value)) {
+                unlink(app_path('Models/' . $value));
+            }
         }
     }
 
     protected function removeControllers()
     {
         foreach ($this->controllers as $key => $value) {
-            unlink(app_path('Http/Controllers/Api/v1/' . $value));
+            if (file_exists(app_path('Http/Controllers/Api/v1/' . $value))) {
+                unlink(app_path('Http/Controllers/Api/v1/' . $value));
+            }
         }
     }
 
@@ -129,19 +133,36 @@ class MakeJsonApiDemoRemove extends Command
     protected function removeSeeds()
     {
         foreach ($this->seeds as $key => $value) {
-            unlink(database_path('seeds/' . $value));
+            if (file_exists(database_path('seeds/' . $value))) {
+                unlink(database_path('seeds/' . $value));
+            }
         }
     }
 
     protected function removeJsonApiEntities()
     {
         foreach ($this->jsonapiEntities as $key => $value) {
-            unlink(app_path($value));
+            if (file_exists(app_path($value))) {
+                unlink(app_path($value));
+            }
         }
-        rmdir(app_path('JsonApi/Users'));
-        rmdir(app_path('JsonApi/Likes'));
-        rmdir(app_path('JsonApi/Skills'));
-        rmdir(app_path('JsonApi/Teams'));
-        rmdir(app_path('JsonApi'));
+        if (file_exists(app_path('JsonApi/Users'))) {
+            rmdir(app_path('JsonApi/Users'));
+        }
+
+        if (file_exists(app_path('JsonApi/Likes'))) {
+            rmdir(app_path('JsonApi/Likes'));
+        }
+
+        if (file_exists(app_path('JsonApi/Skills'))) {
+            rmdir(app_path('JsonApi/Skills'));
+        }
+
+        if (file_exists(app_path('JsonApi/Teams'))) {
+            rmdir(app_path('JsonApi/Teams'));
+        }
+        if (file_exists(app_path('JsonApi'))) {
+            rmdir(app_path('JsonApi'));
+        }
     }
 }
