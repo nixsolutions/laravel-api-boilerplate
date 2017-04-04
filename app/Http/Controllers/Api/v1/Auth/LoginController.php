@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Api\v1\Auth;
 
 use Auth;
 use Illuminate\Http\JsonResponse;
@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Helpers\JsonApiResponseHelper;
+use Validator;
 
 class LoginController extends Controller
 {
@@ -22,7 +24,7 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
+    use AuthenticatesUsers, JsonApiResponseHelper;
 
     /**
      * Where to redirect users after login.
@@ -70,11 +72,11 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
-        $this->validateLogin($request);
+        $errors = $this->validateLogin($request->all())->errors();
+        if (!empty($errors->all())) {
+            return $this->sendFailedResponse($errors->toArray(), 401);
+        }
 
-        // If the class is using the ThrottlesLogins trait, we can automatically throttle
-        // the login attempts for this application. We'll key this by the username and
-        // the IP address of the client making these requests into this application.
         if ($this->hasTooManyLoginAttempts($request)) {
             $this->fireLockoutEvent($request);
 
@@ -82,15 +84,25 @@ class LoginController extends Controller
         }
 
         if ($token = Auth::guard('api')->attempt($this->credentials($request))) {
-            return $this->sendLoginResponse($request, $token);
+            if (Auth::guard('api')->user()->activated) {
+                return $this->sendLoginResponse($request, $token);
+            } else {
+                $error = [
+                    'source' => ['email' => $request->get('email')],
+                    'email' => ['Email not verified']
+                ];
+                return $this->sendFailedResponse($error, 403);
+            }
+
         }
 
-        // If the login attempt was unsuccessful we will increment the number of attempts
-        // to login and redirect the user back to the login form. Of course, when this
-        // user surpasses their maximum number of attempts they will get locked out.
         $this->incrementLoginAttempts($request);
 
-        return $this->sendFailedLoginResponse($request);
+        $error = [
+            'email' => ['Invalid credentials. Please check login/password and try again']
+        ];
+
+        return $this->sendFailedResponse($error, 401);
     }
 
     /**
@@ -115,16 +127,20 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user, $token)
     {
-        return response()->json([
-            'token' => $token,
-        ]);
-    }
+        $user = Auth::guard('api')->user();
 
-    protected function sendFailedLoginResponse(Request $request)
-    {
         return response()->json([
-            'message' => 'Email or password are wrong',
-        ], 401);
+            'data' => [
+                'type' => 'token',
+                'attributes' => [
+                    'access_token' => $token,
+                    'token_type' => 'Bearer',
+                    'email' => $user->email,
+                    'id' => $user->id,
+                    'token' => 'Bearer ' . $token,
+                ]
+            ]
+        ]);
     }
 
     /**
@@ -145,7 +161,22 @@ class LoginController extends Controller
         $this->guard()->logout();
 
         return response()->json([
-            'message' => 'Good bye!'
-        ]);
+        ], 200);
+    }
+
+    /**
+     * @param array $data
+     * @return mixed
+     */
+    protected function validateLogin(array $data)
+    {
+        $messages = [
+            'required'  => ':attribute field can\'t be blank'
+        ];
+
+        return Validator::make($data, [
+            'email' => 'required',
+            'password' => 'required'
+        ], $messages);
     }
 }

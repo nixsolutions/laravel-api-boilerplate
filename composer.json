@@ -1,15 +1,15 @@
 {
-    "name": "dtroyan/levelup",
-    "description": "Skills metrics for teams and groups",
-    "keywords": ["skills"],
+    "name": "nixsolutions/laravel-api-boilerplate",
+    "description": "Laravel api skeleton",
+    "keywords": ["json-api"],
     "license": "",
     "type": "project",
     "require": {
         "php": ">=7.0",
-        "laravel/framework": "5.3.*",
-        "darkaonline/l5-swagger": "~3.0",
-        "cloudcreativity/laravel-json-api": "^0.5.4",
-        "tymon/jwt-auth": "1.0.0-beta.1",
+        "laravel/framework": "5.4.*",
+        "darkaonline/l5-swagger": "4.0.1",
+        "cloudcreativity/laravel-json-api": "^0.7.0",
+        "tymon/jwt-auth": "1.0.0-beta.3",
         "barryvdh/laravel-ide-helper": "^2.2",
         "barryvdh/laravel-debugbar": "^2.3",
         "doctrine/dbal": "^2.5",
@@ -22,9 +22,9 @@
         "phpunit/phpunit": "~5.0",
         "symfony/css-selector": "3.1.*",
         "symfony/dom-crawler": "3.1.*",
-        "way/generators": "dev-feature/laravel-five-stable",
         "xethron/migrations-generator": "^2.0",
-        "satooshi/php-coveralls": "dev-master"
+        "satooshi/php-coveralls": "dev-master",
+        "laracasts/generators": "dev-master as 1.1.4"
     },
     "autoload": {
         "classmap": [
@@ -35,9 +35,9 @@
         }
     },
     "autoload-dev": {
-        "classmap": [
-            "tests/TestCase.php"
-        ]
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
     },
     "scripts": {
         "post-root-package-install": [
