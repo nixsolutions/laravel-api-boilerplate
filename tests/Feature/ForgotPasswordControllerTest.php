@@ -36,4 +36,28 @@ class ForgotPasswordControllerTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    /**
+     *
+     */
+    public function testForgotPasswordError()
+    {
+        $userData = [
+            'email' => 'test@mail.com',
+            'password' => Hash::make('password'),
+            'activated' => true
+        ];
+
+        $this->deleteUser($userData);
+
+        factory(User::class)->create($userData);
+
+        $response = $this->json('POST', '/api/v1/password/forgot',
+            [
+                'email' => 'wrong.email@mail.com'
+            ]
+        );
+
+        $response->assertStatus(404);
+    }
 }

@@ -31,7 +31,7 @@ class ResetPasswordControllerTest extends TestCase
 
         $token = app('auth.password.broker')->createToken($user);
 
-        $response = $this->json('POST', '/api/v1/password/forgot',
+        $response = $this->json('POST', '/api/v1/password/reset',
             [
                 'email' => $userData['email'],
                 'password' => 'password-new',
@@ -41,5 +41,32 @@ class ResetPasswordControllerTest extends TestCase
         );
 
         $response->assertStatus(200);
+    }
+
+    /**
+     *
+     */
+    public function testResetPasswordError()
+    {
+        $userData = [
+            'email' => 'test@mail.com',
+            'password' => Hash::make('password'),
+            'activated' => true
+        ];
+
+        $this->deleteUser($userData);
+
+        factory(User::class)->create($userData);
+
+        $response = $this->json('POST', '/api/v1/password/reset',
+            [
+                'email' => $userData['email'],
+                'password' => 'password-new',
+                'password_confirmation'=> 'password-new',
+                'token' => 'wrong-token'
+            ]
+        );
+
+        $response->assertStatus(400);
     }
 }

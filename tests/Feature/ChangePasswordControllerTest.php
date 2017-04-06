@@ -37,4 +37,30 @@ class ChangePasswordControllerTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    /**
+     *
+     */
+    public function testChangePasswordError()
+    {
+        $userData = [
+            'email' => 'test@mail.com',
+            'password' => Hash::make('password'),
+            'activated' => true
+        ];
+
+        $this->deleteUser($userData);
+
+        $user = factory(User::class)->create($userData);
+
+        $response = $this->actingAs($user, 'api')->json('POST', '/api/v1/password/change',
+            [
+                'current_password' => 'password-wrong',
+                'password' => 'password-new',
+                'password_confirmation' => 'password-new'
+            ]);
+
+        $response->assertStatus(400);
+    }
+
 }

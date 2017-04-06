@@ -47,6 +47,26 @@ class RegisterControllerTest extends TestCase
     /**
      *
      */
+    public function testRegisterError()
+    {
+        $this->deleteUser($this->userData);
+
+        $response = $this->json('POST', '/api/v1/register',
+            [
+                'email' => $this->userData['email'],
+                'password' => $this->userData['password'],
+                'password_confirmation' => 'password-wrong',
+                'name' => $this->userData['name']
+            ]
+        );
+
+        $response->assertStatus(400);
+    }
+
+
+    /**
+     *
+     */
     public function testVerify()
     {
         $userData = [
@@ -69,5 +89,32 @@ class RegisterControllerTest extends TestCase
         );
 
         $response->assertStatus(200);
+    }
+
+    /**
+     *
+     */
+    public function testVerifyError()
+    {
+        $userData = [
+            'name' => $this->userData['name'],
+            'email' => 'gfdghdhg@mail.com',
+            'password' => bcrypt($this->userData['password'])
+        ];
+
+        $this->deleteUser($userData);
+
+        $user = factory(User::class)->create($userData);
+
+        $activationService = new ActivationService();
+        $hash = $activationService->createActivation($user);
+
+        $response = $this->json('POST', '/api/v1/register/verify',
+            [
+                'hash' => 'hash-wrong'
+            ]
+        );
+
+        $response->assertStatus(400);
     }
 }
