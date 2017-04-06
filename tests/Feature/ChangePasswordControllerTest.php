@@ -46,9 +46,11 @@ class ChangePasswordControllerTest extends TestCase
             [
                 'Accept' => 'application/json',
                 'Authorization' => 'Bearer ' . $token,
-                'Content-Type' => 'application/vnd.api+json'
+                'Content-Type' => 'application/vnd.api+json',
+                'CONTENT_TYPE' => 'application/vnd.api+json'
             ]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(200)
+        ->assertJson([]);
     }
 }
