@@ -14,7 +14,7 @@ env:
     - DB_PASSWORD=
 
 install:  
-  - mysql -e 'create database homestead_testing;'
+  - mysql -e 'create database homestead;'
   - travis_retry composer install --no-interaction --prefer-source
 
 before_script:
