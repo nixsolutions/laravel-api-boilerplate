@@ -41,7 +41,7 @@ class LoginControllerTest extends TestCase
     /**
      *
      */
-    public function testLogout()
+    public function testLoginError()
     {
         $userVerifiedData = [
             'email' => 'test@mail.com',
@@ -51,11 +51,15 @@ class LoginControllerTest extends TestCase
 
         $this->deleteUser($userVerifiedData);
 
-        $user = factory(User::class)->create($userVerifiedData);
+        factory(User::class)->create($userVerifiedData);
 
-        $response = $this->actingAs($user, 'api')->json('GET', '/api/v1/logout',[], $this->headers($user));
+        $response = $this->json('POST', '/api/v1/login',
+            [
+                'email' => $userVerifiedData['email'],
+                'password' => 'password-wrong'
+            ]
+        );
 
-        $response->assertStatus(200);
+        $response->assertStatus(401);
     }
-
 }
