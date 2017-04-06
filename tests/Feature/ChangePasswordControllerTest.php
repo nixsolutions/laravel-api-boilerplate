@@ -28,15 +28,6 @@ class ChangePasswordControllerTest extends TestCase
 
         $user = factory(User::class)->create($userData);
 
-        $headers = ['Accept' => 'application/json'];
-        $headers['Content-Type'] = 'application/vnd.api+json';
-
-        if ($user) {
-            $token = JWTAuth::fromUser($user);
-            JWTAuth::setToken($token);
-            $headers['Authorization'] = 'Bearer ' . $token;
-        }
-
         $response = $this->actingAs($user, 'api')->json('POST', '/api/v1/password/change',
             [
                 'current_password' => 'password',
@@ -44,7 +35,6 @@ class ChangePasswordControllerTest extends TestCase
                 'password_confirmation' => 'password-new'
             ]);
 
-        $response->assertStatus(200)
-        ->assertJson([]);
+        $response->assertStatus(200);
     }
 }

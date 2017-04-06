@@ -53,7 +53,7 @@ class LoginControllerTest extends TestCase
 
         $user = factory(User::class)->create($userVerifiedData);
 
-        $response = $this->json('GET', '/api/v1/logout', [], $this->headers($user));
+        $response = $this->actingAs($user, 'api')->json('GET', '/api/v1/logout',[], $this->headers($user));
 
         $response->assertStatus(200);
     }
