@@ -24,8 +24,7 @@ class ForgotPasswordControllerTest extends TestCase
             'activated' => true
         ];
 
-        $user = User::where('email', '=' , $userData['email'])->firstOrFail();
-        $user->delete();
+        $this->deleteUser($userData);
 
         factory(User::class)->create($userData);
 

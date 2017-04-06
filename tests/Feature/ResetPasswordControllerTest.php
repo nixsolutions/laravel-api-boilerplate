@@ -25,10 +25,9 @@ class ResetPasswordControllerTest extends TestCase
             'activated' => true
         ];
 
-        $user = User::where('email', '=' , $userData['email'])->firstOrFail();
-        $user->delete();
+        $this->deleteUser($userData);
 
-        factory(User::class)->create($userData);
+        $user = factory(User::class)->create($userData);
 
         $token = app('auth.password.broker')->createToken($user);
 

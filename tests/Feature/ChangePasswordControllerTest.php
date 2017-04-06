@@ -24,8 +24,7 @@ class ChangePasswordControllerTest extends TestCase
             'activated' => true
         ];
 
-        $user = User::where('email', '=' , $userData['email'])->firstOrFail();
-        $user->delete();
+        $this->deleteUser($userData);
 
         $user = factory(User::class)->create($userData);
 
@@ -38,23 +37,5 @@ class ChangePasswordControllerTest extends TestCase
             $this->headers($user));
 
         $response->assertStatus(200);
-    }
-
-    /**
-     * @param null $user
-     * @return array
-     */
-    protected function headers($user = null)
-    {
-        $headers = ['Accept' => 'application/json'];
-        $headers['Content-Type'] = 'application/vnd.api+json';
-
-        if ($user) {
-            $token = JWTAuth::fromUser($user);
-            JWTAuth::setToken($token);
-            $headers['Authorization'] = 'Bearer ' . $token;
-        }
-
-        return $headers;
     }
 }

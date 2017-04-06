@@ -30,7 +30,7 @@ class RegisterControllerTest extends TestCase
      */
     public function testRegister()
     {
-        $this->removeUser();
+        $this->deleteUser($this->userData);
 
         $response = $this->json('POST', '/api/v1/register',
             [
@@ -55,10 +55,7 @@ class RegisterControllerTest extends TestCase
             'password' => bcrypt($this->userData['password'])
         ];
 
-        $user = User::where('email', '=' , $userData['email'])->first();
-        if(!empty($user)) {
-            $user->delete();
-        }
+        $this->deleteUser($userData);
 
         $user = factory(User::class)->create($userData);
 
@@ -72,16 +69,5 @@ class RegisterControllerTest extends TestCase
         );
 
         $response->assertStatus(200);
-    }
-
-    /**
-     *
-     */
-    protected function removeUser()
-    {
-        $user = User::where('email', '=' , $this->userData['email'])->firstOrFail();
-        if ($user) {
-            $user->delete();
-        }
     }
 }

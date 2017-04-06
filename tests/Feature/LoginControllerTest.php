@@ -24,10 +24,7 @@ class LoginControllerTest extends TestCase
             'activated' => true
         ];
 
-        $user = User::where('email', '=' , $userVerifiedData['email'])->firstOrFail();
-        if ($user) {
-            $user->delete();
-        }
+        $this->deleteUser($userVerifiedData);
 
         factory(User::class)->create($userVerifiedData);
 
@@ -52,8 +49,7 @@ class LoginControllerTest extends TestCase
             'activated' => true
         ];
 
-        $user = User::where('email', '=' , $userVerifiedData['email'])->firstOrFail();
-        $user->delete();
+        $this->deleteUser($userVerifiedData);
 
         $user = factory(User::class)->create($userVerifiedData);
 
@@ -62,21 +58,4 @@ class LoginControllerTest extends TestCase
         $response->assertStatus(200);
     }
 
-    /**
-     * @param null $user
-     * @return array
-     */
-    protected function headers($user = null)
-    {
-        $headers = ['Accept' => 'application/json'];
-        $headers['Content-Type'] = 'application/vnd.api+json';
-
-        if ($user) {
-            $token = JWTAuth::fromUser($user);
-            JWTAuth::setToken($token);
-            $headers['Authorization'] = 'Bearer ' . $token;
-        }
-
-        return $headers;
-    }
 }
