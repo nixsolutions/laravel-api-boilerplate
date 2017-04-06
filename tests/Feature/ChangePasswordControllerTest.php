@@ -37,17 +37,11 @@ class ChangePasswordControllerTest extends TestCase
             $headers['Authorization'] = 'Bearer ' . $token;
         }
 
-        $response = $this->json('POST', '/api/v1/password/change',
+        $response = $this->actingAs($user, 'api')->json('POST', '/api/v1/password/change',
             [
                 'current_password' => 'password',
                 'password' => 'password-new',
                 'password_confirmation' => 'password-new'
-            ],
-            [
-                'Accept' => 'application/json',
-                'Authorization' => 'Bearer ' . $token,
-                'Content-Type' => 'application/vnd.api+json',
-                'CONTENT_TYPE' => 'application/vnd.api+json'
             ]);
 
         $response->assertStatus(200)
