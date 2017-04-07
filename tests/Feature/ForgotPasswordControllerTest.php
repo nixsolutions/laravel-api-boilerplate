@@ -13,19 +13,15 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ForgotPasswordControllerTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
+     * @dataProvider addDataProvider
      *
+     * @param $userData
      */
-    public function testForgotPassword()
+    public function testForgotPassword($userData)
     {
-        $userData = [
-            'email' => 'test@mail.com',
-            'password' => Hash::make('password'),
-            'activated' => true
-        ];
-
-        $this->deleteUser($userData);
-
         factory(User::class)->create($userData);
 
         $response = $this->json('POST', '/api/v1/password/forgot',
@@ -38,18 +34,12 @@ class ForgotPasswordControllerTest extends TestCase
     }
 
     /**
+     * @dataProvider addDataProvider
      *
+     * @param $userData
      */
-    public function testForgotPasswordError()
+    public function testForgotPasswordError($userData)
     {
-        $userData = [
-            'email' => 'test@mail.com',
-            'password' => Hash::make('password'),
-            'activated' => true
-        ];
-
-        $this->deleteUser($userData);
-
         factory(User::class)->create($userData);
 
         $response = $this->json('POST', '/api/v1/password/forgot',

@@ -14,19 +14,16 @@ use App\Services\ActivationService;
 
 class ResetPasswordControllerTest extends TestCase
 {
+
+    use DatabaseTransactions;
+
     /**
+     * @dataProvider addDataProvider
      *
+     * @param $userData
      */
-    public function testResetPassword()
+    public function testResetPassword($userData)
     {
-        $userData = [
-            'email' => 'test@mail.com',
-            'password' => Hash::make('password'),
-            'activated' => true
-        ];
-
-        $this->deleteUser($userData);
-
         $user = factory(User::class)->create($userData);
 
         $token = app('auth.password.broker')->createToken($user);
@@ -44,18 +41,12 @@ class ResetPasswordControllerTest extends TestCase
     }
 
     /**
+     * @dataProvider addDataProvider
      *
+     * @param $userData
      */
-    public function testResetPasswordError()
+    public function testResetPasswordError($userData)
     {
-        $userData = [
-            'email' => 'test@mail.com',
-            'password' => Hash::make('password'),
-            'activated' => true
-        ];
-
-        $this->deleteUser($userData);
-
         factory(User::class)->create($userData);
 
         $response = $this->json('POST', '/api/v1/password/reset',

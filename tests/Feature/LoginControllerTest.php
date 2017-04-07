@@ -13,6 +13,8 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class LoginControllerTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      *
      */
@@ -23,8 +25,6 @@ class LoginControllerTest extends TestCase
             'password' => Hash::make('password'),
             'activated' => true
         ];
-
-        $this->deleteUser($userVerifiedData);
 
         factory(User::class)->create($userVerifiedData);
 
@@ -39,23 +39,17 @@ class LoginControllerTest extends TestCase
     }
 
     /**
+     * @dataProvider addDataProvider
      *
+     * @param $userData
      */
-    public function testLoginError()
+    public function testLoginError($userData)
     {
-        $userVerifiedData = [
-            'email' => 'test@mail.com',
-            'password' => Hash::make('password'),
-            'activated' => true
-        ];
-
-        $this->deleteUser($userVerifiedData);
-
-        factory(User::class)->create($userVerifiedData);
+        factory(User::class)->create($userData);
 
         $response = $this->json('POST', '/api/v1/login',
             [
-                'email' => $userVerifiedData['email'],
+                'email' => $userData['email'],
                 'password' => 'password-wrong'
             ]
         );
