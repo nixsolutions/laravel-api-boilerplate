@@ -14,6 +14,9 @@ use App\Services\ActivationService;
 
 class ResetPasswordControllerTest extends TestCase
 {
+
+    use DatabaseTransactions;
+
     /**
      *
      */
@@ -24,8 +27,6 @@ class ResetPasswordControllerTest extends TestCase
             'password' => Hash::make('password'),
             'activated' => true
         ];
-
-        $this->deleteUser($userData);
 
         $user = factory(User::class)->create($userData);
 
@@ -53,8 +54,6 @@ class ResetPasswordControllerTest extends TestCase
             'password' => Hash::make('password'),
             'activated' => true
         ];
-
-        $this->deleteUser($userData);
 
         factory(User::class)->create($userData);
 

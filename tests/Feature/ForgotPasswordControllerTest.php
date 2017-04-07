@@ -13,6 +13,8 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ForgotPasswordControllerTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      *
      */
@@ -23,8 +25,6 @@ class ForgotPasswordControllerTest extends TestCase
             'password' => Hash::make('password'),
             'activated' => true
         ];
-
-        $this->deleteUser($userData);
 
         factory(User::class)->create($userData);
 
@@ -47,8 +47,6 @@ class ForgotPasswordControllerTest extends TestCase
             'password' => Hash::make('password'),
             'activated' => true
         ];
-
-        $this->deleteUser($userData);
 
         factory(User::class)->create($userData);
 

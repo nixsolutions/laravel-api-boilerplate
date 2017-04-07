@@ -11,17 +11,6 @@ abstract class TestCase extends BaseTestCase
     use CreatesApplication;
 
     /**
-     * @param array $user
-     */
-    public function deleteUser(array $user)
-    {
-        $user = User::where('email', '=' , $user['email'])->first();
-        if (!empty($user)) {
-            $user->delete();
-        }
-    }
-
-    /**
      * @param null $user
      * @return array
      */

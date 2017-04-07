@@ -15,6 +15,8 @@ use Illuminate\Auth\Events\Registered;
 
 class RegisterControllerTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * @var array
      */
@@ -30,8 +32,6 @@ class RegisterControllerTest extends TestCase
      */
     public function testRegister()
     {
-        $this->deleteUser($this->userData);
-
         $response = $this->json('POST', '/api/v1/register',
             [
                 'email' => $this->userData['email'],
@@ -49,8 +49,6 @@ class RegisterControllerTest extends TestCase
      */
     public function testRegisterError()
     {
-        $this->deleteUser($this->userData);
-
         $response = $this->json('POST', '/api/v1/register',
             [
                 'email' => $this->userData['email'],
@@ -63,7 +61,6 @@ class RegisterControllerTest extends TestCase
         $response->assertStatus(400);
     }
 
-
     /**
      *
      */
@@ -74,8 +71,6 @@ class RegisterControllerTest extends TestCase
             'email' => 'gfdghdhg@mail.com',
             'password' => bcrypt($this->userData['password'])
         ];
-
-        $this->deleteUser($userData);
 
         $user = factory(User::class)->create($userData);
 
@@ -102,12 +97,7 @@ class RegisterControllerTest extends TestCase
             'password' => bcrypt($this->userData['password'])
         ];
 
-        $this->deleteUser($userData);
-
-        $user = factory(User::class)->create($userData);
-
-        $activationService = new ActivationService();
-        $hash = $activationService->createActivation($user);
+        factory(User::class)->create($userData);
 
         $response = $this->json('POST', '/api/v1/register/verify',
             [

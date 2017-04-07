@@ -13,6 +13,8 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class LoginControllerTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      *
      */
@@ -23,8 +25,6 @@ class LoginControllerTest extends TestCase
             'password' => Hash::make('password'),
             'activated' => true
         ];
-
-        $this->deleteUser($userVerifiedData);
 
         factory(User::class)->create($userVerifiedData);
 
@@ -48,8 +48,6 @@ class LoginControllerTest extends TestCase
             'password' => Hash::make('password'),
             'activated' => true
         ];
-
-        $this->deleteUser($userVerifiedData);
 
         factory(User::class)->create($userVerifiedData);
 
