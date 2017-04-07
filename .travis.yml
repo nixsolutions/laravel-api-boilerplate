@@ -18,7 +18,7 @@ install:
   - travis_retry composer install --no-interaction --prefer-source
 
 before_script:
-  - mkdir -p 775 /home/travis/build/nixsolutions/laravel-api-boilerplate/build/logs
+  - mkdir -p 775 /home/travis/build/alexfloppy/laravel-api-boilerplate/build/logs
   - cp config/env/.env.travis .env
   - travis_retry php artisan vendor:publish
   - php artisan key:generate
