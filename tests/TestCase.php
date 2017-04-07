@@ -5,6 +5,7 @@ namespace Tests;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use App\Models\User;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Hash;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -26,5 +27,20 @@ abstract class TestCase extends BaseTestCase
         }
 
         return $headers;
+    }
+
+    /**
+     * @name userDataProvider
+     * @return array
+     */
+    public function addDataProvider()
+    {
+        return [
+            ['userData' => [
+                'email' => 'test@mail.com',
+                'password' => 'password',
+                'activated' => true
+            ]]
+        ];
     }
 }

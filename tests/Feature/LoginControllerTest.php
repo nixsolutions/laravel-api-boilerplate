@@ -39,21 +39,17 @@ class LoginControllerTest extends TestCase
     }
 
     /**
+     * @dataProvider addDataProvider
      *
+     * @param $userData
      */
-    public function testLoginError()
+    public function testLoginError($userData)
     {
-        $userVerifiedData = [
-            'email' => 'test@mail.com',
-            'password' => Hash::make('password'),
-            'activated' => true
-        ];
-
-        factory(User::class)->create($userVerifiedData);
+        factory(User::class)->create($userData);
 
         $response = $this->json('POST', '/api/v1/login',
             [
-                'email' => $userVerifiedData['email'],
+                'email' => $userData['email'],
                 'password' => 'password-wrong'
             ]
         );

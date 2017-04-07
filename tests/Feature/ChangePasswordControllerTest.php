@@ -16,9 +16,11 @@ class ChangePasswordControllerTest extends TestCase
     use DatabaseTransactions;
 
     /**
+     * @dataProvider addDataProvider
      *
+     * @param $userData
      */
-    public function testChangePassword()
+    public function testChangePassword($userData)
     {
         $userData = [
             'email' => 'test@mail.com',
@@ -39,16 +41,12 @@ class ChangePasswordControllerTest extends TestCase
     }
 
     /**
+     * @dataProvider addDataProvider
      *
+     * @param $userData
      */
-    public function testChangePasswordError()
+    public function testChangePasswordError($userData)
     {
-        $userData = [
-            'email' => 'test@mail.com',
-            'password' => Hash::make('password'),
-            'activated' => true
-        ];
-
         $user = factory(User::class)->create($userData);
 
         $response = $this->actingAs($user, 'api')->json('POST', '/api/v1/password/change',

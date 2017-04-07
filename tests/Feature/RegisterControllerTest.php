@@ -62,15 +62,11 @@ class RegisterControllerTest extends TestCase
     }
 
     /**
+     * @dataProvider addDataProvider
      *
+     * @param $userData
      */
-    public function testVerify()
-    {
-        $userData = [
-            'name' => $this->userData['name'],
-            'email' => 'gfdghdhg@mail.com',
-            'password' => bcrypt($this->userData['password'])
-        ];
+    public function testVerify($userData)    {
 
         $user = factory(User::class)->create($userData);
 
@@ -87,16 +83,12 @@ class RegisterControllerTest extends TestCase
     }
 
     /**
+     * @dataProvider addDataProvider
      *
+     * @param $userData
      */
-    public function testVerifyError()
+    public function testVerifyError($userData)
     {
-        $userData = [
-            'name' => $this->userData['name'],
-            'email' => 'gfdghdhg@mail.com',
-            'password' => bcrypt($this->userData['password'])
-        ];
-
         factory(User::class)->create($userData);
 
         $response = $this->json('POST', '/api/v1/register/verify',
