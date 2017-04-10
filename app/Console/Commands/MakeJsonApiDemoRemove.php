@@ -145,28 +145,35 @@ class MakeJsonApiDemoRemove extends Command
 
     protected function removeJsonApiEntities()
     {
-        foreach ($this->jsonapiEntities as $key => $value) {
-            if (file_exists(app_path($value))) {
-                unlink(app_path($value));
+        try {
+            foreach ($this->jsonapiEntities as $key => $value) {
+                if (file_exists(app_path($value))) {
+                    unlink(app_path($value));
+                }
             }
-        }
-        if (file_exists(app_path('JsonApi/Users'))) {
-            rmdir(app_path('JsonApi/Users'));
-        }
+            if (file_exists(app_path('JsonApi/Users'))) {
+                rmdir(app_path('JsonApi/Users'));
+            }
 
-        if (file_exists(app_path('JsonApi/Likes'))) {
-            rmdir(app_path('JsonApi/Likes'));
-        }
+            if (file_exists(app_path('JsonApi/Likes'))) {
+                rmdir(app_path('JsonApi/Likes'));
+            }
 
-        if (file_exists(app_path('JsonApi/Skills'))) {
-            rmdir(app_path('JsonApi/Skills'));
-        }
+            if (file_exists(app_path('JsonApi/Skills'))) {
+                rmdir(app_path('JsonApi/Skills'));
+            }
 
-        if (file_exists(app_path('JsonApi/Teams'))) {
-            rmdir(app_path('JsonApi/Teams'));
-        }
-        if (file_exists(app_path('JsonApi'))) {
-            rmdir(app_path('JsonApi'));
+            if (file_exists(app_path('JsonApi/Teams'))) {
+                rmdir(app_path('JsonApi/Teams'));
+            }
+
+            if (file_exists(app_path('JsonApi'))) {
+                if(!@rmdir(app_path('JsonApi'))) {
+                     throw new \League\Flysystem\Exception('JsonApi directory is not empty!');
+                };
+            }
+        } catch (\League\Flysystem\Exception $e) {
+            $this->warn($e->getMessage());
         }
     }
 }
