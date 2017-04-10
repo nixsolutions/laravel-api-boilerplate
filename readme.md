@@ -3,7 +3,7 @@
 [![Build Status](https://secure.travis-ci.org/nixsolutions/laravel-api-boilerplate.png?branch=master)](https://travis-ci.org/nixsolutions/laravel-api-boilerplate)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nixsolutions/laravel-api-boilerplate/badges/quality-score.png)](https://scrutinizer-ci.com/g/nixsolutions/laravel-api-boilerplate/?branch=master)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg?style=flat-square)](http://www.gnu.org/licenses/agpl-3.0)
-[![Dependency Status](https://www.versioneye.com/user/projects/58c6d1f87a7954003a3cacfc/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/58c6d1f87a7954003a3cacfc)
+[![Dependency Status](https://www.versioneye.com/user/projects/58e7b65326a5bb0038e42265/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/58e7b65326a5bb0038e42265)
 
 ##Starting project steps
 
