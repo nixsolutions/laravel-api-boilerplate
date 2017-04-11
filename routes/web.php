@@ -24,13 +24,6 @@ Route::get('register', 'WebAuth\RegisterController@index');
 Route::get('home', 'HomeController@index');
 Route::get('logout', 'WebAuth\LoginController@logout');
 
-//Route::group(['prefix' => 'password'], function () {
-//    Route::get('reset', 'WebAuth\ResetPasswordController@index');
-//    Route::post('reset', 'WebAuth\ResetPasswordController@reset');
-//    Route::post('forgot', 'WebAuth\ForgotPasswordController@sendResetLinkEmail');
-//});
-
-
 // Password Reset Routes...
 $this->get('password/reset', 'WebAuth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
 $this->post('password/email', 'WebAuth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
