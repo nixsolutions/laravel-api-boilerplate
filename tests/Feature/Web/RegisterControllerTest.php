@@ -12,26 +12,19 @@ class RegisterControllerTest extends TestCase
     use DatabaseTransactions;
 
     /**
-     * @var array
-     */
-    protected $userData = [
-        'email' => 'test@mail.com',
-        'password' => 'password',
-        'password_confirmation' => 'password',
-        'name' => 'TestUser'
-    ];
-
-    /**
+     * @dataProvider registerUserProvider
+     *
+     * @param $userData
      *
      */
-    public function testRegister()
+    public function testRegister($userData)
     {
         $response = $this->post('/register',
             [
-                'email' => $this->userData['email'],
-                'password' => $this->userData['password'],
-                'password_confirmation' => $this->userData['password_confirmation'],
-                'name' => $this->userData['name']
+                'email' => $userData['email'],
+                'password' => $userData['password'],
+                'password_confirmation' => $userData['password_confirmation'],
+                'name' => $userData['name']
             ]
         );
 
@@ -39,16 +32,19 @@ class RegisterControllerTest extends TestCase
     }
 
     /**
+     * @dataProvider registerUserProvider
+     *
+     * @param $userData
      *
      */
-    public function testRegisterError()
+    public function testRegisterError($userData)
     {
         $response = $this->post('/register',
             [
-                'email' => $this->userData['email'],
-                'password' => $this->userData['password'],
+                'email' => $userData['email'],
+                'password' => $userData['password'],
                 'password_confirmation' => 'wrong-password',
-                'name' => $this->userData['name']
+                'name' => $userData['name']
             ]
         );
 
