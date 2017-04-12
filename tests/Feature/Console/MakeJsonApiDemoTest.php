@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Console;
 
-
+use Mockery;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 use Tests\TestCase;
@@ -13,6 +13,25 @@ use Illuminate\Support\Facades\Artisan;
 
 class MakeJsonApiDemoTest extends TestCase
 {
+    public function tearDown()
+    {
+        Mockery::close();
+    }
+
+    public function testMakeJsonApiDemoMock()
+    {
+        $fileMock = Mockery::mock("\App\Console\Commands\MakeJsonApiDemo");
+        $fileMock->shouldReceive('handle')->once()->andReturn(false);
+        $fileMock->handle();
+    }
+
+    public function testMakeJsonApiDemoRemoveMock()
+    {
+        $fileMock = Mockery::mock("\App\Console\Commands\MakeJsonApiDemoRemove");
+        $fileMock->shouldReceive('handle')->once()->andReturn(false);
+        $fileMock->handle();
+    }
+
     /**
      *
      */
@@ -78,17 +97,17 @@ class MakeJsonApiDemoTest extends TestCase
     }
 
 
-    /**
-     *
-     */
-    public function testMakeDemo()
-    {
-        Artisan::call('make:demo',
-            [
-                '--fake' => true
-            ]
-        );
-
-        $this->assertTrue(true);
-    }
+//    /**
+//     *
+//     */
+//    public function testMakeDemo()
+//    {
+//        Artisan::call('make:demo',
+//            [
+//                '--fake' => true
+//            ]
+//        );
+//
+//        $this->assertTrue(true);
+//    }
 }
