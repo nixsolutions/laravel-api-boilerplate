@@ -36,11 +36,27 @@ abstract class TestCase extends BaseTestCase
     public function addDataProvider()
     {
         return [
-            ['userData' => [
+            [
+            'userData' => [
                 'email' => 'test@mail.com',
                 'password' => 'password',
                 'activated' => true
-            ]]
+                ]
+            ]
+        ];
+    }
+
+    public function registerUserProvider()
+    {
+        return [
+            [
+            'userData' => [
+                'email' => 'test@mail.com',
+                'password' => 'password',
+                'password_confirmation' => 'password',
+                'name' => 'TestUser'
+                ]
+            ]
         ];
     }
 }
