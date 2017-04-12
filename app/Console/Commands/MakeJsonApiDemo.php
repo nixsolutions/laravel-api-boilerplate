@@ -78,6 +78,8 @@ class MakeJsonApiDemo extends Command
     public function handle()
     {
         if ($this->option('fake')) {
+            $this->info('JsonApi demo entities fake generated successfully.');
+            return true;
             $this->setupFake();
         }
 

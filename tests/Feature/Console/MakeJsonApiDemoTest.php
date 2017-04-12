@@ -13,29 +13,10 @@ use Illuminate\Support\Facades\Artisan;
 
 class MakeJsonApiDemoTest extends TestCase
 {
-    public function tearDown()
-    {
-        Mockery::close();
-    }
-
-    public function testMakeJsonApiDemoMock()
-    {
-        $fileMock = Mockery::mock("\App\Console\Commands\MakeJsonApiDemo");
-        $fileMock->shouldReceive('handle')->once()->andReturn(false);
-        $fileMock->handle();
-    }
-
-    public function testMakeJsonApiDemoRemoveMock()
-    {
-        $fileMock = Mockery::mock("\App\Console\Commands\MakeJsonApiDemoRemove");
-        $fileMock->shouldReceive('handle')->once()->andReturn(false);
-        $fileMock->handle();
-    }
-
     /**
      *
      */
-    public function testMakeDemoRemove()
+    public function testMakeDemoCreateRemove()
     {
         $structure = [
 
@@ -97,17 +78,31 @@ class MakeJsonApiDemoTest extends TestCase
     }
 
 
-//    /**
-//     *
-//     */
-//    public function testMakeDemo()
-//    {
-//        Artisan::call('make:demo',
-//            [
-//                '--fake' => true
-//            ]
-//        );
-//
-//        $this->assertTrue(true);
-//    }
+    /**
+     *
+     */
+    public function testMakeDemo()
+    {
+        Artisan::call('make:demo',
+            [
+                '--fake' => true
+            ]
+        );
+
+        $this->assertTrue(true);
+    }
+
+    /**
+     *
+     */
+    public function testMakeDemoRemove()
+    {
+        Artisan::call('make:demo-remove',
+            [
+                '--fake' => true
+            ]
+        );
+
+        $this->assertTrue(true);
+    }
 }

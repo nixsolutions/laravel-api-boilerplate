@@ -11,7 +11,8 @@ class MakeJsonApiDemoRemove extends Command
      *
      * @var string
      */
-    protected $signature = 'make:demo-remove';
+    protected $signature = 'make:demo-remove
+        {--fake : Make fake removing directories and files for test}';
 
     /**
      * The console command description.
@@ -82,7 +83,6 @@ class MakeJsonApiDemoRemove extends Command
     /**
      * Create a new command instance.
      *
-     * @return void
      */
     public function __construct()
     {
@@ -96,6 +96,11 @@ class MakeJsonApiDemoRemove extends Command
      */
     public function handle()
     {
+        if($this->option('fake')) {
+            $this->info('JsonApi demo entities fake removed successfully.');
+            return true;
+        }
+
         $this->removeJsonApiEntities();
         $this->removeModels();
         $this->removeControllers();
