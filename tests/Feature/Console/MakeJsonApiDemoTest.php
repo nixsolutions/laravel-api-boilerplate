@@ -85,7 +85,8 @@ class MakeJsonApiDemoTest extends TestCase
     {
         Artisan::call('make:demo',
             [
-                '--fake' => true
+                '--test' => true,
+                '--force' => true
             ]
         );
 
@@ -99,7 +100,7 @@ class MakeJsonApiDemoTest extends TestCase
     {
         Artisan::call('make:demo-remove',
             [
-                '--fake' => true
+                '--test' => true
             ]
         );
 

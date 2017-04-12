@@ -19,6 +19,7 @@ class MakeJsonApiDemo extends Command
      */
     protected $signature = 'make:demo                    
                     {--force : Overwrite existing files by default}
+                    {--test  : Add files postfix for test}
                     {--fake  : Make fake directories and files for test}';
 
     /**
@@ -27,6 +28,8 @@ class MakeJsonApiDemo extends Command
      * @var string
      */
     protected $description = 'Create JsonApi Demo entities';
+
+    protected $testPostfix = '-test';
 
     protected $migrations = [
         'create_likes_table.stub'                   => 'create_likes_table.php',
@@ -77,6 +80,10 @@ class MakeJsonApiDemo extends Command
      */
     public function handle()
     {
+        if ($this->option('test')) {
+            $this->setupTest();
+        }
+
         if ($this->option('fake')) {
             $this->setupFake();
         }
@@ -92,6 +99,22 @@ class MakeJsonApiDemo extends Command
         $this::call('optimize');
 
         $this->info('JsonApi demo entities generated successfully.');
+    }
+
+    protected function setupTest()
+    {
+        foreach ($this->migrations as $key => $value) {
+            $this->migrations[$key] = $value . $this->testPostfix;
+        }
+        foreach ($this->seeds as $key => $value) {
+            $this->seeds[$key] = $value . $this->testPostfix;
+        }
+        foreach ($this->controllers as $key => $value) {
+            $this->controllers[$key] = $value . $this->testPostfix;
+        }
+        foreach ($this->models as $key => $value) {
+            $this->models[$key] = $value . $this->testPostfix;
+        }
     }
 
     /**
@@ -125,6 +148,10 @@ class MakeJsonApiDemo extends Command
     {
         $source = 'stubs/JsonApi';
         $destination = ($this->option('fake')) ? vfsStream::url('app/JsonApi') : app_path('JsonApi');
+
+        if ($this->option('test')) {
+            $destination = app_path('JsonApi-test');
+        }
 
         $this->recurse_copy($source, $destination);
     }

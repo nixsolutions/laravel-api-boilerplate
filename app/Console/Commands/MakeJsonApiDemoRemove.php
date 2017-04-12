@@ -12,7 +12,8 @@ class MakeJsonApiDemoRemove extends Command
      * @var string
      */
     protected $signature = 'make:demo-remove
-        {--fake : Make fake removing directories and files for test}';
+            {--test  : Add files postfix for test}
+            {--fake : Make fake removing directories and files for test}';
 
     /**
      * The console command description.
@@ -20,6 +21,8 @@ class MakeJsonApiDemoRemove extends Command
      * @var string
      */
     protected $description = 'Remove JsonApi Demo entities';
+
+    protected $testPostfix = '-test';
 
     /**
      * @var array
@@ -80,6 +83,32 @@ class MakeJsonApiDemoRemove extends Command
         'JsonApi/Users/Validators.stub' => 'JsonApi/Users/Validators.php',
     ];
 
+    protected $jsonapiEntitiesTest = [
+        'JsonApi/Likes/Hydrator.stub' => 'JsonApi-test/Likes/Hydrator.php',
+        'JsonApi/Likes/Request.stub' => 'JsonApi-test/Likes/Request.php',
+        'JsonApi/Likes/Schema.stub' => 'JsonApi-test/Likes/Schema.php',
+        'JsonApi/Likes/Search.stub' => 'JsonApi-test/Likes/Search.php',
+        'JsonApi/Likes/Validators.stub' => 'JsonApi-test/Likes/Validators.php',
+
+        'JsonApi/Skills/Hydrator.stub' => 'JsonApi-test/Skills/Hydrator.php',
+        'JsonApi/Skills/Request.stub' => 'JsonApi-test/Skills/Request.php',
+        'JsonApi/Skills/Schema.stub' => 'JsonApi-test/Skills/Schema.php',
+        'JsonApi/Skills/Search.stub' => 'JsonApi-test/Skills/Search.php',
+        'JsonApi/Skills/Validators.stub' => 'JsonApi-test/Skills/Validators.php',
+
+        'JsonApi/Teams/Hydrator.stub' => 'JsonApi-test/Teams/Hydrator.php',
+        'JsonApi/Teams/Request.stub' => 'JsonApi-test/Teams/Request.php',
+        'JsonApi/Teams/Schema.stub' => 'JsonApi-test/Teams/Schema.php',
+        'JsonApi/Teams/Search.stub' => 'JsonApi-test/Teams/Search.php',
+        'JsonApi/Teams/Validators.stub' => 'JsonApi-test/Teams/Validators.php',
+
+        'JsonApi/Users/Hydrator.stub' => 'JsonApi-test/Users/Hydrator.php',
+        'JsonApi/Users/Request.stub' => 'JsonApi-test/Users/Request.php',
+        'JsonApi/Users/Schema.stub' => 'JsonApi-test/Users/Schema.php',
+        'JsonApi/Users/Search.stub' => 'JsonApi-test/Users/Search.php',
+        'JsonApi/Users/Validators.stub' => 'JsonApi-test/Users/Validators.php',
+    ];
+
     /**
      * Create a new command instance.
      *
@@ -96,6 +125,10 @@ class MakeJsonApiDemoRemove extends Command
      */
     public function handle()
     {
+        if ($this->option('test')) {
+            $this->setupTest();
+        }
+
         if($this->option('fake')) {
             $this->info('JsonApi demo entities fake removed successfully.');
             return true;
@@ -111,6 +144,27 @@ class MakeJsonApiDemoRemove extends Command
         $this::call('optimize');
 
         $this->info('JsonApi demo entities removed successfully.');
+    }
+
+    protected function setupTest()
+    {
+        foreach ($this->migrations as $key => $value) {
+            $this->migrations[$key] = $value . $this->testPostfix;
+        }
+        foreach ($this->seeds as $key => $value) {
+            $this->seeds[$key] = $value . $this->testPostfix;
+        }
+        foreach ($this->controllers as $key => $value) {
+            $this->controllers[$key] = $value . $this->testPostfix;
+        }
+        foreach ($this->models as $key => $value) {
+            $this->models[$key] = $value . $this->testPostfix;
+        }
+        $this->jsonapiEntities = $this->jsonapiEntitiesTest;
+
+//        foreach ($this->jsonapiEntities as $key => $value) {
+//            $this->jsonapiEntities[$key] = $value . $this->testPostfix;
+//        }
     }
 
     protected function removeModels()
