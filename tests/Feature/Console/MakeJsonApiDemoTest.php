@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Console;
 
-use Mockery;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 use Tests\TestCase;

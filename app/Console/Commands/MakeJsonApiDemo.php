@@ -3,12 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use org\bovigo\vfs\vfsStream;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use org\bovigo\vfs\vfsStreamDirectory;
-use org\bovigo\vfs\vfsStreamWrapper;
 
 class MakeJsonApiDemo extends Command
 {
