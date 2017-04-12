@@ -61,10 +61,32 @@ class MakeJsonApiDemo extends Command
         'Team.stub' => 'Team.php'
     ];
 
-    /**
-     * @var array
-     */
-    protected $stubs = [];
+    protected $jsonapiEntities = [
+        'JsonApi/Likes/Hydrator.php' => 'JsonApi/Likes/Hydrator.php',
+        'JsonApi/Likes/Request.php' => 'JsonApi/Likes/Request.php',
+        'JsonApi/Likes/Schema.php' => 'JsonApi/Likes/Schema.php',
+        'JsonApi/Likes/Search.php' => 'JsonApi/Likes/Search.php',
+        'JsonApi/Likes/Validators.php' => 'JsonApi/Likes/Validators.php',
+
+        'JsonApi/Skills/Hydrator.php' => 'JsonApi/Skills/Hydrator.php',
+        'JsonApi/Skills/Request.php' => 'JsonApi/Skills/Request.php',
+        'JsonApi/Skills/Schema.php' => 'JsonApi/Skills/Schema.php',
+        'JsonApi/Skills/Search.php' => 'JsonApi/Skills/Search.php',
+        'JsonApi/Skills/Validators.php' => 'JsonApi/Skills/Validators.php',
+
+        'JsonApi/Teams/Hydrator.php' => 'JsonApi/Teams/Hydrator.php',
+        'JsonApi/Teams/Request.php' => 'JsonApi/Teams/Request.php',
+        'JsonApi/Teams/Schema.php' => 'JsonApi/Teams/Schema.php',
+        'JsonApi/Teams/Search.php' => 'JsonApi/Teams/Search.php',
+        'JsonApi/Teams/Validators.php' => 'JsonApi/Teams/Validators.php',
+
+        'JsonApi/Users/Hydrator.php' => 'JsonApi/Users/Hydrator.php',
+        'JsonApi/Users/Request.php' => 'JsonApi/Users/Request.php',
+        'JsonApi/Users/Schema.php' => 'JsonApi/Users/Schema.php',
+        'JsonApi/Users/Search.php' => 'JsonApi/Users/Search.php',
+        'JsonApi/Users/Validators.php' => 'JsonApi/Users/Validators.php',
+    ];
+
 
     /**
      * Create a new command instance.
@@ -96,11 +118,16 @@ class MakeJsonApiDemo extends Command
         $this->exportMigrations();
         $this->exportSeeds();
 
-        $this::call('optimize');
+        if (!$this->option('test')) {
+            $this::call('optimize');
+        }
 
         $this->info('JsonApi demo entities generated successfully.');
     }
 
+    /**
+     *
+     */
     protected function setupTest()
     {
         foreach ($this->migrations as $key => $value) {
@@ -114,6 +141,9 @@ class MakeJsonApiDemo extends Command
         }
         foreach ($this->models as $key => $value) {
             $this->models[$key] = $value . $this->testPostfix;
+        }
+        foreach ($this->jsonapiEntities as $key => $value) {
+            $this->jsonapiEntities[$key] = $value . $this->testPostfix;
         }
     }
 
@@ -138,7 +168,28 @@ class MakeJsonApiDemo extends Command
      */
     public function fire()
     {
+        $this->createDirectories();
+
         $this->copyJsonApiEntities();
+    }
+
+    /**
+     *
+     */
+    protected function createDirectories()
+    {
+        if (!is_dir(app_path('JsonApi/Likes'))) {
+            mkdir(app_path('JsonApi/Likes'), 0755, true);
+        }
+        if (!is_dir(app_path('JsonApi/Skills'))) {
+            mkdir(app_path('JsonApi/Skills'), 0755, true);
+        }
+        if (!is_dir(app_path('JsonApi/Teams'))) {
+            mkdir(app_path('JsonApi/Teams'), 0755, true);
+        }
+        if (!is_dir(app_path('JsonApi/Users'))) {
+            mkdir(app_path('JsonApi/Users'), 0755, true);
+        }
     }
 
     /**
@@ -146,14 +197,28 @@ class MakeJsonApiDemo extends Command
      */
     protected function copyJsonApiEntities()
     {
-        $source = 'stubs/JsonApi';
-        $destination = ($this->option('fake')) ? vfsStream::url('app/JsonApi') : app_path('JsonApi');
+        foreach ($this->jsonapiEntities as $key => $value) {
+            if (file_exists(app_path('JsonApi/'.$value)) && ! $this->option('force')) {
+                if (! $this->confirm("The [{$value}] already exists. Do you want to replace it?")) {
+                    continue;
+                }
+            }
 
-        if ($this->option('test')) {
-            $destination = app_path('JsonApi-test');
+            copy(
+                base_path('stubs/'.$key),
+                app_path($value)
+            );
         }
 
-        $this->recurse_copy($source, $destination);
+
+//        $source = 'stubs/JsonApi';
+//        $destination = ($this->option('fake')) ? vfsStream::url('app/JsonApi') : app_path('JsonApi');
+//
+//        if ($this->option('test')) {
+//            $destination = app_path('JsonApi-test');
+//        }
+//
+//        $this->recurse_copy($source, $destination);
     }
 
     /**
