@@ -30,3 +30,25 @@
     
 6. Under vagrant from project root `$ php artisan migrate && php artisan db:seed`.
 7. Finally, browse [http://192.168.10.10](http://192.168.10.10), you should see the main page of application.
+
+Demo
+-------------------------
+### Install json-api demo
+To install the json-api demo run the command:
+
+    php artisan make:demo 
+        {--force : Overwrite existing files by default}
+        
+Once it is up and running, go to the following address in your browser:
+
+    http://192.168.10.10/api/v1/skills
+    
+## Testing
+
+To run the tests:
+
+    vagrant ssh
+    cd /vagrant
+    vendor/bin/phpunit
+
+
