@@ -35,7 +35,7 @@ class Schema extends EloquentSchema
      *
      * @return array
      */
-    public function getRelationships($resource, bool $isPrimary, array $includeRelationships)
+    public function getRelationships($resource, $isPrimary, array $includeRelationships)
     {
         if (!$resource instanceof Like) {
             throw new RuntimeException('Expecting a Like model.');
