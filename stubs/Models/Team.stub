@@ -11,6 +11,10 @@ class Team extends Model
 
     public $table = 'teams';
 
+    protected $fillable = [
+        'name'
+    ];
+
     public function parent()
     {
         return $this->belongsTo(Team::class, 'parent_id');

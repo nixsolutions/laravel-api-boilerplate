@@ -11,6 +11,14 @@ class Like extends Model
 
     public $table = 'likes';
 
+    protected $fillable = [
+        'comment'
+    ];
+
+    protected $guarded = array('updated_at');
+
+    public $timestamps = false;
+
     public function liker()
     {
         return $this->belongsTo(User::class, 'liker_id');
