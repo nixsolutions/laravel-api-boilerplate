@@ -1,64 +1,81 @@
 <?php
-
 return [
-
     /*
     |--------------------------------------------------------------------------
-    | JSON API Namespaces
+    | Root Namespace
     |--------------------------------------------------------------------------
     |
-    | The aliases of the different APIs within your application that are
-    | using the JSON API spec. For example, you may have a `v1` and `v2` API.
-    | Generally these are going to match your route groups.
+    | The root namespace for JSON API classes for this API. If `null`, the
+    | namespace will default to `JsonApi` within your application's root
+    | namespace (obtained via Laravel's `Application::getNamespace()`
+    | method).
     |
-    | Each API has the following configuration:
+    | The `by-resource` setting determines how your units are organised within
+    | your root namespace.
     |
-    | ## url-prefix
+    | - true: e.g. \App\JsonApi\Posts\{Schema, Hydrator}
+    | - false:
+    |   - e.g. \App\JsonApi\Schemas\{User, Post, Comment}
+    |   - e.g. \App\JsonApi\Hydrators\{User, Post, Comment}
+    |
+    */
+    'namespace' => null,
+    'by-resource' => true,
+    /*
+    |--------------------------------------------------------------------------
+    | Resources
+    |--------------------------------------------------------------------------
+    |
+    | Here you map the list of JSON API resources in your API to the actual
+    | record (model/entity) classes they relate to.
+    |
+    | For example, if you had a `posts` JSON API resource, that related to
+    | an Eloquent model `App\Post`, your mapping would be:
+    |
+    | `'posts' => App\Post::class`
+    */
+    'resources' => [
+        'users'  => App\Models\User::class,
+        'skills'  => App\Models\Skill::class,
+        'teams'  => App\Models\Team::class,
+        'likes'  => App\Models\Like::class,
+    ],
+    /*
+    |--------------------------------------------------------------------------
+    | Eloquent
+    |--------------------------------------------------------------------------
+    |
+    | Whether your JSON API resources predominantly relate to Eloquent models.
+    | This is used by the package's generators.
+    |
+    | You can override the setting here when running a generator. If the
+    | setting here is `true` running a generator with `--no-eloquent` will
+    | override it; if the setting is `false`, then `--eloquent` is the override.
+    |
+    */
+    'use-eloquent' => true,
+    /*
+    |--------------------------------------------------------------------------
+    | URL Prefix
+    |--------------------------------------------------------------------------
     |
     | The URL prefix to be used when encoding responses. Use this if
     | your API is hosted within a URL namespace, e.g. `/api/v1`.
     |
-    | ## supported-ext
-    |
-    | The supported extensions that apply to the whole API namespace.
-    |
-    | ## paging
-    |
-    | Sets the keys that the client uses for the page number and the amount
-    | per-page in the request. The JSON API spec defines the `page` parameter
-    | as where these will appear. So if the `paging.page` setting is `number`,
-    | the client will need to submit `page[number]=2` to get the second page.
-    | If either of the values are `null`, the default of `number` and `size`
-    | is used.
-    |
-    | ## paging-meta
-    |
-    | This sets the keys to use for pagination meta in responses.
-    | Pagination meta will be added to your response meta under the `page`
-    | key. The settings define the keys to use within the pagination meta
-    | for the values returned by the Laravel Paginator/LengthAwarePaginator
-    | contracts. If any values are `null`, defaults will be used.
+    | Although we could detect this for HTTP requests, we need it defined here
+    | for when we are encoding outside of HTTP requests, e.g. broadcasting.
     |
     */
-    'namespaces'       => [
-        'v1' => [
-            'url-prefix'    => '/api/v1',
-            'supported-ext' => null,
-            'paging'        => [
-                'page'     => 'number',
-                'per-page' => null,
-            ],
-            'paging-meta'   => [
-                'current-page' => null,
-                'per-page'     => null,
-                'first-item'   => null,
-                'last-item'    => null,
-                'total'        => null,
-                'last-page'    => null,
-            ],
-        ],
-    ],
-
+    'url-prefix' => '/api/v1',
+    /*
+    |--------------------------------------------------------------------------
+    | Supported JSON API Extensions
+    |--------------------------------------------------------------------------
+    |
+    | Refer to the JSON API spec for information on supported extensions.
+    |
+    */
+    'supported-ext' => null,
     /*
     |--------------------------------------------------------------------------
     | Content Negotiation
@@ -73,7 +90,7 @@ return [
     | then an error will be sent to the client as per the JSON-API spec.
     |
     */
-    'codec-matcher'    => [
+    'codecs' => [
         'encoders' => [
             'application/vnd.api+json',
             'text/plain' => JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES,
@@ -82,111 +99,35 @@ return [
             'application/vnd.api+json',
         ],
     ],
-
     /*
     |--------------------------------------------------------------------------
-    | Schemas
+    | Providers
     |--------------------------------------------------------------------------
     |
-    | Schemas are the objects that convert a record object into its JSON API
-    | resource representation. This package supports having multiple sets of
-    | schemas, using your JSON API namespaces as configured above. The
-    | 'defaults' set is used for all namespaces, and the config for a
-    | specific namespace is merged over the top of the 'defaults' set.
+    | Providers allow vendor packages to include resources in your API. E.g.
+    | a Shopping Cart vendor package might define the `orders` and `payments`
+    | JSON API resources.
     |
-    | Schema sets are a mapping of the record object class to the schema class
-    | that is responsible for encoding it.
+    | A package author will define a provider class in their package that you
+    | can add here. E.g. for our shopping cart example, the provider could be
+    | `Vendor\ShoppingCart\JsonApi\ResourceProvider`.
+    |
     */
-    'schemas'          => [
-        'defaults' => [
-        ],
-        'v1'       => [
-            'App\Models\User' => 'App\JsonApi\Users\Schema',
-            'App\Models\Team' => 'App\JsonApi\Teams\Schema',
-            'App\Models\Skill' => 'App\JsonApi\Skills\Schema',
-            'App\Models\Like' => 'App\JsonApi\Likes\Schema',
-        ],
-    ],
-
+    'providers' => [],
     /*
     |--------------------------------------------------------------------------
-    | Eloquent Adapter
+    | Errors
     |--------------------------------------------------------------------------
     |
-    | The Eloquent adapter is used to look up whether a record exists for a
-    | resource type and id, and for retrieving that record. The adapter takes
-    | two configuration arrays:
+    | This is an array of JSON API errors that can be returned by the API.
+    | The value here is an array of errors specific to this API, with string
+    | array keys that are the references used to create those errors.
     |
-    | `map` - a map of JSON API resource types to Eloquent Model classes.
-    |
-    | `columns` (optional) - a map of JSON API resource types to the column
-    | name that is used for the resource id. These are optional - if a
-    | column is not specified, the adapter will use `Model::getQualifiedKeyName()`
-    | by default.
+    | Errors contained here will be merged on top of the default errors
+    | supplied by this package (merging is not recursive). This means if you
+    | need to override any of the default errors, you can include an error here
+    | with the same key as the default error you want to override. Default
+    | errors can be found in the package's 'config/json-api-errors.php' file.
     */
-    'eloquent-adapter' => [
-        'map'     => [
-            'users'  => App\Models\User::class,
-            'skills'  => App\Models\Skill::class,
-            'teams'  => App\Models\Team::class,
-            'likes'  => App\Models\Like::class,
-        ],
-        'columns' => [],
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Store Adapters
-    |--------------------------------------------------------------------------
-    |
-    | Store adapters are used to locate your domain records using a JSON API
-    | resource identifier. For Eloquent models you can configure the Eloquent
-    | adapter above. For other records, you will need to write an adapter class
-    | (implementing CloudCreativity\JsonApi\Contracts\Store\AdapterInterface).
-    |
-    | To attach these adapters to the store, list the fully qualified name of
-    | your custom adapters here. These will be created via the service
-    | container, so you can type-hint dependencies in an adapter's constructor.
-    */
-    'adapters'         => [],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Generators
-    |--------------------------------------------------------------------------
-    |
-    | This package supplies a set of handy generators. These make it possible
-    | to easily generate every class needed to implement a JSON API resource.
-    |
-    | So that we do not enforce any specific patterns, we have included a few
-    | handy configuration options. This is so that the generators can follow
-    | your workflow.
-    |
-    | ## namespace (default: 'JsonApi')
-    |
-    | The folder in which you will be storing everything related to your JSON
-    | API implementation.
-    |
-    | ## by-resource (default: true)
-    |
-    | How you are organising your JSON API classes within your application.
-    |
-    | - true: e.g. \App\JsonApi\Tasks\{Schema, Request, Hydrator}
-    | - false:
-    |   - e.g. \App\JsonApi\Schemas\{User, Post, Comment}
-    |   - e.g. \App\JsonApi\Requests\{User, Post, Comment}
-    |
-    | ## use-eloquent (default: true)
-    |
-    | Whether your JSON API resources predominantly relate to Eloquent models.
-    | You can override the setting here when running a generator. If the
-    | setting here is `true` running a generator with `--no-eloquent` will
-    | override it; if the setting is `false`, then `--eloquent` is the override.
-    |
-    */
-    'generator'        => [
-        'namespace'    => 'JsonApi',
-        'by-resource'  => true,
-        'use-eloquent' => true,
-    ],
+    'errors' => [],
 ];
