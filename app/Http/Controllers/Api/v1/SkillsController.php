@@ -107,7 +107,7 @@ class SkillsController extends EloquentController
  *     @SWG\Parameter(
  *     in="body",
  *     name="object",
- *     description="Skill object (format <br/>{&quot;data&quot;: {&quot;type&quot;: &quot;skills&quot;, &quot;attributes&quot;: {&quot;name&quot;: &quot;new name&quot;}, &quot;relationships&quot;: {&quot;author&quot;: {&quot;data&quot;: {&quot;type&quot;: &quot;users&quot;, &quot;id&quot;: &quot;1&quot;}}}}}",
+ *     description="Skill object (format <br/>{&quot;data&quot;: {&quot;type&quot;: &quot;skills&quot;, &quot;attributes&quot;: {&quot;name&quot;: &quot;new name&quot;}, &quot;relationships&quot;: {&quot;author&quot;: {&quot;data&quot;: {&quot;type&quot;: &quot;users&quot;, &quot;id&quot;: 1}}}}}",
  *     required=true,
  *     @SWG\Schema(
  *         type="object",
@@ -136,7 +136,7 @@ class SkillsController extends EloquentController
  *     @SWG\Parameter(
  *     in="body",
  *     name="object",
- *     description="Skill object (format <br/>{&quot;data&quot;: {&quot;type&quot;: &quot;skills&quot;, &quot;id&quot;: &quot;1&quot;, &quot;attributes&quot;: {&quot;name&quot;: &quot;new name&quot;}}}",
+ *     description="Skill object (format <br/>{&quot;data&quot;: {&quot;type&quot;: &quot;skills&quot;, &quot;id&quot;: 1, &quot;attributes&quot;: {&quot;name&quot;: &quot;new name&quot;}}}",
  *     required=true,
  *     @SWG\Schema(
  *         type="object",

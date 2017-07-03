@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\JsonApi\Skills\Hydrator;
-use App\Models\Skill;
+use App\JsonApi\Teams\Hydrator;
+use App\Models\Team;
 use CloudCreativity\LaravelJsonApi\Http\Controllers\EloquentController;
 use CloudCreativity\LaravelJsonApi\Search\SearchAll;
-use App\JsonApi\Skills\Request as SkillsRequest;
+use App\JsonApi\Teams\Request as TeamsRequest;
 
-class SkillsController extends EloquentController
+class TeamsController extends EloquentController
 {
     /**
      * EloquentController constructor.
      *
-     * @param Skill $model
+     * @param Team $model
      * @param Hydrator|null $hydrator
      * @param SearchAll|null $search
      */
     public function __construct(
-        Skill $model,
+        Team $model,
         Hydrator $hydrator = null
     ) {
         parent::__construct($model, $hydrator);
@@ -26,15 +26,15 @@ class SkillsController extends EloquentController
 
     protected function getRequestHandler()
     {
-        return SkillsRequest::class;
+        return TeamsRequest::class;
     }
 }
 
 /**
- * @SWG\Get(path="/skills",
- *   tags={"Skill actions"},
- *   summary="Filter skills with limited per page quantity.",
- *   description="Filter skills",
+ * @SWG\Get(path="/teams",
+ *   tags={"Team actions"},
+ *   summary="Filter teams with limited per page quantity.",
+ *   description="Filter teams",
  *   produces={"application/vnd.api+json"},
  *   consumes={"application/vnd.api+json"},
  *     @SWG\Parameter(
@@ -67,19 +67,19 @@ class SkillsController extends EloquentController
  *         type="object", example=""
  *     )
  *   ),
- *   @SWG\Response(response="200", description="Return filtered skills list.")
+ *   @SWG\Response(response="200", description="Return filtered teams list.")
  * )
  */
 
 /**
  * @SWG\Get(
- *     path="/skills/{id}",
- *     summary="Get a skill",
- *     description="Get a skill",
+ *     path="/teams/{id}",
+ *     summary="Get a team",
+ *     description="Get a team",
  *     produces={"application/vnd.api+json", "application/vnd.api+json"},
- *     tags={"Skill actions"},
+ *     tags={"Team actions"},
  *     @SWG\Parameter(
- *         description="Skill id",
+ *         description="Team id",
  *         in="path",
  *         name="id",
  *         required=true,
@@ -92,22 +92,22 @@ class SkillsController extends EloquentController
  *     ),
  *     @SWG\Response(
  *         response=404,
- *         description="Skill not found"
+ *         description="Team not found"
  *     ),
  * )
  */
 
 /**
- * @SWG\Post(path="/skills",
- *   tags={"Skill actions"},
- *   summary="Post skills",
- *   description="Post skills",
+ * @SWG\Post(path="/teams",
+ *   tags={"Team actions"},
+ *   summary="Create team",
+ *   description="Create team",
  *   produces={"application/vnd.api+json"},
  *   consumes={"application/vnd.api+json"},
  *     @SWG\Parameter(
  *     in="body",
  *     name="object",
- *     description="Skill object (format <br/>{&quot;data&quot;: {&quot;type&quot;: &quot;skills&quot;, &quot;attributes&quot;: {&quot;name&quot;: &quot;new name&quot;}, &quot;relationships&quot;: {&quot;author&quot;: {&quot;data&quot;: {&quot;type&quot;: &quot;users&quot;, &quot;id&quot;: &quot;1&quot;}}}}}",
+ *     description="Team object (format <br/>{&quot;data&quot;: {&quot;type&quot;: &quot;teams&quot;, &quot;attributes&quot;: {&quot;name&quot;: &quot;new name&quot;}}}",
  *     required=true,
  *     @SWG\Schema(
  *         type="object",
@@ -119,14 +119,14 @@ class SkillsController extends EloquentController
  */
 
 /**
- * @SWG\Patch(path="/skills/{id}",
- *   tags={"Skill actions"},
- *   summary="Update skill",
- *   description="Update skills",
+ * @SWG\Patch(path="/teams/{id}",
+ *   tags={"Team actions"},
+ *   summary="Update team",
+ *   description="Update teams",
  *   produces={"application/vnd.api+json"},
  *   consumes={"application/vnd.api+json"},
  *   @SWG\Parameter(
- *         description="Skill id to update",
+ *         description="Team id to update",
  *         in="path",
  *         name="id",
  *         required=true,
@@ -136,7 +136,7 @@ class SkillsController extends EloquentController
  *     @SWG\Parameter(
  *     in="body",
  *     name="object",
- *     description="Skill object (format <br/>{&quot;data&quot;: {&quot;type&quot;: &quot;skills&quot;, &quot;id&quot;: &quot;1&quot;, &quot;attributes&quot;: {&quot;name&quot;: &quot;new name&quot;}}}",
+ *     description="Team object (format <br/>{&quot;data&quot;: {&quot;type&quot;: &quot;teams&quot;, &quot;id&quot;: 1, &quot;attributes&quot;: {&quot;name&quot;: &quot;new name&quot;}}}",
  *     required=true,
  *     @SWG\Schema(
  *         type="object",
@@ -149,13 +149,13 @@ class SkillsController extends EloquentController
 
 /**
  * @SWG\Delete(
- *     path="/skills/{id}",
- *     summary="Delete a skill",
- *     description="Delete a skill",
+ *     path="/teams/{id}",
+ *     summary="Delete a team",
+ *     description="Delete a team",
  *     produces={"application/vnd.api+json", "application/vnd.api+json"},
- *     tags={"Skill actions"},
+ *     tags={"Team actions"},
  *     @SWG\Parameter(
- *         description="Skill id to delete",
+ *         description="Team id to delete",
  *         in="path",
  *         name="id",
  *         required=true,
@@ -168,7 +168,7 @@ class SkillsController extends EloquentController
  *     ),
  *     @SWG\Response(
  *         response=404,
- *         description="Skill not found"
+ *         description="Team not found"
  *     ),
  * )
  */

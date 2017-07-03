@@ -19,10 +19,9 @@ class TeamsController extends EloquentController
      */
     public function __construct(
         Team $model,
-        Hydrator $hydrator = null,
-        SearchAll $search = null
+        Hydrator $hydrator = null
     ) {
-        parent::__construct($model, $hydrator, $search);
+        parent::__construct($model, $hydrator);
     }
 
     protected function getRequestHandler()
@@ -137,7 +136,7 @@ class TeamsController extends EloquentController
  *     @SWG\Parameter(
  *     in="body",
  *     name="object",
- *     description="Team object (format <br/>{&quot;data&quot;: {&quot;type&quot;: &quot;teams&quot;, &quot;id&quot;: 1, &quot;attributes&quot;: {&quot;name&quot;: &quot;new name&quot;}}}",
+ *     description="Team object (format <br/>{&quot;data&quot;: {&quot;type&quot;: &quot;teams&quot;, &quot;id&quot;: &quot;1&quot;, &quot;attributes&quot;: {&quot;name&quot;: &quot;new name&quot;}}}",
  *     required=true,
  *     @SWG\Schema(
  *         type="object",

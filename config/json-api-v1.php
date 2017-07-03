@@ -100,7 +100,12 @@ return [
     'schemas'          => [
         'defaults' => [
         ],
-        'v1'       => [],
+        'v1'       => [
+            'App\Models\User' => 'App\JsonApi\Users\Schema',
+            'App\Models\Team' => 'App\JsonApi\Teams\Schema',
+            'App\Models\Skill' => 'App\JsonApi\Skills\Schema',
+            'App\Models\Like' => 'App\JsonApi\Likes\Schema',
+        ],
     ],
 
     /*
@@ -122,6 +127,9 @@ return [
     'eloquent-adapter' => [
         'map'     => [
             'users'  => App\Models\User::class,
+            'skills'  => App\Models\Skill::class,
+            'teams'  => App\Models\Team::class,
+            'likes'  => App\Models\Like::class,
         ],
         'columns' => [],
     ],

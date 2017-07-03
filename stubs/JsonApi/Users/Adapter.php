@@ -1,47 +1,54 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: kvasenko
+ * Date: 30.06.17
+ * Time: 15:35
+ */
 
 namespace App\JsonApi\Users;
 
-use CloudCreativity\LaravelJsonApi\Search\AbstractSearch;
+use App\Models\User;
+use CloudCreativity\LaravelJsonApi\Store\EloquentAdapter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
-class Search extends AbstractSearch
+
+class Adapter extends EloquentAdapter
 {
     /**
-     * @var int
+     * Adapter constructor.
      */
-    protected $maxPerPage = 25;
-
+    public function __construct()
+    {
+        parent::__construct(new User());
+    }
     /**
-     * @param Builder $builder
-     * @param Collection $filters
+     * @inheritDoc
      */
-    protected function filter(Builder $builder, Collection $filters)
+    protected function filter(Builder $query, Collection $filters)
     {
         $user = Auth::user();
 
         if (!$user->hasRole('admin')) {
             $teamsIds = $user->teams->pluck('id')->toArray();
 
-            $builder
+            $query
                 ->leftJoin('membership', 'users.id', 'membership.user_id')
                 ->whereIn('team_id', $teamsIds);
 
             if ($filters->has('name')) {
-                $builder->where('name', 'like', '%' . $filters->get('name') . '%');
+                $query->where('name', 'like', '%' . $filters->get('name') . '%');
             }
         }
     }
-
     /**
-     * @param Collection $filters
-     *
-     * @return bool
+     * @inheritDoc
      */
     protected function isSearchOne(Collection $filters)
     {
         return false;
     }
+
 }
