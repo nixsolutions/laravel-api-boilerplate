@@ -8,13 +8,13 @@
         "php": ">=7.0",
         "laravel/framework": "5.4.*",
         "darkaonline/l5-swagger": "4.0.1",
-        "cloudcreativity/laravel-json-api": "^0.7.0",
+        "cloudcreativity/laravel-json-api": "^0.9",
         "tymon/jwt-auth": "1.0.0-beta.3",
         "barryvdh/laravel-ide-helper": "^2.2",
-        "barryvdh/laravel-debugbar": "^2.3",
         "doctrine/dbal": "^2.5",
         "laravel/homestead": "^5.0",
-        "zizaco/entrust": "5.2.x-dev"
+        "zizaco/entrust": "5.2.x-dev",
+        "barryvdh/laravel-debugbar": "^2.4"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
