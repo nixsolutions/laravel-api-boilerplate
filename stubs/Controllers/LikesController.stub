@@ -19,10 +19,9 @@ class LikesController extends EloquentController
      */
     public function __construct(
         Like $model,
-        Hydrator $hydrator = null,
-        SearchAll $search = null
+        Hydrator $hydrator = null
     ) {
-        parent::__construct($model, $hydrator, $search);
+        parent::__construct($model, $hydrator);
     }
 
     protected function getRequestHandler()
@@ -110,8 +109,8 @@ class LikesController extends EloquentController
  *     in="body",
  *     name="object",
  *     description="Like object (format <br/>{&quot;data&quot;: {&quot;type&quot;: &quot;likes&quot;, &quot;attributes&quot;: {<br />
-  &quot;comment&quot;: &quot;new comment&quot;}, &quot;relationships&quot;: <br />{&quot;liked&quot;: {&quot;data&quot;: {&quot;type&quot;: &quot;users&quot;, &quot;id&quot;: 1}}, <br />
-  &quot;liker&quot;: {&quot;data&quot;: {&quot;type&quot;: &quot;users&quot;, &quot;id&quot;: 1}}, &quot;skill&quot;: {&quot;data&quot;: {&quot;type&quot;: &quot;skills&quot;, &quot;id&quot;: 1}}}}}",
+  &quot;comment&quot;: &quot;new comment&quot;}, &quot;relationships&quot;: <br />{&quot;liked&quot;: {&quot;data&quot;: {&quot;type&quot;: &quot;users&quot;, &quot;id&quot;: &quot;1&quot;}}, <br />
+  &quot;liker&quot;: {&quot;data&quot;: {&quot;type&quot;: &quot;users&quot;, &quot;id&quot;: &quot;1&quot;}}, &quot;skill&quot;: {&quot;data&quot;: {&quot;type&quot;: &quot;skills&quot;, &quot;id&quot;: &quot;1&quot;}}}}}",
  *     required=true,
  *     @SWG\Schema(
  *         type="object",
@@ -140,7 +139,7 @@ class LikesController extends EloquentController
  *     @SWG\Parameter(
  *     in="body",
  *     name="object",
- *     description="Like object (format <br/>{&quot;data&quot;: {&quot;type&quot;: &quot;likes&quot;, &quot;id&quot;: 1, &quot;attributes&quot;: {&quot;comment&quot;: &quot;new comment&quot;}}}",
+ *     description="Like object (format <br/>{&quot;data&quot;: {&quot;type&quot;: &quot;likes&quot;, &quot;id&quot;: &quot;1&quot;, &quot;attributes&quot;: {&quot;comment&quot;: &quot;new comment&quot;}}}",
  *     required=true,
  *     @SWG\Schema(
  *         type="object",
