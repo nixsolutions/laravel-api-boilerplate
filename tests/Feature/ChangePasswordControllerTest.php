@@ -22,11 +22,7 @@ class ChangePasswordControllerTest extends TestCase
      */
     public function testChangePassword($userData)
     {
-        $userData = [
-            'email' => 'test@mail.com',
-            'password' => Hash::make('password'),
-            'activated' => true
-        ];
+        $userData['password'] = Hash::make('password');
 
         $user = factory(User::class)->create($userData);
 

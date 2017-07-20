@@ -1,24 +1,24 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Web;
 
+use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 class LoginControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
     /**
-     * @dataProvider addDataProvider
+     * @dataProvider  addDataProvider
      *
      * @param $userData
+     *
      */
     public function testLogin($userData)
     {
@@ -26,32 +26,35 @@ class LoginControllerTest extends TestCase
 
         factory(User::class)->create($userData);
 
-        $response = $this->json('POST', '/api/v1/login',
+        $response = $this
+            ->post('/login',
             [
                 'email' => $userData['email'],
                 'password' => 'password'
             ]
         );
 
-        $response->assertStatus(200);
+        $response->assertRedirect('home');
     }
 
     /**
-     * @dataProvider addDataProvider
+     * @dataProvider  addDataProvider
      *
      * @param $userData
+     *
      */
     public function testLoginError($userData)
     {
         factory(User::class)->create($userData);
 
-        $response = $this->json('POST', '/api/v1/login',
-            [
-                'email' => $userData['email'],
-                'password' => 'password-wrong'
-            ]
-        );
+        $response = $this
+            ->post('/login',
+                [
+                    'email' => $userData['email'],
+                    'password' => 'password-wrong'
+                ]
+            );
 
-        $response->assertStatus(401);
+        $response->assertRedirect('/');
     }
 }
