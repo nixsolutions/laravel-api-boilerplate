@@ -19,10 +19,9 @@ class UsersController extends EloquentController
      */
     public function __construct(
         User $model,
-        Hydrator $hydrator = null,
-        Search $search = null
+        Hydrator $hydrator = null
     ) {
-        parent::__construct($model, $hydrator, $search);
+        parent::__construct($model, $hydrator);
     }
 
     protected function getRequestHandler()
