@@ -11,7 +11,8 @@ class MakeJsonApiDemoRemove extends Command
      *
      * @var string
      */
-    protected $signature = 'make:demo-remove';
+    protected $signature = 'make:demo-remove
+            {--test  : Add files postfix for test}';
 
     /**
      * The console command description.
@@ -19,6 +20,8 @@ class MakeJsonApiDemoRemove extends Command
      * @var string
      */
     protected $description = 'Remove JsonApi Demo entities';
+
+    protected $testPostfix = '-test';
 
     /**
      * @var array
@@ -82,7 +85,6 @@ class MakeJsonApiDemoRemove extends Command
     /**
      * Create a new command instance.
      *
-     * @return void
      */
     public function __construct()
     {
@@ -96,6 +98,10 @@ class MakeJsonApiDemoRemove extends Command
      */
     public function handle()
     {
+        if ($this->option('test')) {
+            $this->setupTest();
+        }
+
         $this->removeJsonApiEntities();
         $this->removeModels();
         $this->removeControllers();
@@ -103,11 +109,38 @@ class MakeJsonApiDemoRemove extends Command
         $this->removeSeeds();
         $this->removeMigrations();
 
-        $this::call('optimize');
+        if (!$this->option('test')) {
+            $this::call('optimize');
+        }
 
         $this->info('JsonApi demo entities removed successfully.');
     }
 
+    /**
+     *
+     */
+    protected function setupTest()
+    {
+        foreach ($this->migrations as $key => $value) {
+            $this->migrations[$key] = $value . $this->testPostfix;
+        }
+        foreach ($this->seeds as $key => $value) {
+            $this->seeds[$key] = $value . $this->testPostfix;
+        }
+        foreach ($this->controllers as $key => $value) {
+            $this->controllers[$key] = $value . $this->testPostfix;
+        }
+        foreach ($this->models as $key => $value) {
+            $this->models[$key] = $value . $this->testPostfix;
+        }
+        foreach ($this->jsonapiEntities as $key => $value) {
+            $this->jsonapiEntities[$key] = $value . $this->testPostfix;
+        }
+    }
+
+    /**
+     *
+     */
     protected function removeModels()
     {
         foreach ($this->models as $key => $value) {
@@ -117,6 +150,9 @@ class MakeJsonApiDemoRemove extends Command
         }
     }
 
+    /**
+     *
+     */
     protected function removeControllers()
     {
         foreach ($this->controllers as $key => $value) {
@@ -126,6 +162,9 @@ class MakeJsonApiDemoRemove extends Command
         }
     }
 
+    /**
+     *
+     */
     protected function removeMigrations()
     {
         foreach ($this->migrations as $key => $value) {
@@ -134,6 +173,9 @@ class MakeJsonApiDemoRemove extends Command
         }
     }
 
+    /**
+     *
+     */
     protected function removeSeeds()
     {
         foreach ($this->seeds as $key => $value) {
@@ -143,30 +185,40 @@ class MakeJsonApiDemoRemove extends Command
         }
     }
 
+    /**
+     *
+     */
     protected function removeJsonApiEntities()
     {
-        foreach ($this->jsonapiEntities as $key => $value) {
-            if (file_exists(app_path($value))) {
-                unlink(app_path($value));
+        try {
+            foreach ($this->jsonapiEntities as $key => $value) {
+                if (file_exists(app_path($value))) {
+                    unlink(app_path($value));
+                }
             }
-        }
-        if (file_exists(app_path('JsonApi/Users'))) {
-            rmdir(app_path('JsonApi/Users'));
-        }
+            if (file_exists(app_path('JsonApi/Users'))) {
+                rmdir(app_path('JsonApi/Users'));
+            }
 
-        if (file_exists(app_path('JsonApi/Likes'))) {
-            rmdir(app_path('JsonApi/Likes'));
-        }
+            if (file_exists(app_path('JsonApi/Likes'))) {
+                rmdir(app_path('JsonApi/Likes'));
+            }
 
-        if (file_exists(app_path('JsonApi/Skills'))) {
-            rmdir(app_path('JsonApi/Skills'));
-        }
+            if (file_exists(app_path('JsonApi/Skills'))) {
+                rmdir(app_path('JsonApi/Skills'));
+            }
 
-        if (file_exists(app_path('JsonApi/Teams'))) {
-            rmdir(app_path('JsonApi/Teams'));
-        }
-        if (file_exists(app_path('JsonApi'))) {
-            rmdir(app_path('JsonApi'));
+            if (file_exists(app_path('JsonApi/Teams'))) {
+                rmdir(app_path('JsonApi/Teams'));
+            }
+
+            if (file_exists(app_path('JsonApi'))) {
+                if(!@rmdir(app_path('JsonApi'))) {
+                     throw new \League\Flysystem\Exception('JsonApi directory is not empty!');
+                };
+            }
+        } catch (\League\Flysystem\Exception $e) {
+            $this->warn($e->getMessage());
         }
     }
 }
