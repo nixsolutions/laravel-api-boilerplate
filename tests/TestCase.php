@@ -37,10 +37,10 @@ abstract class TestCase extends BaseTestCase
     {
         return [
             [
-            'userData' => [
-                'email' => 'test@mail.com',
-                'password' => 'password',
-                'activated' => true
+                'userData' => [
+                    'email' => 'test@mail.com',
+                    'password' => 'password',
+                    'activated' => true
                 ]
             ]
         ];
@@ -50,11 +50,11 @@ abstract class TestCase extends BaseTestCase
     {
         return [
             [
-            'userData' => [
-                'email' => 'test@mail.com',
-                'password' => 'password',
-                'password_confirmation' => 'password',
-                'name' => 'TestUser'
+                'userData' => [
+                    'email' => 'test@mail.com',
+                    'password' => 'password',
+                    'password_confirmation' => 'password',
+                    'name' => 'TestUser'
                 ]
             ]
         ];
