@@ -104,17 +104,24 @@ class MakeJsonApiDemo extends Command
 
         $this->fire();
 
-        $this->exportControllers();
-        $this->exportModels();
+        $this->exportControllers()
+            ->info('Controllers generated successfully.');
 
-        $this->exportMigrations();
-        $this->exportSeeds();
+        $this->exportModels()
+            ->info('Models generated successfully.');
+
+        $this->exportMigrations()
+            ->info('Migrations generated successfully.');
+        $this->exportSeeds()
+            ->info('Seeds generated successfully.');
+
+        $this->info('JsonApi Demo entities generated successfully.');
 
         if (!$this->option('test')) {
             $this::call('optimize');
         }
 
-        $this->info('JsonApi demo entities generated successfully.');
+
     }
 
     /**
@@ -204,6 +211,8 @@ class MakeJsonApiDemo extends Command
                 app_path('Http/Controllers/Api/v1/'.$value)
             );
         }
+
+        return $this;
     }
 
     /**
@@ -223,6 +232,8 @@ class MakeJsonApiDemo extends Command
                 app_path('Models/'.$value)
             );
         }
+
+        return $this;
     }
 
     /**
@@ -243,6 +254,8 @@ class MakeJsonApiDemo extends Command
                 database_path('migrations/'. date('Y_m_d_Hi') . '0' . $counter++ . '_' . $value)
             );
         }
+
+        return $this;
     }
 
     /**
@@ -262,6 +275,8 @@ class MakeJsonApiDemo extends Command
                 database_path('seeds/'.$value)
             );
         }
+
+        return $this;
     }
 
     /**
