@@ -87,11 +87,19 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapJsonApiV1Routes()
     {
         Route::group([
-            'middleware' => 'json-api:v1',
+            'middleware' => 'json-api:default',
             'namespace' => $this->namespace,
             'prefix' => 'api/v1'
         ], function ($router) {
-            require base_path('routes/json-api-v1.php');
+            require base_path('routes/json-api-v1-default.php');
+        });
+
+        Route::group([
+            'middleware' => 'json-api:default',
+            'namespace' => $this->namespace,
+            'prefix' => 'api/v1'
+        ], function ($router) {
+            require base_path('routes/json-api-v1-demo.php');
         });
     }
 }
