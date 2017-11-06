@@ -1,29 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: kvasenko
- * Date: 30.06.17
- * Time: 15:35
- */
 
-namespace App\JsonApi\Teams;
+namespace App\JsonApi\Roles;
 
-use App\Models\Team;
+use App\Models\Role;
 use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
 use CloudCreativity\LaravelJsonApi\Store\EloquentAdapter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
-
 class Adapter extends EloquentAdapter
 {
-    /**
-     * @var array
-     */
-    protected $defaultPagination = [
-        'number' => 1,
-    ];
-
     /**
      * Adapter constructor.
      *
@@ -31,21 +17,24 @@ class Adapter extends EloquentAdapter
      */
     public function __construct(StandardStrategy $paging)
     {
-        parent::__construct(new Team(), $paging);
+        parent::__construct(new Role(), $paging);
     }
+
     /**
-     * @inheritDoc
+     * @param Builder $builder
+     * @param Collection $filters
      */
-    protected function filter(Builder $query, Collection $filters)
+    protected function filter(Builder $builder, Collection $filters)
     {
-        // TODO: Implement filter() method.
+        //
     }
+
     /**
-     * @inheritDoc
+     * @param Collection $filters
+     * @return bool
      */
     protected function isSearchOne(Collection $filters)
     {
-        // TODO: Implement isSearchOne() method.
+        //
     }
-
 }

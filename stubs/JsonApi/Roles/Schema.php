@@ -1,24 +1,23 @@
 <?php
 
-namespace App\JsonApi\Skills;
+namespace App\JsonApi\Roles;
 
-use App\Models\Skill;
-use CloudCreativity\JsonApi\Exceptions\RuntimeException;
+use App\Models\Role;
 use CloudCreativity\LaravelJsonApi\Schema\EloquentSchema;
+use CloudCreativity\JsonApi\Exceptions\RuntimeException;
 
 class Schema extends EloquentSchema
 {
+
     /**
      * @var string
      */
-    const RESOURCE_TYPE = 'skills';
+    const RESOURCE_TYPE = 'roles';
 
     /**
-     * @var array
+     * @var array|null
      */
-    protected $attributes = [
-        'name',
-    ];
+    protected $attributes = null;
 
     /**
      * @return string
@@ -32,21 +31,21 @@ class Schema extends EloquentSchema
      * @param object $resource
      * @param bool $isPrimary
      * @param array $includeRelationships
-     *
      * @return array
      */
     public function getRelationships($resource, $isPrimary, array $includeRelationships)
     {
-        if (!$resource instanceof Skill) {
-            throw new RuntimeException('Expecting a Skill model.');
+        if (!$resource instanceof Role) {
+            throw new RuntimeException('Expecting a Role model.');
         }
 
         return [
-            'author' => [
-                self::SHOW_SELF    => true,
+            'users' => [
+                self::SHOW_SELF => true,
                 self::SHOW_RELATED => true,
-                self::DATA         => $resource->author,
-            ],
+                self::DATA => $resource->users,
+            ]
         ];
     }
 }
+

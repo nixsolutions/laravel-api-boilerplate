@@ -1,54 +1,40 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: kvasenko
- * Date: 30.06.17
- * Time: 15:35
- */
 
 namespace App\JsonApi\Users;
 
 use App\Models\User;
+use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
 use CloudCreativity\LaravelJsonApi\Store\EloquentAdapter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
-
 
 class Adapter extends EloquentAdapter
 {
     /**
      * Adapter constructor.
+     *
+     * @param StandardStrategy $paging
      */
-    public function __construct()
+    public function __construct(StandardStrategy $paging)
     {
-        parent::__construct(new User());
+        parent::__construct(new User(), $paging);
     }
+
     /**
-     * @inheritDoc
+     * @param Builder $builder
+     * @param Collection $filters
      */
-    protected function filter(Builder $query, Collection $filters)
+    protected function filter(Builder $builder, Collection $filters)
     {
-        $user = Auth::user();
-
-        if (!$user->hasRole('admin')) {
-            $teamsIds = $user->teams->pluck('id')->toArray();
-
-            $query
-                ->leftJoin('membership', 'users.id', 'membership.user_id')
-                ->whereIn('team_id', $teamsIds);
-
-            if ($filters->has('name')) {
-                $query->where('name', 'like', '%' . $filters->get('name') . '%');
-            }
-        }
+        //
     }
+
     /**
-     * @inheritDoc
+     * @param Collection $filters
+     * @return bool
      */
     protected function isSearchOne(Collection $filters)
     {
-        return false;
+        //
     }
-
 }
