@@ -1,6 +1,7 @@
 <?php
 
 use CloudCreativity\LaravelJsonApi\Routing\ApiGroup as Api;
+use Illuminate\Routing\Router;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,13 +14,13 @@ use CloudCreativity\LaravelJsonApi\Routing\ApiGroup as Api;
 |
 */
 
-JsonApi::api('v1', [
-    'namespace' => 'Api\v1',
-    'prefix' => 'v1',
-    'as' => 'api-v1::'
-], function (Api $api, $router) {
-    $api->resource('teams', ['has-one' => 'parent', 'has-many' => ['children', 'members']]);
-    $api->resource('skills', ['has-one' => 'author']);
-    $api->resource('likes', ['has-one' => ['liker', 'liked', 'skill']]);
-    $api->resource('users');
-});
+JsonApi::register(
+    'v1',
+    ['namespace' => 'Api\v1', 'prefix' => 'v1', 'as' => 'api-v1::'],
+    function (Api $api, Router $router) {
+        $api->resource('users', [
+            'controller' => 'UsersController',
+            'has-many' => ['roles'],
+            'has-one' => ['activation']
+        ]);
+    });
