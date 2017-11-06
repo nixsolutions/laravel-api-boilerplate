@@ -5,6 +5,7 @@
 Homestead.json
 Homestead.yaml
 .env
+.env.testing
 .vagrant
 storage/api-docs/
 _ide_helper.php
