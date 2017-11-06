@@ -66,6 +66,20 @@ return [
             'engine'    => null,
         ],
 
+        'mysql_testing' => [
+            'driver'    => 'mysql',
+            'host'      => env('TESTING_DB_HOST', 'localhost'),
+            'port'      => env('TESTING_DB_PORT', '3306'),
+            'database'  => env('TESTING_DB_DATABASE', 'forge'),
+            'username'  => env('TESTING_DB_USERNAME', 'forge'),
+            'password'  => env('TESTING_DB_PASSWORD', ''),
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+            'strict'    => true,
+            'engine'    => null,
+        ],
+
         'pgsql' => [
             'driver'   => 'pgsql',
             'host'     => env('DB_HOST', 'localhost'),
