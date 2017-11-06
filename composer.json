@@ -8,7 +8,7 @@
         "php": ">=7.0",
         "laravel/framework": "5.4.*",
         "darkaonline/l5-swagger": "4.0.1",
-        "cloudcreativity/laravel-json-api": "^0.9",
+        "cloudcreativity/laravel-json-api": "^0.11",
         "tymon/jwt-auth": "1.0.0-beta.3",
         "barryvdh/laravel-ide-helper": "^2.2",
         "doctrine/dbal": "^2.5",
