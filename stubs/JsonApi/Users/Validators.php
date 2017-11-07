@@ -56,7 +56,7 @@ class Validators extends AbstractValidatorProvider
     protected function attributeRules($record = null)
     {
         $email = 'required|email|max:255|unique:users';
-        $password = 'required|min:8|max:16|complexity_password';
+        $password = 'required|min:8|max:16';
 
         if ($record) {
             $email = 'sometimes|' . $email;

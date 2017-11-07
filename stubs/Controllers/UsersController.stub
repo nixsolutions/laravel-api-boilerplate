@@ -2,19 +2,40 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Helpers\Interfaces\ResponseCodesInterface;
+use App\Helpers\JsonApiResponseHelper;
 use CloudCreativity\JsonApi\Contracts\Http\Requests\RequestInterface as JsonApiRequest;
 use CloudCreativity\LaravelJsonApi\Http\Controllers\EloquentController;
 use App\Models\User;
 use App\JsonApi\Users\Hydrator;
+use App\Services\UserService;
+use Illuminate\Auth\Events\Registered;
+use Auth;
 
 class UsersController extends EloquentController
 {
+    use JsonApiResponseHelper;
+
     /**
+     * @var UserService $service
+     */
+    protected $service;
+
+    /**
+     * @var User $model
+     */
+    protected $model;
+
+    /**
+     * @param UserService $service
      * @param User $user
      * @param Hydrator $hydrator
      */
-    public function __construct(User $user, Hydrator $hydrator)
+    public function __construct(UserService $service, User $user, Hydrator $hydrator)
     {
+        $this->service = $service;
+        $this->model = $user;
+
         parent::__construct($user, $hydrator);
     }
 
@@ -22,7 +43,7 @@ class UsersController extends EloquentController
      * Display a listing of the resource.
      *
      * @SWG\Get(
-     *   path="/users",
+     *   path="/users?filter[user]=me",
      *   tags={"Users"},
      *   summary="get me",
      *   description="get me",
@@ -58,6 +79,14 @@ class UsersController extends EloquentController
      * @param JsonApiRequest $request
      * @return mixed
      */
+    public function read(JsonApiRequest $request)
+    {
+        if (is_array($result = $this->service->checkAccess())) {
+            return $this->sendFailedResponse($result, ResponseCodesInterface::HTTP_CODE_FORBIDDEN);
+        }
+
+        return parent::read($request);
+    }
 
     /**
      * @SWG\Post(path="/users",
@@ -92,6 +121,23 @@ class UsersController extends EloquentController
      * @param JsonApiRequest $request
      * @return mixed
      */
+    public function create(JsonApiRequest $request)
+    {
+        /**
+         * hydrate all data to User entity
+         *
+         * @var User $user
+         */
+        $user = $this->hydrate($request->getDocument()->getResource(), $this->model);
+
+        $this->service->saveModel($user);
+
+        $this->service->attachUserRole($user);
+
+        event(new Registered($user));
+
+        return $this->reply()->created($user);
+    }
 
     /**
      * @SWG\Patch(path="/users/{id}",
@@ -142,6 +188,22 @@ class UsersController extends EloquentController
      * @param JsonApiRequest $request
      * @return mixed
      */
+    public function update(JsonApiRequest $request)
+    {
+        if (is_array($result = $this->service->checkAccess())) {
+            return $this->sendFailedResponse($result, ResponseCodesInterface::HTTP_CODE_FORBIDDEN);
+        }
+
+        $resource = $request->getDocument()->getResource();
+        $record = $this->getRecord($request);
+
+        // hydrate all data to User entity
+        $user = $this->hydrate($resource, $record);
+
+        $this->service->saveModel($user);
+
+        return $this->reply()->content($user);
+    }
 
     /**
      * @SWG\Delete(
@@ -166,4 +228,12 @@ class UsersController extends EloquentController
      * @param JsonApiRequest $request
      * @return mixed
      */
+    public function delete(JsonApiRequest $request)
+    {
+        if (is_array($result = $this->service->checkAccess())) {
+            return $this->sendFailedResponse($result, ResponseCodesInterface::HTTP_CODE_FORBIDDEN);
+        }
+
+        return parent::delete($request);
+    }
 }

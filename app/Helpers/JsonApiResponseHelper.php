@@ -20,7 +20,7 @@ trait JsonApiResponseHelper
         $errorsJson = [];
         if (!empty($errors['email'])) {
             $emailError = [
-                'status' => $statusCode,
+                'status' => "$statusCode",
                 'title'  => 'Email error',
                 'detail' => $errors['email'][0]
             ];
@@ -29,7 +29,7 @@ trait JsonApiResponseHelper
 
         if (!empty($errors['password'])) {
             $passwordError = [
-                'status' => $statusCode,
+                'status' => "$statusCode",
                 'title'  => 'Password error',
                 'detail' => $errors['password'][0]
             ];
@@ -38,7 +38,7 @@ trait JsonApiResponseHelper
 
         if (!empty($errors['password_confirmation'])) {
             $passwordConfirmationError = [
-                'status' => $statusCode,
+                'status' => "$statusCode",
                 'title'  => 'Password error',
                 'detail' => $errors['password_confirmation'][0]
             ];
@@ -47,7 +47,7 @@ trait JsonApiResponseHelper
 
         if (!empty($errors['name'])) {
             $nameError = [
-                'status' => $statusCode,
+                'status' => "$statusCode",
                 'title'  => 'Name error',
                 'detail' => $errors['name'][0]
             ];
@@ -56,7 +56,7 @@ trait JsonApiResponseHelper
 
         if (!empty($errors['token'])) {
             $tokenError = [
-                'status' => $statusCode,
+                'status' => "$statusCode",
                 'title'  => 'Token error',
                 'detail' => $errors['token']
             ];
@@ -65,7 +65,7 @@ trait JsonApiResponseHelper
 
         if (!empty($errors['token'])) {
             $tokenError = [
-                'status' => $statusCode,
+                'status' => "$statusCode",
                 'title'  => 'Token error',
                 'detail' => $errors['token']
             ];
@@ -74,11 +74,32 @@ trait JsonApiResponseHelper
 
         if (!empty($errors['activation_hash'])) {
             $activationHashError = [
-                'status' => $statusCode,
+                'status' => "$statusCode",
                 'title'  => 'Activation hash error',
                 'detail' => $errors['activation_hash'][0]
             ];
             array_push($errorsJson, $activationHashError);
+        }
+
+        if (!empty($errors['forbidden'])) {
+            $forbiddenError = [
+                'status' => "$statusCode",
+                'title'  => 'Forbidden',
+                'detail' => $errors['forbidden']
+            ];
+
+            if (!empty($errors['sources'])) {
+                foreach ($errors['sources'] as $source) {
+                    if (is_null($source)) {
+                        array_push($errorsJson, $forbiddenError);
+                        continue;
+                    }
+                    $forbiddenError['source'] = $source;
+                    array_push($errorsJson, $forbiddenError);
+                }
+            } else {
+                array_push($errorsJson, $forbiddenError);
+            }
         }
 
         $errorsJson = ($errorsJson) ? $errorsJson : $errors;
