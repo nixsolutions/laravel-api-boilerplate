@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use League\Flysystem\Exception;
 
 class MakeJsonApiDemoRemove extends Command
 {
@@ -181,17 +182,23 @@ class MakeJsonApiDemoRemove extends Command
                 }
             }
             foreach ($this->dirNames as $dirName) {
-                if (file_exists(app_path($dirName))) {
-                    rmdir(app_path($dirName));
+                if ($this->option('test')) {
+                    if (glob(app_path($dirName) . '/*.php' . $this->testPostfix)) {
+                        throw new Exception($dirName . ' directory is not empty! Test files are there!');
+                    }
+                } else {
+                    if (file_exists(app_path($dirName))) {
+                        rmdir(app_path($dirName));
+                    }
                 }
             }
 
             if (file_exists(app_path('JsonApi'))) {
                 if(!@rmdir(app_path('JsonApi'))) {
-                     throw new \League\Flysystem\Exception('JsonApi directory is not empty!');
+                     throw new Exception('JsonApi directory is not empty!');
                 };
             }
-        } catch (\League\Flysystem\Exception $e) {
+        } catch (Exception $e) {
             $this->warn($e->getMessage());
         }
     }

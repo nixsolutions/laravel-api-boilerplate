@@ -139,7 +139,6 @@ class MakeJsonApiDemo extends Command
             if (!is_dir(app_path($name))) {
                 mkdir(app_path($name), 0755, true);
             }
-            continue;
         }
     }
 
