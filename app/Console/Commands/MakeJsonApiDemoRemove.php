@@ -34,7 +34,9 @@ class MakeJsonApiDemoRemove extends Command
      * @var array
      */
     protected $models = [
-        'Role.stub' => 'Role.php',
+        'Activation.stub'   => 'Activation.php',
+        'Role.stub'         => 'Role.php',
+        'User.stub'         => 'User.php',
     ];
 
     // migrate_name_table.stub => migrate_name_table.php

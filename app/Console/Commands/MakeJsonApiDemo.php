@@ -33,18 +33,29 @@ class MakeJsonApiDemo extends Command
     // TableNameTableSeeder.stub => TableNameTableSeeder.php
     protected $seeds = [];
 
+    /**
+     * @var array
+     */
     protected $dirNames = [
         'JsonApi/Users',
         'JsonApi/Roles',
         'JsonApi/Activations',
     ];
 
+    /**
+     * @var array
+     */
     protected $controllers = [
         'UsersController.stub' => 'UsersController.php'
     ];
 
+    /**
+     * @var array
+     */
     protected $models = [
-        'Role.stub' => 'Role.php',
+        'Activation.stub'   => 'Activation.php',
+        'Role.stub'         => 'Role.php',
+        'User.stub'         => 'User.php',
     ];
 
     protected $jsonapiEntities = [
