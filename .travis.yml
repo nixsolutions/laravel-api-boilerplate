@@ -22,7 +22,6 @@ before_script:
   - cp config/env/.env.travis .env
   - travis_retry php artisan vendor:publish
   - php artisan key:generate
-  - cat .env
   - php artisan migrate
   - php artisan db:seed
 
