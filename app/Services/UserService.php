@@ -14,7 +14,7 @@ class UserService
     public function checkAccess()
     {
         if (Auth::guard('api')->user()->id != request()->route('record')->getAttributes()['id']) {
-            $err['forbidden'] =  'You don\'t have to access this resource.';
+            $err['forbidden'] =  'You don\'t have permission to access this resource.';
             $err['sources'][] =  ['pointer' => '/data/id'];
 
             return $err;

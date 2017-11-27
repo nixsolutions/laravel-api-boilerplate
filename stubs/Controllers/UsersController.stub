@@ -111,6 +111,13 @@ class UsersController extends EloquentController
      *           @SWG\Property(property="email", type="string", example="user@mail.com", description="required"),
      *           @SWG\Property(property="password", type="string", example="password", description="required"),
      *           @SWG\Property(property="name", type="string", example="Steven", description="required"),
+     *           @SWG\Property(
+     *             property="activated",
+     *             type="string",
+     *             description="0 - deactivated, 1 - activated",
+     *             default="1",
+     *             example="1"
+     *           ),
      *         )
      *       )
      *     )
