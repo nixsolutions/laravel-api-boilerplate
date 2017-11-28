@@ -43,12 +43,20 @@ class UsersController extends EloquentController
      * Display a listing of the resource.
      *
      * @SWG\Get(
-     *   path="/users?filter[user]=me",
+     *   path="/users",
      *   tags={"Users"},
      *   summary="get me",
      *   description="get me",
      *   produces={"application/vnd.api+json"},
      *   consumes={"application/vnd.api+json"},
+     *   @SWG\Parameter(
+     *     in="query",
+     *     name="filter[user]",
+     *     description="",
+     *     required=true,
+     *     default="me",
+     *     type="string"
+     *   ),
      *   @SWG\Response(response="200", description="Return user")
      * )
      *
