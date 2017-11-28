@@ -28,8 +28,6 @@ trait CreatesApplication
 
         if (!empty($currentEnv)) {
             $env = str_replace('--env=', '', current($currentEnv));
-        } else {
-            $app->loadEnvironmentFrom('.env.' . $env);
         }
 
         $app->loadEnvironmentFrom('.env.' . $env);
