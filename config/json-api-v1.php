@@ -35,10 +35,9 @@ return [
     | `'posts' => App\Post::class`
     */
     'resources' => [
-        'users'  => App\Models\User::class,
-        'skills'  => App\Models\Skill::class,
-        'teams'  => App\Models\Team::class,
-        'likes'  => App\Models\Like::class,
+        'users'         => App\Models\User::class,
+        'roles'         => App\Models\Role::class,
+        'activations'   => App\Models\Activation::class,
     ],
     /*
     |--------------------------------------------------------------------------

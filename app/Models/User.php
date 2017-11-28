@@ -11,7 +11,6 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Model implements AuthenticatableUserContract, Authenticatable, CanResetPasswordContract
@@ -65,14 +64,6 @@ class User extends Model implements AuthenticatableUserContract, Authenticatable
     public function roles()
     {
         return $this->belongsToMany(Role::class);
-    }
-
-    /**
-     * @return BelongsToMany
-     */
-    public function teams()
-    {
-        return $this->belongsToMany(Team::class, 'membership');
     }
 
     /**

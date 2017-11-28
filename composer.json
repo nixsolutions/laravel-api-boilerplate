@@ -8,7 +8,7 @@
         "php": ">=7.0",
         "laravel/framework": "5.4.*",
         "darkaonline/l5-swagger": "4.0.1",
-        "cloudcreativity/laravel-json-api": "^0.9",
+        "cloudcreativity/laravel-json-api": "^0.11",
         "tymon/jwt-auth": "1.0.0-beta.3",
         "barryvdh/laravel-ide-helper": "^2.2",
         "doctrine/dbal": "^2.5",
@@ -42,25 +42,30 @@
     },
     "scripts": {
         "post-root-package-install": [
-            "php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+            "php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "php -r \"file_exists('.env.testing') || copy('.env.testing.example', '.env.testing');\""
         ],
         "post-create-project-cmd": [
-            "php artisan key:generate"
+            "php artisan key:generate",
+            "php artisan key:generate --env=testing"
         ],
         "post-install-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postInstall",
             "@post-root-package-install",
             "@post-create-project-cmd",
             "php artisan clear-compiled",
-            "@ide-helper-generate",
-            "php artisan optimize"
+            "@prepare-project"
         ],
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
             "php artisan optimize"
         ],
-        "ide-helper-generate": [
-            "php artisan ide-helper:generate"
+        "prepare-project": [
+            "php artisan make:demo",
+            "php artisan l5-swagger:publish-assets",
+            "php artisan l5-swagger:publish-views",
+            "php artisan ide-helper:generate",
+            "php artisan optimize"
         ]
     },
     "config": {

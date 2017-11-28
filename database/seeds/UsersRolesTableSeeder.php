@@ -5,6 +5,7 @@ namespace App\Seeds;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use DB;
 
 /**
  * This is the comments table seeder class.
@@ -20,6 +21,8 @@ class UsersRolesTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('role_user')->truncate();
+
         $admin = User::find(1);
         $users = User::where('name', '!=', 'Admin')->get();
 

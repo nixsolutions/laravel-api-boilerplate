@@ -1,25 +1,23 @@
 <?php
 
-namespace App\JsonApi\Users;
+namespace App\JsonApi\Roles;
 
 use CloudCreativity\LaravelJsonApi\Hydrator\EloquentHydrator;
 
 class Hydrator extends EloquentHydrator
 {
+
     /**
-     * @var array
+     * @var array|null
      */
-    protected $attributes = [
-        'name',
-        'email',
-        'password',
-        'activated',
-    ];
+    protected $attributes = null;
 
     /**
      * @var array
      */
     protected $relationships = [
-        'roles',
+        'users',
     ];
+
 }
+

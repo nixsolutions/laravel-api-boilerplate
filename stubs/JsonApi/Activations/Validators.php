@@ -1,6 +1,6 @@
 <?php
 
-namespace App\JsonApi\Users;
+namespace App\JsonApi\Activations;
 
 use CloudCreativity\JsonApi\Contracts\Validators\RelationshipsValidatorInterface;
 use CloudCreativity\LaravelJsonApi\Validators\AbstractValidatorProvider;
@@ -17,32 +17,16 @@ class Validators extends AbstractValidatorProvider
      */
     protected $allowedFilteringParameters = [
         'id',
-        'name',
-        'email',
-        'activated',
+        'expired',
         'created_at',
         'updated_at',
-        'user'
-    ];
-
-    /**
-     * @var array
-     */
-    protected $allowedSortParameters = [
-        'id',
-        'name',
-        'email',
-        'activated',
-        'created_at',
-        'updated_at'
     ];
 
     /**
      * @var array
      */
     protected $allowedIncludePaths = [
-        'activation',
-        'roles',
+        'user'
     ];
 
     /**
@@ -50,23 +34,12 @@ class Validators extends AbstractValidatorProvider
      *
      * @param object|null $record
      *      the record being updated, or null if it is a create request.
-     *
      * @return array
      */
     protected function attributeRules($record = null)
     {
-        $email = 'required|email|max:255|unique:users';
-        $password = 'required|min:8|max:16';
-
-        if ($record) {
-            $email = 'sometimes|' . $email;
-            $password = 'sometimes|' . $password;
-        }
-
         return [
-            'name' => 'required|max:32',
-            'email' => $email,
-            'password' => $password,
+            //
         ];
     }
 
@@ -76,7 +49,6 @@ class Validators extends AbstractValidatorProvider
      * @param RelationshipsValidatorInterface $relationships
      * @param object|null $record
      *      the record being updated, or null if it is a create request.
-     *
      * @return void
      */
     protected function relationshipRules(RelationshipsValidatorInterface $relationships, $record = null)
@@ -84,3 +56,4 @@ class Validators extends AbstractValidatorProvider
         //
     }
 }
+

@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use League\Flysystem\Exception;
 
 class MakeJsonApiDemoRemove extends Command
 {
@@ -27,59 +28,43 @@ class MakeJsonApiDemoRemove extends Command
      * @var array
      */
     protected $controllers = [
-        'LikesController.stub' => 'LikesController.php',
-        'SkillsController.stub' => 'SkillsController.php',
-        'TeamsController.stub' => 'TeamsController.php',
         'UsersController.stub' => 'UsersController.php'
     ];
 
+    /**
+     * @var array
+     */
     protected $models = [
-        'Like.stub' => 'Like.php',
-        'Skill.stub' => 'Skill.php',
-        'Team.stub' => 'Team.php'
+        'Role.stub' => 'Role.php',
     ];
 
-    protected $migrations = [
-        'create_likes_table.stub'                   => 'create_likes_table.php',
-        'create_membership_table.stub'              => 'create_membership_table.php',
-        'create_skills_table.stub'                  => 'create_skills_table.php',
-        'create_teams_table.stub'                   => 'create_teams_table.php',
-        'add_foreign_keys_to_likes_table.stub'      => 'add_foreign_keys_to_likes_table.php',
-        'add_foreign_keys_to_membership_table.stub' => 'add_foreign_keys_to_membership_table.php',
-        'add_foreign_keys_to_skills_table.stub'     => 'add_foreign_keys_to_skills_table.php',
-        'add_foreign_keys_to_teams_table.stub'      => 'add_foreign_keys_to_teams_table.php'
-    ];
+    // migrate_name_table.stub => migrate_name_table.php
+    protected $migrations = [];
 
-    protected $seeds = [
-        'TeamsTableSeeder.stub'     => 'TeamsTableSeeder.php',
-        'TeamUsersTableSeeder.stub' => 'TeamUsersTableSeeder.php',
-        'JsonApiSeeder.stub' => 'JsonApiSeeder.php'
+    // TableNameTableSeeder.stub => TableNameTableSeeder.php
+    protected $seeds = [];
+
+    protected $dirNames = [
+        'JsonApi/Users',
+        'JsonApi/Roles',
+        'JsonApi/Activations',
     ];
 
     protected $jsonapiEntities = [
-        'JsonApi/Likes/Hydrator.stub' => 'JsonApi/Likes/Hydrator.php',
-        'JsonApi/Likes/Request.stub' => 'JsonApi/Likes/Request.php',
-        'JsonApi/Likes/Schema.stub' => 'JsonApi/Likes/Schema.php',
-        'JsonApi/Likes/Search.stub' => 'JsonApi/Likes/Search.php',
-        'JsonApi/Likes/Validators.stub' => 'JsonApi/Likes/Validators.php',
+        'JsonApi/Users/Adapter.php'     => 'JsonApi/Users/Adapter.php',
+        'JsonApi/Users/Hydrator.php'    => 'JsonApi/Users/Hydrator.php',
+        'JsonApi/Users/Schema.php'      => 'JsonApi/Users/Schema.php',
+        'JsonApi/Users/Validators.php'  => 'JsonApi/Users/Validators.php',
 
-        'JsonApi/Skills/Hydrator.stub' => 'JsonApi/Skills/Hydrator.php',
-        'JsonApi/Skills/Request.stub' => 'JsonApi/Skills/Request.php',
-        'JsonApi/Skills/Schema.stub' => 'JsonApi/Skills/Schema.php',
-        'JsonApi/Skills/Search.stub' => 'JsonApi/Skills/Search.php',
-        'JsonApi/Skills/Validators.stub' => 'JsonApi/Skills/Validators.php',
+        'JsonApi/Roles/Adapter.php'     => 'JsonApi/Roles/Adapter.php',
+        'JsonApi/Roles/Hydrator.php'    => 'JsonApi/Roles/Hydrator.php',
+        'JsonApi/Roles/Schema.php'      => 'JsonApi/Roles/Schema.php',
+        'JsonApi/Roles/Validators.php'  => 'JsonApi/Roles/Validators.php',
 
-        'JsonApi/Teams/Hydrator.stub' => 'JsonApi/Teams/Hydrator.php',
-        'JsonApi/Teams/Request.stub' => 'JsonApi/Teams/Request.php',
-        'JsonApi/Teams/Schema.stub' => 'JsonApi/Teams/Schema.php',
-        'JsonApi/Teams/Search.stub' => 'JsonApi/Teams/Search.php',
-        'JsonApi/Teams/Validators.stub' => 'JsonApi/Teams/Validators.php',
-
-        'JsonApi/Users/Hydrator.stub' => 'JsonApi/Users/Hydrator.php',
-        'JsonApi/Users/Request.stub' => 'JsonApi/Users/Request.php',
-        'JsonApi/Users/Schema.stub' => 'JsonApi/Users/Schema.php',
-        'JsonApi/Users/Search.stub' => 'JsonApi/Users/Search.php',
-        'JsonApi/Users/Validators.stub' => 'JsonApi/Users/Validators.php',
+        'JsonApi/Activations/Adapter.php'     => 'JsonApi/Activations/Adapter.php',
+        'JsonApi/Activations/Hydrator.php'    => 'JsonApi/Activations/Hydrator.php',
+        'JsonApi/Activations/Schema.php'      => 'JsonApi/Activations/Schema.php',
+        'JsonApi/Activations/Validators.php'  => 'JsonApi/Activations/Validators.php',
     ];
 
     /**
@@ -196,28 +181,24 @@ class MakeJsonApiDemoRemove extends Command
                     unlink(app_path($value));
                 }
             }
-            if (file_exists(app_path('JsonApi/Users'))) {
-                rmdir(app_path('JsonApi/Users'));
-            }
-
-            if (file_exists(app_path('JsonApi/Likes'))) {
-                rmdir(app_path('JsonApi/Likes'));
-            }
-
-            if (file_exists(app_path('JsonApi/Skills'))) {
-                rmdir(app_path('JsonApi/Skills'));
-            }
-
-            if (file_exists(app_path('JsonApi/Teams'))) {
-                rmdir(app_path('JsonApi/Teams'));
+            foreach ($this->dirNames as $dirName) {
+                if ($this->option('test')) {
+                    if (glob(app_path($dirName) . '/*.php' . $this->testPostfix)) {
+                        throw new Exception($dirName . ' directory is not empty! Test files are there!');
+                    }
+                } else {
+                    if (file_exists(app_path($dirName))) {
+                        rmdir(app_path($dirName));
+                    }
+                }
             }
 
             if (file_exists(app_path('JsonApi'))) {
                 if(!@rmdir(app_path('JsonApi'))) {
-                     throw new \League\Flysystem\Exception('JsonApi directory is not empty!');
+                     throw new Exception('JsonApi directory is not empty!');
                 };
             }
-        } catch (\League\Flysystem\Exception $e) {
+        } catch (Exception $e) {
             $this->warn($e->getMessage());
         }
     }

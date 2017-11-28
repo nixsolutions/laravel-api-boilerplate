@@ -1,10 +1,13 @@
 /node_modules
 /public/storage
+/public/vendor/l5-swagger
+/resources/views/vendor/l5-swagger
 /vendor
 /.idea
 Homestead.json
 Homestead.yaml
 .env
+.env.testing
 .vagrant
 storage/api-docs/
 _ide_helper.php

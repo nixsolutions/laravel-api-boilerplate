@@ -27,60 +27,50 @@ class MakeJsonApiDemo extends Command
 
     protected $testPostfix = '-test';
 
-    protected $migrations = [
-        'create_likes_table.stub'                   => 'create_likes_table.php',
-        'create_membership_table.stub'              => 'create_membership_table.php',
-        'create_skills_table.stub'                  => 'create_skills_table.php',
-        'create_teams_table.stub'                   => 'create_teams_table.php',
-        'add_foreign_keys_to_likes_table.stub'      => 'add_foreign_keys_to_likes_table.php',
-        'add_foreign_keys_to_membership_table.stub' => 'add_foreign_keys_to_membership_table.php',
-        'add_foreign_keys_to_skills_table.stub'     => 'add_foreign_keys_to_skills_table.php',
-        'add_foreign_keys_to_teams_table.stub'      => 'add_foreign_keys_to_teams_table.php'
+    // migrate_name_table.stub => migrate_name_table.php
+    protected $migrations = [];
+
+    // TableNameTableSeeder.stub => TableNameTableSeeder.php
+    protected $seeds = [];
+
+    /**
+     * @var array
+     */
+    protected $dirNames = [
+        'JsonApi/Users',
+        'JsonApi/Roles',
+        'JsonApi/Activations',
     ];
 
-    protected $seeds = [
-        'TeamsTableSeeder.stub'     => 'TeamsTableSeeder.php',
-        'TeamUsersTableSeeder.stub' => 'TeamUsersTableSeeder.php',
-        'JsonApiSeeder.stub' => 'JsonApiSeeder.php'
-    ];
-
+    /**
+     * @var array
+     */
     protected $controllers = [
-        'LikesController.stub' => 'LikesController.php',
-        'SkillsController.stub' => 'SkillsController.php',
-        'TeamsController.stub' => 'TeamsController.php',
         'UsersController.stub' => 'UsersController.php'
     ];
 
+    /**
+     * @var array
+     */
     protected $models = [
-        'Like.stub' => 'Like.php',
-        'Skill.stub' => 'Skill.php',
-        'Team.stub' => 'Team.php'
+        'Role.stub' => 'Role.php',
     ];
 
     protected $jsonapiEntities = [
-        'JsonApi/Likes/Hydrator.php' => 'JsonApi/Likes/Hydrator.php',
-        'JsonApi/Likes/Request.php' => 'JsonApi/Likes/Request.php',
-        'JsonApi/Likes/Schema.php' => 'JsonApi/Likes/Schema.php',
-        'JsonApi/Likes/Search.php' => 'JsonApi/Likes/Search.php',
-        'JsonApi/Likes/Validators.php' => 'JsonApi/Likes/Validators.php',
+        'JsonApi/Users/Adapter.php'     => 'JsonApi/Users/Adapter.php',
+        'JsonApi/Users/Hydrator.php'    => 'JsonApi/Users/Hydrator.php',
+        'JsonApi/Users/Schema.php'      => 'JsonApi/Users/Schema.php',
+        'JsonApi/Users/Validators.php'  => 'JsonApi/Users/Validators.php',
 
-        'JsonApi/Skills/Hydrator.php' => 'JsonApi/Skills/Hydrator.php',
-        'JsonApi/Skills/Request.php' => 'JsonApi/Skills/Request.php',
-        'JsonApi/Skills/Schema.php' => 'JsonApi/Skills/Schema.php',
-        'JsonApi/Skills/Search.php' => 'JsonApi/Skills/Search.php',
-        'JsonApi/Skills/Validators.php' => 'JsonApi/Skills/Validators.php',
+        'JsonApi/Roles/Adapter.php'     => 'JsonApi/Roles/Adapter.php',
+        'JsonApi/Roles/Hydrator.php'    => 'JsonApi/Roles/Hydrator.php',
+        'JsonApi/Roles/Schema.php'      => 'JsonApi/Roles/Schema.php',
+        'JsonApi/Roles/Validators.php'  => 'JsonApi/Roles/Validators.php',
 
-        'JsonApi/Teams/Hydrator.php' => 'JsonApi/Teams/Hydrator.php',
-        'JsonApi/Teams/Request.php' => 'JsonApi/Teams/Request.php',
-        'JsonApi/Teams/Schema.php' => 'JsonApi/Teams/Schema.php',
-        'JsonApi/Teams/Search.php' => 'JsonApi/Teams/Search.php',
-        'JsonApi/Teams/Validators.php' => 'JsonApi/Teams/Validators.php',
-
-        'JsonApi/Users/Hydrator.php' => 'JsonApi/Users/Hydrator.php',
-        'JsonApi/Users/Request.php' => 'JsonApi/Users/Request.php',
-        'JsonApi/Users/Schema.php' => 'JsonApi/Users/Schema.php',
-        'JsonApi/Users/Search.php' => 'JsonApi/Users/Search.php',
-        'JsonApi/Users/Validators.php' => 'JsonApi/Users/Validators.php',
+        'JsonApi/Activations/Adapter.php'     => 'JsonApi/Activations/Adapter.php',
+        'JsonApi/Activations/Hydrator.php'    => 'JsonApi/Activations/Hydrator.php',
+        'JsonApi/Activations/Schema.php'      => 'JsonApi/Activations/Schema.php',
+        'JsonApi/Activations/Validators.php'  => 'JsonApi/Activations/Validators.php',
     ];
 
 
@@ -107,9 +97,6 @@ class MakeJsonApiDemo extends Command
         $this->exportControllers();
         $this->exportModels();
 
-        $this->exportMigrations();
-        $this->exportSeeds();
-
         if (!$this->option('test')) {
             $this::call('optimize');
         }
@@ -117,9 +104,6 @@ class MakeJsonApiDemo extends Command
         $this->info('JsonApi demo entities generated successfully.');
     }
 
-    /**
-     *
-     */
     protected function setupTest()
     {
         foreach ($this->migrations as $key => $value) {
@@ -139,38 +123,25 @@ class MakeJsonApiDemo extends Command
         }
     }
 
-    /**
-     *
-     */
     public function fire()
     {
-        $this->createDirectories();
+        $this->createDirectories($this->dirNames);
 
         $this->copyJsonApiEntities();
     }
 
     /**
-     *
+     * @param array $dirNames
      */
-    protected function createDirectories()
+    protected function createDirectories($dirNames)
     {
-        if (!is_dir(app_path('JsonApi/Likes'))) {
-            mkdir(app_path('JsonApi/Likes'), 0755, true);
-        }
-        if (!is_dir(app_path('JsonApi/Skills'))) {
-            mkdir(app_path('JsonApi/Skills'), 0755, true);
-        }
-        if (!is_dir(app_path('JsonApi/Teams'))) {
-            mkdir(app_path('JsonApi/Teams'), 0755, true);
-        }
-        if (!is_dir(app_path('JsonApi/Users'))) {
-            mkdir(app_path('JsonApi/Users'), 0755, true);
+        foreach ($dirNames as $name) {
+            if (!is_dir(app_path($name))) {
+                mkdir(app_path($name), 0755, true);
+            }
         }
     }
 
-    /**
-     *
-     */
     protected function copyJsonApiEntities()
     {
         foreach ($this->jsonapiEntities as $key => $value) {
@@ -187,9 +158,6 @@ class MakeJsonApiDemo extends Command
         }
     }
 
-    /**
-     *
-     */
     protected function exportControllers()
     {
         foreach ($this->controllers as $key => $value) {
@@ -206,9 +174,6 @@ class MakeJsonApiDemo extends Command
         }
     }
 
-    /**
-     *
-     */
     protected function exportModels()
     {
         foreach ($this->models as $key => $value) {
@@ -225,9 +190,6 @@ class MakeJsonApiDemo extends Command
         }
     }
 
-    /**
-     *
-     */
     protected function exportMigrations()
     {
         $counter = 0;
@@ -245,9 +207,6 @@ class MakeJsonApiDemo extends Command
         }
     }
 
-    /**
-     *
-     */
     protected function exportSeeds()
     {
         foreach ($this->seeds as $key => $value) {
