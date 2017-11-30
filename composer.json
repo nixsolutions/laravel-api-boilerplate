@@ -5,7 +5,7 @@
     "license": "",
     "type": "project",
     "require": {
-        "php": ">=7.0",
+        "php": ">=7.1",
         "laravel/framework": "5.4.*",
         "darkaonline/l5-swagger": "4.0.1",
         "cloudcreativity/laravel-json-api": "^0.11",
