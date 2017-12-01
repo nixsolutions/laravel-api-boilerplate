@@ -53,6 +53,8 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'url_spa' => env('APP_URL_SPA', 'http://localhost'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
