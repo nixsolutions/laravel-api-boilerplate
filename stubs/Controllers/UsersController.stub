@@ -10,7 +10,6 @@ use App\Models\User;
 use App\JsonApi\Users\Hydrator;
 use App\Services\UserService;
 use Illuminate\Auth\Events\Registered;
-use Auth;
 
 class UsersController extends EloquentController
 {
@@ -53,7 +52,7 @@ class UsersController extends EloquentController
      *     in="query",
      *     name="filter[user]",
      *     description="",
-     *     required=true,
+     *     required=false,
      *     default="me",
      *     type="string"
      *   ),
