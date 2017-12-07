@@ -24,6 +24,16 @@ class UserService
     }
 
     /**
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        $roles = Auth::guard('api')->user()->roles()->get()->pluck('name', 'id')->toArray();
+
+        return array_has($roles, Role::ROLE_ADMIN);
+    }
+
+    /**
      * @param User $user
      *
      * @return User $user
