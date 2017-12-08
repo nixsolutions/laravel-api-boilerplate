@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
+use App\Services\PageService;
 use App\Services\UserService;
+use Illuminate\Support\ServiceProvider;
 use Laracasts\Generators\GeneratorsServiceProvider;
 use Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider;
 
@@ -33,6 +34,10 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(UserService::class, function () {
             return new UserService();
+        });
+
+        $this->app->bind(PageService::class, function () {
+            return new PageService();
         });
     }
 }

@@ -39,6 +39,7 @@ class MakeJsonApiDemo extends Command
     protected $dirNames = [
         'JsonApi/Users',
         'JsonApi/Roles',
+        'JsonApi/Pages',
         'JsonApi/Activations',
     ];
 
@@ -46,15 +47,12 @@ class MakeJsonApiDemo extends Command
      * @var array
      */
     protected $controllers = [
-        'UsersController.stub' => 'UsersController.php'
+        'UserController.stub' => 'UserController.php',
+        'PageController.stub' => 'PageController.php',
     ];
 
-    /**
-     * @var array
-     */
-    protected $models = [
-        'Role.stub' => 'Role.php',
-    ];
+    // ModelName.stub => ModelName.php
+    protected $models = [];
 
     protected $jsonapiEntities = [
         'JsonApi/Users/Adapter.php'     => 'JsonApi/Users/Adapter.php',
@@ -71,6 +69,11 @@ class MakeJsonApiDemo extends Command
         'JsonApi/Activations/Hydrator.php'    => 'JsonApi/Activations/Hydrator.php',
         'JsonApi/Activations/Schema.php'      => 'JsonApi/Activations/Schema.php',
         'JsonApi/Activations/Validators.php'  => 'JsonApi/Activations/Validators.php',
+
+        'JsonApi/Pages/Adapter.php'     => 'JsonApi/Pages/Adapter.php',
+        'JsonApi/Pages/Hydrator.php'    => 'JsonApi/Pages/Hydrator.php',
+        'JsonApi/Pages/Schema.php'      => 'JsonApi/Pages/Schema.php',
+        'JsonApi/Pages/Validators.php'  => 'JsonApi/Pages/Validators.php',
     ];
 
 

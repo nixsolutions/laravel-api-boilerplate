@@ -18,24 +18,28 @@ class MakeJsonApiDemoTest extends TestCase
     public function testMakeDemoCreateRemove()
     {
         $structure = [
-                'Controllers/UsersController.stub',
+            'Controllers/UserController.stub',
+            'Controllers/PageController.stub',
 
-                'Models/Role.stub',
+            'JsonApi/Users/Adapter.php',
+            'JsonApi/Users/Hydrator.php',
+            'JsonApi/Users/Schema.php',
+            'JsonApi/Users/Validators.php',
 
-                'JsonApi/Users/Adapter.php',
-                'JsonApi/Users/Hydrator.php',
-                'JsonApi/Users/Schema.php',
-                'JsonApi/Users/Validators.php',
+            'JsonApi/Roles/Adapter.php',
+            'JsonApi/Roles/Hydrator.php',
+            'JsonApi/Roles/Schema.php',
+            'JsonApi/Roles/Validators.php',
 
-                'JsonApi/Roles/Adapter.php',
-                'JsonApi/Roles/Hydrator.php',
-                'JsonApi/Roles/Schema.php',
-                'JsonApi/Roles/Validators.php',
+            'JsonApi/Activations/Adapter.php',
+            'JsonApi/Activations/Hydrator.php',
+            'JsonApi/Activations/Schema.php',
+            'JsonApi/Activations/Validators.php',
 
-                'JsonApi/Activations/Adapter.php',
-                'JsonApi/Activations/Hydrator.php',
-                'JsonApi/Activations/Schema.php',
-                'JsonApi/Activations/Validators.php',
+            'JsonApi/Pages/Adapter.php',
+            'JsonApi/Pages/Hydrator.php',
+            'JsonApi/Pages/Schema.php',
+            'JsonApi/Pages/Validators.php',
         ];
 
         vfsStream::copyFromFileSystem(base_path('stubs'), vfsStream::setup('app'));

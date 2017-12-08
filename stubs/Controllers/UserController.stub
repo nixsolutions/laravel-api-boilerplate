@@ -11,7 +11,7 @@ use App\JsonApi\Users\Hydrator;
 use App\Services\UserService;
 use Illuminate\Auth\Events\Registered;
 
-class UsersController extends EloquentController
+class UserController extends EloquentController
 {
     use JsonApiResponseHelper;
 
@@ -56,7 +56,7 @@ class UsersController extends EloquentController
      *     default="me",
      *     type="string"
      *   ),
-     *   @SWG\Response(response="200", description="Return user")
+     *   @SWG\Response(response="200", description="Return users")
      * )
      *
      * @param JsonApiRequest $request
