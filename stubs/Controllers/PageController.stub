@@ -48,6 +48,30 @@ class PageController extends EloquentController
      *   description="get pages",
      *   produces={"application/vnd.api+json"},
      *   consumes={"application/vnd.api+json"},
+     *   @SWG\Parameter(
+     *     in="query",
+     *     name="page[number]",
+     *     description="",
+     *     required=false,
+     *     default="1",
+     *     type="string"
+     *   ),
+     *   @SWG\Parameter(
+     *     in="query",
+     *     name="page[size]",
+     *     description="",
+     *     required=false,
+     *     default="1",
+     *     type="string"
+     *   ),
+     *   @SWG\Parameter(
+     *     in="query",
+     *     name="sort",
+     *     description="if you want sortaed by desc you must adding `-` before field",
+     *     required=false,
+     *     default="title,created_at",
+     *     type="string"
+     *   ),
      *   @SWG\Response(response="200", description="Return pages")
      * )
      *
@@ -103,12 +127,12 @@ class PageController extends EloquentController
      *       @SWG\Property(
      *         property="data",
      *         type="object",
-     *         @SWG\Property(property="type", type="string", default="pages", example="pages"),
+     *         @SWG\Property(property="type", type="string", default="pages"),
      *         @SWG\Property(
      *           property="attributes",
      *           type="object",
-     *           @SWG\Property(property="title", type="string", default="<body><p>Body</p><body/>", example="Title", description="not required"),
-     *           @SWG\Property(property="body", type="string", default="<body><p>Body</p><body/>", example="<body><p>Body</p><body/>", description="required"),
+     *           @SWG\Property(property="title", type="string", default="Title", description="not required"),
+     *           @SWG\Property(property="body", type="string", default="<body><p>Body</p><body/>", description="required"),
      *         )
      *       )
      *     )
@@ -152,13 +176,13 @@ class PageController extends EloquentController
      *       @SWG\Property(
      *         property="data",
      *         type="object",
-     *         @SWG\Property(property="type", type="string", default="pages", example="pages"),
-     *         @SWG\Property(property="id", type="integer", default="1", example="1"),
+     *         @SWG\Property(property="type", type="string", default="pages"),
+     *         @SWG\Property(property="id", type="integer", default="1"),
      *         @SWG\Property(
      *           property="attributes",
      *           type="object",
-     *           @SWG\Property(property="title", type="string", default="Title", example="Title", description="not required"),
-     *           @SWG\Property(property="body", type="string", default="<body><p>Body</p><body/>", example="<body><p>Body</p><body/>", description="required"),
+     *           @SWG\Property(property="title", type="string", default="Title", description="not required"),
+     *           @SWG\Property(property="body", type="string", default="<body><p>Body</p><body/>", description="required"),
      *         )
      *       )
      *     )

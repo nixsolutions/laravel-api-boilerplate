@@ -44,8 +44,8 @@ class UserController extends EloquentController
      * @SWG\Get(
      *   path="/users",
      *   tags={"Users"},
-     *   summary="get me",
-     *   description="get me",
+     *   summary="get all users if you admin or get current user",
+     *   description="get all users if you admin or get current user",
      *   produces={"application/vnd.api+json"},
      *   consumes={"application/vnd.api+json"},
      *   @SWG\Parameter(
@@ -56,7 +56,7 @@ class UserController extends EloquentController
      *     default="me",
      *     type="string"
      *   ),
-     *   @SWG\Response(response="200", description="Return users")
+     *   @SWG\Response(response="200", description="Return users, current user or 403 error")
      * )
      *
      * @param JsonApiRequest $request
@@ -111,19 +111,18 @@ class UserController extends EloquentController
      *       @SWG\Property(
      *         property="data",
      *         type="object",
-     *         @SWG\Property(property="type", type="string", default="users", example="users"),
+     *         @SWG\Property(property="type", type="string", default="users"),
      *         @SWG\Property(
      *           property="attributes",
      *           type="object",
-     *           @SWG\Property(property="email", type="string", example="user@mail.com", description="required"),
-     *           @SWG\Property(property="password", type="string", example="password", description="required"),
-     *           @SWG\Property(property="name", type="string", example="Steven", description="required"),
+     *           @SWG\Property(property="email", type="string", default="user@mail.com", description="required"),
+     *           @SWG\Property(property="password", type="string", default="password", description="required"),
+     *           @SWG\Property(property="name", type="string", default="Steven", description="required"),
      *           @SWG\Property(
      *             property="activated",
      *             type="string",
      *             description="0 - deactivated, 1 - activated",
-     *             default="1",
-     *             example="1"
+     *             default="1"
      *           ),
      *         )
      *       )
@@ -177,20 +176,19 @@ class UserController extends EloquentController
      *       @SWG\Property(
      *         property="data",
      *         type="object",
-     *         @SWG\Property(property="type", type="string", default="users", example="users"),
-     *         @SWG\Property(property="id", type="string", default="1", example="1"),
+     *         @SWG\Property(property="type", type="string", default="users"),
+     *         @SWG\Property(property="id", type="string", default="1"),
      *         @SWG\Property(
      *           property="attributes",
      *           type="object",
-     *           @SWG\Property(property="email", type="string", example="user@mail.com", description="required"),
-     *           @SWG\Property(property="password", type="string", example="Password1", description="required"),
-     *           @SWG\Property(property="name", type="string", example="Steven", description="required"),
+     *           @SWG\Property(property="email", type="string", default="user@mail.com", description="required"),
+     *           @SWG\Property(property="password", type="string", default="Password1", description="required"),
+     *           @SWG\Property(property="name", type="string", default="Steven", description="required"),
      *           @SWG\Property(
      *             property="activated",
      *             type="string",
      *             description="0 - deactivated, 1 - activated",
-     *             default="1",
-     *             example="1"
+     *             default="1"
      *           ),
      *         )
      *       )
