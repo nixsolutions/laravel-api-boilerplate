@@ -131,8 +131,11 @@ class PageController extends EloquentController
      *         @SWG\Property(
      *           property="attributes",
      *           type="object",
-     *           @SWG\Property(property="title", type="string", default="Title", description="not required"),
-     *           @SWG\Property(property="body", type="string", default="<body><p>Body</p><body/>", description="required"),
+     *           @SWG\Property(property="title", type="string", default="Title", description="required"),
+     *           @SWG\Property(property="alias", type="string", default="Alias", description="required"),
+     *           @SWG\Property(property="keywords", type="string", default="Keywords", description="required"),
+     *           @SWG\Property(property="description", type="string", default="Description", description="required"),
+     *           @SWG\Property(property="content", type="string", default="Content", description="required"),
      *         )
      *       )
      *     )
@@ -181,8 +184,11 @@ class PageController extends EloquentController
      *         @SWG\Property(
      *           property="attributes",
      *           type="object",
-     *           @SWG\Property(property="title", type="string", default="Title", description="not required"),
-     *           @SWG\Property(property="body", type="string", default="<body><p>Body</p><body/>", description="required"),
+     *           @SWG\Property(property="title", type="string", default="Title", description="required"),
+     *           @SWG\Property(property="alias", type="string", default="Alias", description="required"),
+     *           @SWG\Property(property="keywords", type="string", default="Keywords", description="required"),
+     *           @SWG\Property(property="description", type="string", default="Description", description="required"),
+     *           @SWG\Property(property="content", type="string", default="Content", description="required"),
      *         )
      *       )
      *     )

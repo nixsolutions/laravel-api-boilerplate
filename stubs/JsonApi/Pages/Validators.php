@@ -18,7 +18,10 @@ class Validators extends AbstractValidatorProvider
     protected $allowedFilteringParameters = [
         'id',
         'title',
-        'body',
+        'alias',
+        'keywords',
+        'description',
+        'content',
         'created_at',
         'updated_at',
     ];
@@ -29,7 +32,10 @@ class Validators extends AbstractValidatorProvider
     protected $allowedSortParameters = [
         'id',
         'title',
-        'body',
+        'alias',
+        'keywords',
+        'description',
+        'content',
         'created_at',
         'updated_at'
     ];
@@ -52,7 +58,11 @@ class Validators extends AbstractValidatorProvider
     protected function attributeRules($record = null)
     {
         return [
-            'body' => 'required',
+            'title' => 'required',
+            'alias' => 'required',
+            'keywords' => 'required',
+            'description' => 'required',
+            'content' => 'required',
         ];
     }
 

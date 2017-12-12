@@ -16,8 +16,11 @@ class CreatePagesTable extends Migration
         Schema::create('pages', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->string('title')->nullable();
-            $table->text('body');
+            $table->string('title');
+            $table->string('alias');
+            $table->string('keywords');
+            $table->text('description');
+            $table->text('content');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
