@@ -16,11 +16,11 @@ class PageService
         $requestPageId = request()->route('record')->getAttributes()['id'];
 
         if (!in_array($requestPageId, $pageIds)) {
-            $err['forbidden'] =  'You don\'t have permission to access this resource.';
+            $errors['forbidden'] =  'You don\'t have permission to access this resource.';
 
-            if (request()->method() == 'PUT') $err['sources'][] =  ['pointer' => '/data/id'];
+            if (request()->method() == 'PUT') $errors['sources'][] =  ['pointer' => '/data/id'];
 
-            return $err;
+            return $errors;
         }
 
         return true;
