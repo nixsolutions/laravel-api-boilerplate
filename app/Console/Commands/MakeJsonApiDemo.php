@@ -97,10 +97,6 @@ class MakeJsonApiDemo extends Command
         $this->exportControllers();
         $this->exportModels();
 
-        if (!$this->option('test')) {
-            $this::call('optimize');
-        }
-
         $this->info('JsonApi demo entities generated successfully.');
     }
 

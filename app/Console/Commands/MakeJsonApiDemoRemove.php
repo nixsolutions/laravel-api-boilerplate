@@ -94,10 +94,6 @@ class MakeJsonApiDemoRemove extends Command
         $this->removeSeeds();
         $this->removeMigrations();
 
-        if (!$this->option('test')) {
-            $this::call('optimize');
-        }
-
         $this->info('JsonApi demo entities removed successfully.');
     }
 
