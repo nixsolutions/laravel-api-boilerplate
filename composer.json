@@ -65,7 +65,6 @@
             "Illuminate\\Foundation\\ComposerScripts::postUpdate"
         ],
         "prepare-project": [
-            "php artisan make:demo",
             "php artisan vendor:publish --provider L5Swagger\\L5SwaggerServiceProvider",
             "php artisan ide-helper:generate",
             "php artisan migrate:fresh --seed"

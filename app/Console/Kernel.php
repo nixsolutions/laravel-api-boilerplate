@@ -13,8 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\MakeJsonApiDemo::class,
-        Commands\MakeJsonApiDemoRemove::class
+        //
     ];
 
     /**
