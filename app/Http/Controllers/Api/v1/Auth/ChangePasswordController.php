@@ -36,7 +36,10 @@ class ChangePasswordController extends Controller implements ResponseCodesInterf
      *         @SWG\Property(property="password_confirmation", type="string", example="87654321")
      *     )
      *   ),
-     *   @SWG\Response(response="200", description="Return message")
+     *   @SWG\Response(response="200", description="Return message"),
+     *   security={
+     *     {"api_key_header": {}},
+     *   }
      * )
      */
 
