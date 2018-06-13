@@ -10,6 +10,7 @@ Homestead.yaml
 .env.testing
 .vagrant
 storage/api-docs/
+storage/debugbar/
 _ide_helper.php
 /after.sh
 /aliases

@@ -24,6 +24,18 @@ class UserService
     }
 
     /**
+     * @return array
+     */
+    public function checkOnAdminRole()
+    {
+        if (!$this->isAdmin()) {
+            $err['forbidden'] =  'You don\'t have permission to access this resource.';
+
+            return $err;
+        }
+    }
+
+    /**
      * @return bool
      */
     public function isAdmin()

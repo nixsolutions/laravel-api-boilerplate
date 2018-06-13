@@ -151,7 +151,10 @@ class LoginController extends Controller
      *   summary="Perform user logout",
      *   description="logout user",
      *   produces={"application/json"},
-     *   @SWG\Response(response="200", description="Return token or error message")
+     *   @SWG\Response(response="200", description="Return token or error message"),
+     *   security={
+     *     {"api_key_header": {}},
+     *   }
      * )
      *
      * @return Response

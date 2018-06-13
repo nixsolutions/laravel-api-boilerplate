@@ -29,7 +29,7 @@ class Controller extends BaseController
 
 /**
  * @SWG\SecurityScheme(
- *   securityDefinition="api_key",
+ *   securityDefinition="api_key_query",
  *   type="apiKey",
  *   in="query",
  *   name="api_key"
@@ -38,9 +38,9 @@ class Controller extends BaseController
 
 /**
  * @SWG\SecurityScheme(
- *   securityDefinition="X-Api-Token",
+ *   securityDefinition="api_key_header",
  *   type="apiKey",
  *   in="header",
- *   name="X-Api-Token"
+ *   name="Authorization"
  * )
  */
