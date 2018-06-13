@@ -37,6 +37,7 @@ return [
     'resources' => [
         'users'         => App\Models\User::class,
         'roles'         => App\Models\Role::class,
+        'pages'         => App\Models\Page::class,
         'activations'   => App\Models\Activation::class,
     ],
     /*
@@ -65,7 +66,11 @@ return [
     | for when we are encoding outside of HTTP requests, e.g. broadcasting.
     |
     */
-    'url-prefix' => '/api/v1',
+    'url' => [
+        'host' => null,
+        'namespace' => '/api/v1',
+        'name' => 'api:v1:',
+    ],
     /*
     |--------------------------------------------------------------------------
     | Supported JSON API Extensions

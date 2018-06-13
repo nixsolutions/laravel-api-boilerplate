@@ -1,15 +1,16 @@
 <?php
 
-namespace App\JsonApi\Activations;
+namespace App\JsonApi\Pages;
 
-use App\Models\Activation;
-use Auth;
+use App\Models\Page;
 use App\Models\User;
 use CloudCreativity\LaravelJsonApi\Pagination\StandardStrategy;
 use CloudCreativity\LaravelJsonApi\Store\EloquentAdapter;
+use CloudCreativity\JsonApi\Exceptions\ValidationException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Auth;
 
 class Adapter extends EloquentAdapter
 {
@@ -20,12 +21,14 @@ class Adapter extends EloquentAdapter
      */
     public function __construct(StandardStrategy $paging)
     {
-        parent::__construct(new Activation(), $paging);
+        parent::__construct(new Page(), $paging);
     }
 
     /**
      * @param Builder $builder
      * @param Collection $filters
+     *
+     * @return Builder|ValidationException|EloquentCollection
      */
     protected function filter(Builder $builder, Collection $filters)
     {
@@ -42,8 +45,6 @@ class Adapter extends EloquentAdapter
     }
 
     /**
-     * When requested on get all activations this method is overridden to clear all unavailable user activations
-     *
      * @param Builder $builder
      * @return EloquentCollection
      */
@@ -51,7 +52,7 @@ class Adapter extends EloquentAdapter
     {
         /** @var User $user */
         $user = Auth::guard('api')->user();
-        $models = $user->activation()->getResults();
+        $models = $user->pages()->get()->all();
 
         if (count($models) > 0) {
             $models = $builder->eagerLoadRelations($models);

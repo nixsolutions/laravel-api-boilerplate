@@ -28,15 +28,12 @@ class MakeJsonApiDemoRemove extends Command
      * @var array
      */
     protected $controllers = [
-        'UsersController.stub' => 'UsersController.php'
+        'UserController.stub' => 'UserController.php',
+        'PageController.stub' => 'PageController.php',
     ];
 
-    /**
-     * @var array
-     */
-    protected $models = [
-        'Role.stub' => 'Role.php',
-    ];
+    // ModelName.stub => ModelName.php
+    protected $models = [];
 
     // migrate_name_table.stub => migrate_name_table.php
     protected $migrations = [];
@@ -47,6 +44,7 @@ class MakeJsonApiDemoRemove extends Command
     protected $dirNames = [
         'JsonApi/Users',
         'JsonApi/Roles',
+        'JsonApi/Pages',
         'JsonApi/Activations',
     ];
 
@@ -65,6 +63,11 @@ class MakeJsonApiDemoRemove extends Command
         'JsonApi/Activations/Hydrator.php'    => 'JsonApi/Activations/Hydrator.php',
         'JsonApi/Activations/Schema.php'      => 'JsonApi/Activations/Schema.php',
         'JsonApi/Activations/Validators.php'  => 'JsonApi/Activations/Validators.php',
+
+        'JsonApi/Pages/Adapter.php'     => 'JsonApi/Pages/Adapter.php',
+        'JsonApi/Pages/Hydrator.php'    => 'JsonApi/Pages/Hydrator.php',
+        'JsonApi/Pages/Schema.php'      => 'JsonApi/Pages/Schema.php',
+        'JsonApi/Pages/Validators.php'  => 'JsonApi/Pages/Validators.php',
     ];
 
     /**

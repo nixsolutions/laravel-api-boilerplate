@@ -71,7 +71,6 @@ class RouteServiceProvider extends ServiceProvider
         Route::group([
             'middleware' => 'api',
             'namespace' => $this->namespace,
-            'prefix' => 'api',
         ], function ($router) {
             require base_path('routes/api.php');
         });
@@ -89,7 +88,6 @@ class RouteServiceProvider extends ServiceProvider
         Route::group([
             'middleware' => ['auth:api', 'json-api:v1'],
             'namespace' => $this->namespace,
-            'prefix' => 'api'
         ], function ($router) {
             require base_path('routes/json-api-v1.php');
         });

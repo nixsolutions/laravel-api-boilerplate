@@ -14,13 +14,15 @@ use Illuminate\Routing\Router;
 |
 */
 
-JsonApi::register(
-    'v1',
-    ['namespace' => 'Api\v1', 'prefix' => 'v1', 'as' => 'api-v1::'],
-    function (Api $api, Router $router) {
-        $api->resource('users', [
-            'controller' => 'UsersController',
-            'has-many' => ['roles'],
-            'has-one' => ['activation']
-        ]);
-    });
+JsonApi::register('v1', ['namespace' => 'Api\v1'], function (Api $api, Router $router) {
+    $api->resource('users', [
+        'controller' => 'UserController',
+        'has-many' => ['roles', 'pages'],
+        'has-one' => ['activation']
+    ]);
+
+    $api->resource('pages', [
+        'controller' => 'PageController',
+        'has-one' => ['user']
+    ]);
+});
