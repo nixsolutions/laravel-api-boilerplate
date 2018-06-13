@@ -11,7 +11,7 @@ use App\JsonApi\Users\Hydrator;
 use App\Services\UserService;
 use Illuminate\Auth\Events\Registered;
 
-class UserController extends EloquentController
+class UsersController extends EloquentController
 {
     use JsonApiResponseHelper;
 
@@ -44,8 +44,8 @@ class UserController extends EloquentController
      * @SWG\Get(
      *   path="/users",
      *   tags={"Users"},
-     *   summary="get all users if you admin or get current user",
-     *   description="get all users if you admin or get current user",
+     *   summary="get me",
+     *   description="get me",
      *   produces={"application/vnd.api+json"},
      *   consumes={"application/vnd.api+json"},
      *   @SWG\Parameter(
@@ -56,7 +56,10 @@ class UserController extends EloquentController
      *     default="me",
      *     type="string"
      *   ),
-     *   @SWG\Response(response="200", description="Return users, current user or 403 error")
+     *   @SWG\Response(response="200", description="Return user"),
+     *   security={
+     *     {"api_key_header": {}},
+     *   }
      * )
      *
      * @param JsonApiRequest $request
@@ -65,22 +68,25 @@ class UserController extends EloquentController
 
     /**
      * @SWG\Get(
-     *     path="/users/{id}",
-     *     tags={"Users"},
-     *     summary="get user by id",
-     *     description="get user by id",
-     *     produces={"application/vnd.api+json"},
-     *     consumes={"application/vnd.api+json"},
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="id",
-     *         description="",
-     *         required=true,
-     *         default="1",
-     *         type="integer"
-     *     ),
-     *     @SWG\Response(response="200", description="Return user"),
-     *     @SWG\Response(response="404", description="error, user not found"),
+     *   path="/users/{id}",
+     *   tags={"Users"},
+     *   summary="get user by id",
+     *   description="get user by id",
+     *   produces={"application/vnd.api+json"},
+     *   consumes={"application/vnd.api+json"},
+     *   @SWG\Parameter(
+     *     in="path",
+     *     name="id",
+     *     description="",
+     *     required=true,
+     *     default="1",
+     *     type="integer"
+     *   ),
+     *   @SWG\Response(response="200", description="Return user"),
+     *   @SWG\Response(response="404", description="error, user not found"),
+     *   security={
+     *     {"api_key_header": {}},
+     *   }
      * )
      *
      * @param JsonApiRequest $request
@@ -98,12 +104,12 @@ class UserController extends EloquentController
     /**
      * @SWG\Post(path="/users",
      *   tags={"Users"},
-     *   summary="register user",
-     *   description="register user",
+     *   summary="register user. Only for user with admin role",
+     *   description="register user. Only for user with admin role",
      *   produces={"application/vnd.api+json"},
      *   consumes={"application/vnd.api+json"},
      *   @SWG\Parameter(
-     *     name="Register user",
+     *     name="Register user. Only for user with admin role",
      *     in="body",
      *     description="JSON Object which create cat",
      *     required=true,
@@ -111,24 +117,28 @@ class UserController extends EloquentController
      *       @SWG\Property(
      *         property="data",
      *         type="object",
-     *         @SWG\Property(property="type", type="string", default="users"),
+     *         @SWG\Property(property="type", type="string", default="users", example="users"),
      *         @SWG\Property(
      *           property="attributes",
      *           type="object",
-     *           @SWG\Property(property="email", type="string", default="user@mail.com", description="required"),
-     *           @SWG\Property(property="password", type="string", default="password", description="required"),
-     *           @SWG\Property(property="name", type="string", default="Steven", description="required"),
+     *           @SWG\Property(property="email", type="string", example="user@mail.com", description="required"),
+     *           @SWG\Property(property="password", type="string", example="password", description="required"),
+     *           @SWG\Property(property="name", type="string", example="Steven", description="required"),
      *           @SWG\Property(
      *             property="activated",
      *             type="string",
      *             description="0 - deactivated, 1 - activated",
-     *             default="1"
+     *             default="1",
+     *             example="1"
      *           ),
      *         )
      *       )
      *     )
      *   ),
-     *   @SWG\Response(response="200", description="Return message")
+     *   @SWG\Response(response="200", description="Return message"),
+     *   security={
+     *     {"api_key_header": {}},
+     *   }
      * )
      *
      * @param JsonApiRequest $request
@@ -136,6 +146,10 @@ class UserController extends EloquentController
      */
     public function create(JsonApiRequest $request)
     {
+        if (is_array($result = $this->service->checkOnAdminRole())) {
+            return $this->sendFailedResponse($result, ResponseCodesInterface::HTTP_CODE_FORBIDDEN);
+        }
+
         /**
          * hydrate all data to User entity
          *
@@ -176,25 +190,29 @@ class UserController extends EloquentController
      *       @SWG\Property(
      *         property="data",
      *         type="object",
-     *         @SWG\Property(property="type", type="string", default="users"),
-     *         @SWG\Property(property="id", type="string", default="1"),
+     *         @SWG\Property(property="type", type="string", default="users", example="users"),
+     *         @SWG\Property(property="id", type="string", default="1", example="1"),
      *         @SWG\Property(
      *           property="attributes",
      *           type="object",
-     *           @SWG\Property(property="email", type="string", default="user@mail.com", description="required"),
-     *           @SWG\Property(property="password", type="string", default="Password1", description="required"),
-     *           @SWG\Property(property="name", type="string", default="Steven", description="required"),
+     *           @SWG\Property(property="email", type="string", example="user@mail.com", description="required"),
+     *           @SWG\Property(property="password", type="string", example="Password1", description="required"),
+     *           @SWG\Property(property="name", type="string", example="Steven", description="required"),
      *           @SWG\Property(
      *             property="activated",
      *             type="string",
      *             description="0 - deactivated, 1 - activated",
-     *             default="1"
+     *             default="1",
+     *             example="1"
      *           ),
      *         )
      *       )
      *     )
      *   ),
-     *   @SWG\Response(response="200", description="Return message")
+     *   @SWG\Response(response="200", description="Return message"),
+     *   security={
+     *     {"api_key_header": {}},
+     *   }
      * )
      *
      * @param JsonApiRequest $request
@@ -219,22 +237,25 @@ class UserController extends EloquentController
 
     /**
      * @SWG\Delete(
-     *     path="/users/{id}",
-     *     tags={"Users"},
-     *     summary="delete user by id",
-     *     description="delete user by id",
-     *     produces={"application/vnd.api+json"},
-     *     consumes={"application/vnd.api+json"},
-     *     @SWG\Parameter(
-     *         in="path",
-     *         name="id",
-     *         description="",
-     *         required=true,
-     *         default="1",
-     *         type="integer"
-     *     ),
-     *     @SWG\Response(response="200", description="success"),
-     *     @SWG\Response(response="404", description="error, user not found"),
+     *   path="/users/{id}",
+     *   tags={"Users"},
+     *   summary="delete user by id",
+     *   description="delete user by id",
+     *   produces={"application/vnd.api+json"},
+     *   consumes={"application/vnd.api+json"},
+     *   @SWG\Parameter(
+     *     in="path",
+     *     name="id",
+     *     description="",
+     *     required=true,
+     *     default="1",
+     *     type="integer"
+     *   ),
+     *   @SWG\Response(response="200", description="success"),
+     *   @SWG\Response(response="404", description="error, user not found"),
+     *   security={
+     *     {"api_key_header": {}},
+     *   }
      * )
      *
      * @param JsonApiRequest $request
