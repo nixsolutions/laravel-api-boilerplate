@@ -68,6 +68,11 @@ class Schema extends EloquentSchema
                 self::SHOW_RELATED => true,
                 self::DATA => $resource->roles,
             ],
+            'pages' => [
+                self::SHOW_SELF => true,
+                self::SHOW_RELATED => true,
+                self::DATA => $resource->pages,
+            ],
         ];
     }
 }
